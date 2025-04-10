@@ -1,30 +1,29 @@
 class HeaderSubcategory extends HTMLElement {
-
-  static get observedAttributes() {
+  static get observedAttributes () {
     return ['background-color', 'color']
   }
 
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.render()
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render()
     }
   }
 
-  render() {
+  render () {
     const backgroundColor = this.getAttribute('background-color') || 'hsl(229, 22%, 10%)'
     const color = this.getAttribute('color') || 'hsl(0, 0%, 100%)'
 
-    this.shadow.innerHTML = 
-    /*html*/`
+    this.shadow.innerHTML =
+    /* html */`
       <style>
 
         header {
@@ -42,8 +41,8 @@ class HeaderSubcategory extends HTMLElement {
       <header>
         <slot></slot>
       </header>
-    `;
+    `
   }
 }
 
-customElements.define('header-subcategory-component', HeaderSubcategory);
+customElements.define('header-subcategory-component', HeaderSubcategory)

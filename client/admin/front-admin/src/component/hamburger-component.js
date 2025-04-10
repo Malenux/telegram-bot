@@ -1,28 +1,25 @@
 class Hamburger extends HTMLElement {
-  
-  constructor() {
-    super();
-    this.shadow = this.attachShadow({ mode: 'open' });
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
 
     this.data = []
-
   }
 
-  async connectedCallback() {
+  async connectedCallback () {
     await this.loadData()
-    await this.render();
+    await this.render()
   }
 
-  async loadData (){
+  async loadData () {
     this.data = {
       color: 'hsl(0, 0%, 100%)',
       hoverColor: 'hsl(39, 100%, 60%)'
     }
   }
 
-
-  render() {
-    this.shadow.innerHTML = /*html*/`
+  render () {
+    this.shadow.innerHTML = /* html */`
       <style>
         *{
           box-sizing: border-box;
@@ -99,8 +96,8 @@ class Hamburger extends HTMLElement {
         <span></span>
         <span></span>
       </label>
-    `;
+    `
   }
 }
 
-customElements.define('hamburger-component', Hamburger);
+customElements.define('hamburger-component', Hamburger)

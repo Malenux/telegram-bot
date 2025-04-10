@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: hsl(230, 20%, 10%);
+  color: hsl(0, 0%, 90%);
+  padding: 2rem;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: 'Roboto', sans-serif;
+  color: hsl(0, 0%, 90%);
+  margin: 0;
+  text-transform: capitalize;
+}

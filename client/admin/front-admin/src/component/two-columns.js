@@ -1,12 +1,8 @@
 class TwoColumns extends HTMLElement {
-
-
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    
   }
-
 
   connectedCallback () {
     this.render()
@@ -14,7 +10,7 @@ class TwoColumns extends HTMLElement {
 
   render () {
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       * {
         box-sizing: border-box;
@@ -56,5 +52,4 @@ class TwoColumns extends HTMLElement {
   }
 }
 
-
-customElements.define('two-columns-component', TwoColumns);
+customElements.define('two-columns-component', TwoColumns)

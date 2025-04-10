@@ -1,6 +1,5 @@
 class Section extends HTMLElement {
-
-  static get observedAttributes() {
+  static get observedAttributes () {
     return ['background-color']
   }
 
@@ -9,12 +8,11 @@ class Section extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-
   connectedCallback () {
     this.render()
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render()
     }
@@ -22,9 +20,9 @@ class Section extends HTMLElement {
 
   render () {
     const backgroundColor = this.getAttribute('background-color') || '#1D2030'
-    
+
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       
       .section {
@@ -48,5 +46,4 @@ class Section extends HTMLElement {
   }
 }
 
-
-customElements.define('section-component', Section);
+customElements.define('section-component', Section)

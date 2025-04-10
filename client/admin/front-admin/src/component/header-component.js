@@ -1,6 +1,5 @@
 class Header extends HTMLElement {
-
-  static get observedAttributes() {
+  static get observedAttributes () {
     return ['background-color', 'color']
   }
 
@@ -9,12 +8,11 @@ class Header extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-
   connectedCallback () {
     this.render()
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render()
     }
@@ -23,9 +21,9 @@ class Header extends HTMLElement {
   render () {
     const backgroundColor = this.getAttribute('background-color') || 'hsl(229, 22%, 10%)'
     const color = this.getAttribute('color') || 'hsl(0, 0%, 100%)'
-    
+
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       
       header {
@@ -47,5 +45,4 @@ class Header extends HTMLElement {
   }
 }
 
-
-customElements.define('header-component', Header);
+customElements.define('header-component', Header)

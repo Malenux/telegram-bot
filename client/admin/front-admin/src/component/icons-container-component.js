@@ -1,30 +1,30 @@
 class IconsContainer extends HTMLElement {
-  static get observedAttributes() {
+  static get observedAttributes () {
     return ['fill', 'hover', 'width']
   }
 
   constructor () {
-    super();
+    super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.render()
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render()
     }
   }
 
-  render() {
+  render () {
     const fill = this.getAttribute('fill') || 'hsl(90, 13%, 87%)'
     const hover = this.getAttribute('hover') || 'hsl(39, 100%, 60%)'
     const width = this.getAttribute('width') || '1.5rem'
-  
+
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       .icons {
         display: flex;
@@ -59,9 +59,7 @@ class IconsContainer extends HTMLElement {
       <slot></slot>
     </div>
     `
-    
   }
 }
 
-
-customElements.define('icons-container-component', IconsContainer);
+customElements.define('icons-container-component', IconsContainer)

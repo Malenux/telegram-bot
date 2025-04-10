@@ -1,21 +1,17 @@
 class Form extends HTMLElement {
-
-
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    
+
     this.data = []
   }
-
 
   async connectedCallback () {
     await this.loadData()
     await this.render()
   }
 
-
-  async loadData (){
+  async loadData () {
     this.data = [
       {
         title: 'Nombre',
@@ -34,10 +30,9 @@ class Form extends HTMLElement {
     ]
   }
 
-
   render () {
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       
       .form-container {
@@ -97,14 +92,9 @@ class Form extends HTMLElement {
       input.setAttribute('id', form.id)
       input.setAttribute('name', form.name)
       input.setAttribute(form.degree, form.degree)
-      inputContainer.appendChild(input);
-
-
+      inputContainer.appendChild(input)
     })
-
-
   }
 }
 
-
-customElements.define('form-component', Form);
+customElements.define('form-component', Form)

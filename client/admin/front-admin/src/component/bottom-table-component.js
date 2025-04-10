@@ -1,32 +1,26 @@
 class BottomTable extends HTMLElement {
-
-
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    
+
     this.data = []
   }
-
 
   async connectedCallback () {
     await this.loadData()
     await this.render()
   }
 
-
-  async loadData (){
+  async loadData () {
     this.data = {
       show: '3',
       total: '3'
-    } 
+    }
   }
 
-
   render () {
-    
     this.shadow.innerHTML =
-    /*html*/`
+    /* html */`
     <style>
       .bottom-table {
         padding-top: 1.25rem;
@@ -48,5 +42,4 @@ class BottomTable extends HTMLElement {
   }
 }
 
-
-customElements.define('bottom-table-component', BottomTable);
+customElements.define('bottom-table-component', BottomTable)
