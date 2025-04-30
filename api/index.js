@@ -1,3 +1,6 @@
+// es una bariable |global| (utilizable para linux/windows...) que se puede leer cualquier parte del archivo para llamar a otro archivo y
+// ha recibido el nombre "basedir" y te devuelve la ruta del archivo
+
 global.__basedir = __dirname
 
 const app = require('./src/app')
