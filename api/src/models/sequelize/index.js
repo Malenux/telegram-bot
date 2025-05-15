@@ -8,10 +8,8 @@ const sequelizeDb = {} // se esta preparando un objeto vacio para llenarlo con l
 
 const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
   // variable sequlize para que coja la configuración del archivo .env
-
   host: process.env.DATABASE_HOST, // host de la base de datos
   dialect: process.env.DATABASE_DIALECT, // dialecto de la base de datos
-
   pool: {
     max: 5, // máximo de conexiones simultaneas de los usuarios
     min: 0, // mínimo de conexiones simultaneas de los usuarios
@@ -30,7 +28,7 @@ fs.readdirSync(__dirname) // lee los archivos de la carpeta
     )
   })
   .forEach(file => { // para cada archivo que cumpla las condiciones anteriores
-    const model = require(path.join(__dirname, file))( // aqui se carga el archivo
+    const model = require(path.join(__dirname, file))( // aqui se carga los modelos de la bd y se le pasan los parametros de configuración
       sequelize, // se le pasa la variable sequelize que contiene la configuración de la base de datos
       Sequelize.DataTypes // se le pasa el tipo de datos de sequelize
     )
