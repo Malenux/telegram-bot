@@ -1,50 +1,49 @@
-// este archivo es el que se encarga de inicializar la base de datos y cargar los modelos de "sequelize"
-// pero es la configuración mínima
-const fs = require('fs') // aquí se encarga de leer los archibos de la carpeta 'files sistem
-const Sequelize = require('sequelize') // lee los archivos de la carpeta 'sequelize'
-const path = require('path') // lee los archivos de la carpeta 'path' que se encarga de manejar las rutas de los archivos
-const basename = path.basename(__filename) // se obtiene el nombre del archivo actual
-const sequelizeDb = {} // se esta preparando un objeto vacio para llenarlo con la información que se va a exportar para así utilizarlo en otros archivos
+// Este archivo se encarga de inicializar la conexion a la BD y cargar los modelos definidios en los archivos de este directiorio.
+const fs = require('fs') // Módulo para interactuar con el sistema de archivos
+const Sequelize = require('sequelize') // ORM para manejar bases de datos SQL
+const path = require('path') // Módulo para manipular rutas de archivos
 
+const basename = path.basename(__filename) // Nombre del archivo actual (usado para ignorarse a sí mismo)
+// path: utilizado para manejo de rutas de archivos
+const sequelizeDb = {} // Objeto donde se almacenarán los modelos cargados
+
+// Inicializa la conexión a la base de datos con la configuración tomada de variables de entorno de Sequelize (lo pone en la constante y lo que esta en amarillo)
 const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
-  // variable sequlize para que coja la configuración del archivo .env
-  host: process.env.DATABASE_HOST, // host de la base de datos
-  dialect: process.env.DATABASE_DIALECT, // dialecto de la base de datos
+  host: process.env.DATABASE_HOST,
+  dialect: process.env.DATABASE_DIALECT,
   pool: {
-    max: 5, // máximo de conexiones simultaneas de los usuarios
-    min: 0, // mínimo de conexiones simultaneas de los usuarios
-    acquire: 30000, // tiempo milisegundos máximo de espera para una conexión
-    idle: 10000 // tiempo milisegundos máximo de espera para una conexión inactiva
-  }
-})
-// aqui se inicializa la base de datos y se le pasan los parametros de configuracion
+    max: 5, // Número máximo de conexiones en el pool.
+    min: 0, // Número mínimo de conexiones en el pool.
+    acquire: 30000, // Tiempo máximo en milisegundos que el pool intentará establecer una conexión antes de lanzar un error.
+    idle: 10000, // Tiempo máximo en milisegundos que una conexión puede estar inactiva antes de ser liberada.
+  },
+}
+)
 
-fs.readdirSync(__dirname) // lee los archivos de la carpeta
-  .filter(file => { // para filtrar los archivos que no son el archivo actual
-    return ( // solo se quedan los archivos que cumplen las siguientes condinciones:
-      file.indexOf('.') !== 0 && // si el archivo noj empiza con punto
-      file !== basename && // si el archivo no es el actual
-      file.slice(-3) === '.js' // si el archivo termina con .js
+// Lee todos los archivos del directorio actual (excepto este mismo) y carga los modelos definidos en ellos
+fs.readdirSync(__dirname)
+  .filter(file => {
+    return (
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      file.slice(-3) === '.js'
     )
   })
-  .forEach(file => { // para cada archivo que cumpla las condiciones anteriores
-    const model = require(path.join(__dirname, file))( // aqui se carga los modelos de la bd y se le pasan los parametros de configuración
-      sequelize, // se le pasa la variable sequelize que contiene la configuración de la base de datos
-      Sequelize.DataTypes // se le pasa el tipo de datos de sequelize
-    )
-    sequelizeDb[model.name] = model // se le asigna el modelo al objeto sequelizeDb con el nombre del modelo como clave
+  // Aqui se carga los modelos de la base de datos y se le pasan los parametros de configuración
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
+    sequelizeDb[model.name] = model
   })
-  // aqui se cargan los modelos de la base de datos y se le pasan los parametros de configuracion
 
-Object.keys(sequelizeDb).forEach(modelName => { // para cada modelo que se ha cargado
-  if (sequelizeDb[modelName].associate) { // si el modelo tiene una funcion associate, es decir, si tiene asociaciones con otros modelos
-    sequelizeDb[modelName].associate(sequelizeDb) // se le pasa el objeto sequelizeDb para que pueda acceder a los modelos
+// Si los modelos definen asociaciones (realaciones), las inicializa
+Object.keys(sequelizeDb).forEach(modelName => {
+  if (sequelizeDb[modelName].associate) {
+    sequelizeDb[modelName].associate(sequelizeDb)
   }
 })
-// aqui se asocian los modelos de la base de datos
 
-sequelizeDb.sequelize = sequelize // se le asigna la variable 'sequelize' al objeto sequelizeDb para que pueda ser utilizado en otros archivos
+// Expone la instancia de Sequelize y los modelos para usarlos en otras partes del proyecto
+sequelizeDb.sequelize = sequelize
 sequelizeDb.Sequelize = Sequelize
 
 module.exports = sequelizeDb
-// aqui se exporta la base de datos y los modelos
