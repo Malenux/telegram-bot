@@ -83,7 +83,7 @@ class Message extends HTMLElement {
       }
 
       .notice {
-        background-color: wheat;
+        background-color:hsl(240, 21.60%, 29.00%);
         position: fixed;
         bottom: 3%;
         right: 2%;
@@ -100,7 +100,7 @@ class Message extends HTMLElement {
 
       .message{
         padding: 1rem;
-        color: #000;
+        color: hsl(0, 0.00%, 100.00%);
       }
 
     </style>

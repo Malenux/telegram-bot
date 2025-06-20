@@ -2,10 +2,21 @@ class Delete extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+
+    document.addEventListener('showDeleteModal', this.addActive.bind(this))
   }
 
   connectedCallback () {
     this.render()
+  }
+
+  addActive (event) {
+    const deleteBox = this.shadow.querySelector('.delete-box')
+    if (deleteBox) {
+      deleteBox.classList.add('active')
+    } else {
+      console.error('Delete box not found in shadow DOM.')
+    }
   }
 
   render () {
@@ -71,7 +82,7 @@ class Delete extends HTMLElement {
 
     </style>
 
-    <div class="delete-box active">
+    <div class="delete-box">
       <div class="delete-header">
         <h2>Eliminar elemento</h2>
       </div>

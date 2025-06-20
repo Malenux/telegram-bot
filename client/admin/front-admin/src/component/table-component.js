@@ -18,8 +18,6 @@ class Table extends HTMLElement {
       }
 
       this.data = await response.json()
-
-      console.log(this.data)
     } catch (error) {
       console.error('Error loading data:', error)
       this.data = []
@@ -171,8 +169,6 @@ class Table extends HTMLElement {
 
     </style>
 
-
-
     <section class="table">
       <div class="table__header">
         <div class="table__header__box">
@@ -199,7 +195,6 @@ class Table extends HTMLElement {
         </div>
       </div>
     </section>
-    
     `
 
     this.data.rows.forEach(element => {
@@ -253,6 +248,28 @@ class Table extends HTMLElement {
       const uptatedAt = document.createElement('li')
       ul.appendChild(uptatedAt)
       uptatedAt.textContent = `Actualizado: ${element.updatedAt}`
+    })
+
+    this.renderButtons()
+  }
+
+  renderButtons () {
+    this.shadow.querySelector('.table').addEventListener('click', event => {
+      if (event.target.closest('.edit-button')) {
+        const element = event.target.closest('.delete-button')
+        const id = element.dataset.id
+      }
+
+      if (event.target.closest('.delete-button')) {
+        const element = event.target.closest('.delete-button')
+        const id = element.dataset.id
+
+        document.dispatchEvent(new CustomEvent('showDeleteModal', {
+          detail: {
+
+          }
+        }))
+      }
     })
   }
 }

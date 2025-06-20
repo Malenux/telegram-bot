@@ -214,7 +214,7 @@ class Form extends HTMLElement {
           throw new Error(`Error al guardar los datos: ${response.statusText}`)
         }
 
-        const data = await response.json()
+        // const data = await response.json()
 
         document.dispatchEvent(new CustomEvent('notice', {
           detail: {
