@@ -1,4 +1,4 @@
-class Header extends HTMLElement {
+class Main extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
@@ -16,24 +16,30 @@ class Header extends HTMLElement {
         box-sizing: border-box;
       }
 
-      header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
+      main {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
         padding: 1rem;
-        background-color: #2A2A40;
+        width: 100%;
         color: #E0E0E0;
-        border-bottom: 1px solid #3A3A5A;
+      }
+
+      @media (max-width: 768px) {
+        main {
+          grid-template-columns: 1fr;
+          padding: 0 1rem;
+        }
       }
     </style>
 
 
-    <header>
+    <main>
       <slot></slot>
-    </header>
+    </main>
     
     `
   }
 }
 
-customElements.define('header-component', Header)
+customElements.define('main-component', Main)

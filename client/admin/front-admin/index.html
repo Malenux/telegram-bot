@@ -8,51 +8,6 @@
   <script type="module" src="./src/index.js"></script>
 </head>
 <body>
-
-  <font-family-component></font-family-component>
-
-  <header-component background-color="hsl(230, 25%, 20%)" color="hsl(0, 0%, 100%)" >
-    <h1>pedidos</h1>
-    <hamburger-component></hamburger-component>
-  </header-component>
-
-  <two-columns-component>
-
-    <section-component slot="small-column">
-      
-      <header-subcategory-component background-color="hsl(228, 25%, 20%)">
-       
-        <icons-container-component fill="hsl(0, 0%, 100%)" hover="hsl(39, 100%, 60%)" width="1.5rem">
-          <button>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 11L16.76 3.62A1 1 0 0 0 16.59 2.22A1 1 0 0 0 16 2H2A1 1 0 0 0 1.38 2.22A1 1 0 0 0 1.21 3.62L7 11V16.87A1 1 0 0 0 7.29 17.7L9.29 19.7A1 1 0 0 0 10.7 19.7A1 1 0 0 0 11 18.87V11M13 16L18 21L23 16Z" /></svg>
-          </button>
-        </icons-container-component>
-
-      </header-subcategory-component>
-      
-      <tables-boxes-component></tables-boxes-component>
-      <bottom-table-component></bottom-table-component>
-   
-    </section-component>
-    
-    <section-component slot="big-column">
-      
-      <header-subcategory-component background-color="hsl(228, 25%, 20%)">
-        <h2>General</h2>
-        <icons-container-component fill="hsl(0, 0%, 100%)" hover="hsl(39, 100%, 60%)" width="1.5rem">
-          <button>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z" /></svg>
-          </button>
-          <button>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg>
-          </button>
-        </icons-container-component>
-      </header-subcategory-component>
-
-      <form-component></form-component>
-
-    </section-component>
-
-  </two-columns-component>
+  <page-component base-path="/admin"></page-component>
 </body>
 </html>

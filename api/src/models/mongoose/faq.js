@@ -1,0 +1,17 @@
+module.exports = (mongoose) => {
+  const schema = mongoose.Schema(
+    {
+      title: String,
+      description: String,
+      isActive: {
+        type: Boolean,
+        default: true
+      },
+      delateAt: Date,
+    },
+    { timestamps: true } // Agrega createdAt y updatedAt
+  )
+
+  const Faq = mongoose.model('Faq', schema, 'faqs')
+  return Faq
+}
