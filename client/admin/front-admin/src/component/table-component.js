@@ -109,7 +109,7 @@ class Table extends HTMLElement {
         padding-right: 1rem;
       }
 
-      .table-body__element-box {
+      .table-body-element-box {
         background: #2A2A40;
         color: #E0E0E0;
         border-radius: 8px;
@@ -117,16 +117,16 @@ class Table extends HTMLElement {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       }
 
-      .element-box__data {
+      .element-box-data {
         padding: 1rem;
         background-color: #1E1E2F;
       }
 
-      .element-box__data li {
+      .element-box-data li {
         margin-top: 0.2rem;
       }
 
-      .element-box__upper-row {
+      .element-box-upper-row {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -201,11 +201,11 @@ class Table extends HTMLElement {
     this.data.rows.forEach(element => {
       const tableBody = this.shadow.querySelector('.table-body')
       const elementBox = document.createElement('div')
-      elementBox.classList.add('.table-body__element-box')
+      elementBox.classList.add('.table-body-element-box')
       tableBody.appendChild(elementBox)
 
       const upperRow = document.createElement('div')
-      upperRow.classList.add('element-box__upper-row')
+      upperRow.classList.add('element-box-upper-row')
       elementBox.appendChild(upperRow)
 
       const editButton = document.createElement('button')
@@ -228,7 +228,7 @@ class Table extends HTMLElement {
               </svg>`
 
       const data = document.createElement('div')
-      data.classList.add('element-box__data')
+      data.classList.add('element-box-data')
       elementBox.appendChild(data)
 
       const ul = document.createElement('ul')
