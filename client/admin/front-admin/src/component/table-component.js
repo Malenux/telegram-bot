@@ -2,6 +2,7 @@ class Table extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.endpoint = '/api/admin/users'
   }
 
   async connectedCallback () {
@@ -11,7 +12,7 @@ class Table extends HTMLElement {
 
   async loadData () {
     try {
-      const response = await fetch('/api/admin/users')
+      const response = await fetch(this.endpoint)
 
       if (!response.ok) {
         throw new Error(`Error fetching data: ${response.statusText}`)
@@ -66,7 +67,7 @@ class Table extends HTMLElement {
         color: #E0E0E0;
       }
 
-      .table__header {
+      .table-header {
         display: flex;
         justify-content: flex-start;
         background-color: #1E1E2F;
@@ -74,11 +75,11 @@ class Table extends HTMLElement {
         border-bottom: 1px solid #3A3A5A;
       }
 
-      .table__header__button {
+      .table-header-button {
         margin-left: 5px;
       }
 
-      .table__header__button,
+      .table-header-button,
       .edit-button,
       .delete-button,
       .clean-button,
@@ -90,14 +91,14 @@ class Table extends HTMLElement {
         transition: fill 0.3s ease;
       }
 
-      .table__header__button:hover,
+      .table-header-button:hover,
       .edit-button:hover,
       .delete-button:hover,
       .table-page-logo:hover {
         fill: #BB86FC;
       }
 
-      .table__body {
+      .table-body {
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -108,7 +109,7 @@ class Table extends HTMLElement {
         padding-right: 1rem;
       }
 
-      .table__body__element-box {
+      .table-body__element-box {
         background: #2A2A40;
         color: #E0E0E0;
         border-radius: 8px;
@@ -135,7 +136,7 @@ class Table extends HTMLElement {
         border-bottom: 0.5rem solid #3A3A5A;
       }
 
-      .table__footer {
+      .table-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -144,7 +145,7 @@ class Table extends HTMLElement {
         background-color: #2A2A40;
       }
 
-      .table__footer-box {
+      .table-footer-box {
         display: flex;
         width: 100%;
         justify-content: space-between;
@@ -170,9 +171,9 @@ class Table extends HTMLElement {
     </style>
 
     <section class="table">
-      <div class="table__header">
-        <div class="table__header__box">
-          <button class="table__header__button">
+      <div class="table-header">
+        <div class="table-header-box">
+          <button class="table-header-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <title>filter-check</title>
               <path
@@ -181,9 +182,9 @@ class Table extends HTMLElement {
         </button>
         </div>
       </div>
-      <div class="table__body"></div>
-      <div class="table__footer">
-        <div class="table__footer-box">
+      <div class="table-body"></div>
+      <div class="table-footer">
+        <div class="table-footer-box">
           <div class="table-page-info">1 registro en total, mostrando 10 por página</div>
           <button class="table-page-logo">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -198,9 +199,9 @@ class Table extends HTMLElement {
     `
 
     this.data.rows.forEach(element => {
-      const tableBody = this.shadow.querySelector('.table__body')
+      const tableBody = this.shadow.querySelector('.table-body')
       const elementBox = document.createElement('div')
-      elementBox.classList.add('.table__body__element-box')
+      elementBox.classList.add('.table-body__element-box')
       tableBody.appendChild(elementBox)
 
       const upperRow = document.createElement('div')
@@ -254,10 +255,16 @@ class Table extends HTMLElement {
   }
 
   renderButtons () {
-    this.shadow.querySelector('.table').addEventListener('click', event => {
+    this.shadow.querySelector('.table').addEventListener('click', async event => {
       if (event.target.closest('.edit-button')) {
-        const element = event.target.closest('.delete-button')
+        const element = event.target.closest('.edit-button')
         const id = element.dataset.id
+        const endpoint = `${this.endpoint}/${id}`
+
+        const response = await fetch(endpoint)
+        const data = await response.json()
+
+        console.log(data)
       }
 
       if (event.target.closest('.delete-button')) {
@@ -266,7 +273,8 @@ class Table extends HTMLElement {
 
         document.dispatchEvent(new CustomEvent('showDeleteModal', {
           detail: {
-
+            endpoint: this.endpoint,
+            elementId: id,
           }
         }))
       }

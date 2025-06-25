@@ -47,19 +47,19 @@ class Title extends HTMLElement {
         padding: 0;
       }
 
-      .header__title {
+      .header-title {
         background-color: #1F1F1F;
         padding: 1rem;
       }
 
-      .header__title h2 {
+      .header-title h2 {
         font-size: 24px;
         color: #E0E0E0;
       }
     </style>
 
 
-    <div class="header__title">
+    <div class="header-title">
       <h2>Pedidos</h2>
     </div>
     

@@ -2,21 +2,18 @@ class Delete extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-
-    document.addEventListener('showDeleteModal', this.addActive.bind(this))
+    this.endpoint = ''
+    document.addEventListener('showDeleteModal', this.showDeleteModal.bind(this))
   }
 
   connectedCallback () {
     this.render()
   }
 
-  addActive (event) {
-    const deleteBox = this.shadow.querySelector('.delete-box')
-    if (deleteBox) {
-      deleteBox.classList.add('active')
-    } else {
-      console.error('Delete box not found in shadow DOM.')
-    }
+  showDeleteModal (event) {
+    const { endpoint, elementId } = event.detail
+    this.endpoint = `${endpoint}/${elementId}`
+    this.shadow.querySelector('.delete-box').classList.add('active')
   }
 
   render () {
@@ -108,8 +105,35 @@ class Delete extends HTMLElement {
     const confirmButton = this.shadow.querySelector('.confirm')
     const cancelButton = this.shadow.querySelector('.cancel')
 
-    confirmButton.addEventListener('click', () => {
-      this.shadow.querySelector('.delete-box').classList.remove('active')
+    confirmButton.addEventListener('click', async () => {
+      try {
+        const response = await fetch(this.endpoint, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+        if (!response.ok) {
+          throw new Error('Error al eliminar el elemento')
+        }
+
+        document.dispatchEvent(new CustomEvent('notice', {
+          detail: {
+            message: 'Registro eliminado correctamente',
+            type: 'success'
+          }
+        }))
+
+        this.shadow.querySelector('.delete-box').classList.remove('active')
+      } catch (error) {
+        document.dispatchEvent(new CustomEvent('notice', {
+          detail: {
+            message: 'No se pudo eliminar el registro',
+            type: 'error'
+          }
+        }))
+      }
     })
 
     cancelButton.addEventListener('click', () => {

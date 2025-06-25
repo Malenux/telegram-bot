@@ -46,10 +46,10 @@ class Form extends HTMLElement {
       .form {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        border-radius: 10px;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
         background-color: #1E1E2F;
-        padding: 1rem;
+        padding: 0.8rem;
         color: #E0E0E0;
       }
 
@@ -59,47 +59,47 @@ class Form extends HTMLElement {
         gap:1rem;
       }
 
-      .form__body {
+      .form-body {
         display: grid;
         grid-template-columns: 1fr;
         padding: 1rem 0;
         gap: 1rem;
       }
 
-      .form__header {
+      .form-header {
         background-color: #2A2A40;
         padding: 0.75rem 1rem;
         border-radius: 8px;
       }
 
-      .form__header-box {
+      .form-header-box {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
 
-      .form__header-box-filter {
+      .form-header-box-filter {
         background: #3A3A5A;
         padding: 5px 12px;
         color: #E0E0E0;
-        height: 30px;
+        height: 2rem;
         border-radius: 6px;
       }
 
-      .form__header-box-filter button {
+      .form-header-box-filter button {
         color: #E0E0E0;
-        font-size: 16px;
+        font-size: 1rem;
       }
 
-      .form__header-buttons {
+      .form-header-buttons {
         display: flex;
-        gap: 10px;
+        gap: 0.8rem;
       }
 
       .clean-button svg,
       .save-button svg {
-        width: 30px;
-        height: 30px;
+        width: 2rem;
+        height: 2rem;
         fill: #E0E0E0;
         transition: fill 0.3s ease;
       }
@@ -112,7 +112,7 @@ class Form extends HTMLElement {
       .form-element {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 0.5rem;
       }
 
       .form-title span {
@@ -122,27 +122,27 @@ class Form extends HTMLElement {
 
       .form-element-input input {
         width: 100%;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #3A3A5A;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        border: 0.2rem solid #3A3A5A;
         background-color: #2A2A40;
         color: #E0E0E0;
       }
 
       .form-element-input input:focus {
-        outline: 2px solid #BB86FC;
+        outline: 0.2rem solid #BB86FC;
         background-color: #2A2A40;
       }
     </style>
 
 
     <section class="form">
-      <div class="form__header">
-        <div class="form__header-box">
-          <div class="form__header-box-filter">
+      <div class="form-header">
+        <div class="form-header-box">
+          <div class="form-header-box-filter">
             <button>General</button>
           </div>
-          <div class="form__header-buttons">
+          <div class="form-header-buttons">
             <button class="clean-button">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <title>eraser</title>
@@ -160,7 +160,7 @@ class Form extends HTMLElement {
           </div>
         </div>
       </div>
-      <div class="form__body">
+      <div class="form-body">
         <form>
           <div class="form-element">
             <div class="form-title">
