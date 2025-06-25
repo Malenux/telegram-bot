@@ -1,11 +1,23 @@
-class Table extends HTMLElement {
+import { store } from '../../redux/store.js'
+import { showFormElement } from '../../redux/crud-slice.js'
+
+class UserTable extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.endpoint = '/api/admin/users'
+    this.unsubscribe = null
   }
 
   async connectedCallback () {
+    this.unsubscribe = store.subscribe(() => {
+      const currentState = store.getState()
+
+      if (currentState.crud.tableEndpoint === this.endpoint) {
+        this.loadData().then(() => this.render())
+      }
+    })
+
     await this.loadData()
     await this.render()
   }
@@ -79,22 +91,14 @@ class Table extends HTMLElement {
         margin-left: 5px;
       }
 
-      .table-header-button,
-      .edit-button,
-      .delete-button,
-      .clean-button,
-      .save-button,
-      .table-page-logo {
+      .table-header-button svg {
         width: 30px;
         height: 30px;
         fill: #E0E0E0;
         transition: fill 0.3s ease;
       }
 
-      .table-header-button:hover,
-      .edit-button:hover,
-      .delete-button:hover,
-      .table-page-logo:hover {
+      .button svg:hover {
         fill: #BB86FC;
       }
 
@@ -173,7 +177,7 @@ class Table extends HTMLElement {
     <section class="table">
       <div class="table-header">
         <div class="table-header-box">
-          <button class="table-header-button">
+          <button class="button table-header-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <title>filter-check</title>
               <path
@@ -186,7 +190,7 @@ class Table extends HTMLElement {
       <div class="table-footer">
         <div class="table-footer-box">
           <div class="table-page-info">1 registro en total, mostrando 10 por página</div>
-          <button class="table-page-logo">
+          <button class="button table-page-logo">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <title>chevron-double-left</title>
               <path
@@ -261,10 +265,29 @@ class Table extends HTMLElement {
         const id = element.dataset.id
         const endpoint = `${this.endpoint}/${id}`
 
-        const response = await fetch(endpoint)
-        const data = await response.json()
+        try {
+          const response = await fetch(endpoint)
 
-        console.log(data)
+          if (response.status === 500 || response.status === 404) {
+            throw response
+          }
+
+          const data = await response.json()
+
+          const formElement = {
+            endPoint: this.endpoint,
+            data
+          }
+
+          store.dispatch(showFormElement(formElement))
+        } catch (error) {
+          document.dispatchEvent(new CustomEvent('notice', {
+            detail: {
+              message: 'No se han podido recuperar el dato',
+              type: 'error'
+            }
+          }))
+        }
       }
 
       if (event.target.closest('.delete-button')) {
@@ -282,4 +305,4 @@ class Table extends HTMLElement {
   }
 }
 
-customElements.define('table-component', Table)
+customElements.define('users-table-component', UserTable)
