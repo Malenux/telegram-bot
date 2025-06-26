@@ -59,47 +59,51 @@ class UserTable extends HTMLElement {
         font-family: "Montserrat", sans-serif;
       }
 
+      svg {
+        padding: 0;
+        margin: 0;
+        width: 1.8rem;
+        height: 1.8rem;
+        fill:rgb(224, 224, 224);
+        transition: fill 0.3s ease;
+      }
+
+      svg:hover {
+        fill:rgb(187, 134, 252);
+      }
+
+
       button {
         background-color: transparent;
         border: none;
         cursor: pointer;
         outline: none;
         padding: 0;
+        margin: 0;
       }
 
       .table {
         display: flex;
         flex-direction: column;
         flex: 1;
-        gap: 10px;
-        border-radius: 10px;
+        gap: 0.8rem;
         width: 100%;
-        background-color: #2A2A40;
-        border-radius: 10px;
-        color: #E0E0E0;
+        background-color:hsl(240, 20.80%, 20.80%);
+        border-radius: 0.25rem;
+        border: 0.2rem solid #3A3A5A;
+        color:hsl(0, 0.00%, 87.80%);
       }
 
       .table-header {
         display: flex;
         justify-content: flex-start;
-        background-color: #1E1E2F;
+        background-color:hsl(240, 22.10%, 15.10%);
         padding: 1rem;
-        border-bottom: 1px solid #3A3A5A;
+        border-bottom: 0.2rem solid hsl(240, 21.60%, 29.00%);
       }
 
       .table-header-button {
         margin-left: 5px;
-      }
-
-      .table-header-button svg {
-        width: 30px;
-        height: 30px;
-        fill: #E0E0E0;
-        transition: fill 0.3s ease;
-      }
-
-      .button svg:hover {
-        fill: #BB86FC;
       }
 
       .table-body {
@@ -114,11 +118,9 @@ class UserTable extends HTMLElement {
       }
 
       .table-body-element-box {
-        background: #2A2A40;
-        color: #E0E0E0;
-        border-radius: 8px;
+        background:hsl(240, 20.80%, 20.80%);
+        color:hsl(0, 0.00%, 87.80%);
         overflow: hidden;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       }
 
       .element-box-data {
@@ -137,7 +139,7 @@ class UserTable extends HTMLElement {
         gap: 1rem;
         background-color: #1E1E2F;
         padding: 0.5rem 1rem;
-        border-bottom: 0.5rem solid #3A3A5A;
+        border-bottom: 0.2rem solid #3A3A5A;
       }
 
       .table-footer {
@@ -156,22 +158,15 @@ class UserTable extends HTMLElement {
         align-items: center;
       }
 
+      .navegation-buttons {
+        display:flex;
+        gap: 0.2rem;
+      }
+
       .table-page-info {
         color:rgb(255, 255, 255);
         font-family: "Montserrat", sans-serif;
       }
-
-      svg {
-        width: 1.8rem;
-        height: 1.8rem;
-        fill:rgb(224, 224, 224);
-        transition: fill 0.3s ease;
-      }
-
-      svg:hover {
-        fill:rgb(187, 134, 252);
-      }
-
     </style>
 
     <section class="table">
@@ -190,13 +185,22 @@ class UserTable extends HTMLElement {
       <div class="table-footer">
         <div class="table-footer-box">
           <div class="table-page-info">1 registro en total, mostrando 10 por página</div>
-          <button class="button table-page-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <title>chevron-double-left</title>
-              <path
-                d="M18.41,7.41L17,6L11,12L17,18L18.41,16.59L13.83,12L18.41,7.41M12.41,7.41L11,6L5,12L11,18L12.41,16.59L7.83,12L12.41,7.41Z" />
-            </svg>
-        </button>
+            <div class="table-page-logo">
+            <div class="navegation-buttons">
+              <button class="button frist-page">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>frist-page</title><path d="M18.41,7.41L17,6L11,12L17,18L18.41,16.59L13.83,12L18.41,7.41M12.41,7.41L11,6L5,12L11,18L12.41,16.59L7.83,12L12.41,7.41Z" /></svg>
+              </button>
+              <button class="button previous-page">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>previous-page</title><path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" /></svg>
+              </button>
+              <button class="button next-page">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>next-page</title><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+              </button>
+              <button class="button last-page">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>last-page</title><path d="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z" /></svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
