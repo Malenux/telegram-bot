@@ -3,12 +3,8 @@
 }
 
 body {
-  display: flex;
-  flex-direction: column;
   font-family: 'Roboto', sans-serif;
-  width: 100%;
-  background-color: #1E1E2F;
-  color: hsl(0, 0%, 90%);
+  background-color: hsl(0, 0%, 5.5%);
   padding: 0;
   margin: 0;
 }

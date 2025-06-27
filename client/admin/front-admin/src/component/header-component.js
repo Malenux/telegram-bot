@@ -20,10 +20,10 @@ class Header extends HTMLElement {
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding: 1rem;
-        background-color: #2A2A40;
-        color: #E0E0E0;
-        border-bottom: 1px solid #3A3A5A;
+        background-color:hsl(0, 0.00%, 10.20%);
+        border-bottom: 0.2rem solid hsl(0, 0.00%, 22.00%);
       }
     </style>
 

@@ -34,20 +34,20 @@ class Menu extends HTMLElement {
       }
 
       .header-menu {
-        background-color: #1E1E2F;
         padding: 1rem;
       }
 
       svg {
-        width: 2rem;
-        height: 2rem;
-        fill: #E0E0E0;
-        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        width: 1.8rem;
+        height: 1.8rem;
+        fill: hsl(0, 0.00%, 54.90%);
         transition: fill 0.3s ease;
       }
 
       svg:hover {
-        fill: #BB86FC;
+        fill: hsl(0, 0%, 88%);
       }
     </style>
 

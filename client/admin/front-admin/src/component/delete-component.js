@@ -35,6 +35,10 @@ class Delete extends HTMLElement {
         color: #E0E0E0;
       }
 
+      span {
+        color: hsl(0, 95.20%, 75.70%);
+      }
+
       .overlay {
         position: fixed;
         top: 0;
@@ -57,8 +61,8 @@ class Delete extends HTMLElement {
       }
       .delete-box {
         width: 25rem;
-        background-color: hsl(240, 22%, 29%);
-        border: solid 0.2rem hsl(240, 27%, 65%);
+        background-color: hsl(0, 0.00%, 10.20%);
+        border: solid 0.2rem hsl(0, 0.00%, 22.00%);
         border-radius: 0.5rem;
         padding: 2rem;
         z-index: 1000;
@@ -73,7 +77,7 @@ class Delete extends HTMLElement {
       }
 
       button {
-        background-color: hsl(240, 22%, 15%);
+        background-color: hsl(0, 0.00%, 22.00%);
         border: none;
       }
 
@@ -86,7 +90,7 @@ class Delete extends HTMLElement {
       .button svg {
         width: 2rem;
         height: 2rem;
-        fill: hsla(0, 0.00%, 87.80%, 0.20);
+        fill: hsla(0, 0.00%, 87.80%, 0.50);
         cursor: pointer;
         transition: fill 0.3s ease;
       }
@@ -103,11 +107,11 @@ class Delete extends HTMLElement {
     <div class="overlay">
       <div class="delete-box">
         <div class="delete-header">
-          <h2>Eliminar elemento</h2>
+          <h2>Eliminar</h2>
         </div>
         <div class="delete-content">
           <div class="delete-description">
-            <p>¿Está seguro de que desea eliminar este elemento? Esta acción no se puede deshacer.</p>
+            <p>¿Está seguro de que desea eliminar este elemento? <span>Esta acción no se puede deshacer</span>.</p>
         </div>
           <div class="delete-actions">
             <button class="button confirm">

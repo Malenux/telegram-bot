@@ -29,23 +29,12 @@ class UserForm extends HTMLElement {
     /* html */`
     <style>
       * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
-        font-family: "Montserrat", sans-serif;
-      }
-
-      button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        outline: none;
-        padding: 0;
       }
 
       h1, h2, h3, h4, h5, h6, p {
         margin: 0;
-        color: #E0E0E0;
+        color: hsl(0, 0%, 88%);
       }
 
       img {
@@ -59,20 +48,60 @@ class UserForm extends HTMLElement {
         padding: 0;
       }
 
+      svg {
+        padding: 0;
+        margin: 0;
+        width: 1.8rem;
+        height: 1.8rem;
+        fill: hsl(0, 0.00%, 54.90%);
+        transition: fill 0.3s ease;
+      }
+
+      svg:hover {
+        fill: hsl(0, 0%, 88%);
+      }
+
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+        position: relative;
+      }
+
+      .tooltip {
+        position: absolute;
+        background-color:hsla(0, 0.00%, 22.00%, 0.8);
+        color: hsl(0, 0.00%, 100%, 0.8);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        transform: translate(-50%, -140%);
+        margin-bottom: 0.25rem;
+        opacity: 0;
+        transition: opacity 0.2s ease;  
+        z-index: 10;
+      }
+
+      button:hover .tooltip {
+        opacity: 1;
+      }
+
       .form {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         border-radius: 0.5rem;
-        background-color: #1E1E2F;
         padding: 0.8rem;
-        color: #E0E0E0;
+        color: hsl(0, 0%, 88%);
       }
-
+      
       form {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
-        gap:1rem;
+        gap: 1rem;
       }
 
       .form-body {
@@ -83,7 +112,7 @@ class UserForm extends HTMLElement {
       }
 
       .form-header {
-        background-color: #2A2A40;
+        background-color: hsl(0, 0%, 10%);
         padding: 0.75rem 1rem;
         border-radius: 8px;
       }
@@ -95,32 +124,21 @@ class UserForm extends HTMLElement {
       }
 
       .form-header-box-filter {
-        background: #3A3A5A;
-        padding: 5px 12px;
-        color: #E0E0E0;
+        background: hsl(0, 0%, 15%);
+        padding: 0.5rem 0.8rem;
+        color: hsl(0, 0%, 88%);
         height: 2rem;
         border-radius: 6px;
       }
 
       .form-header-box-filter button {
-        color: #E0E0E0;
+        color: hsl(0, 0%, 88%);
         font-size: 1rem;
       }
 
       .form-header-buttons {
         display: flex;
         gap: 0.8rem;
-      }
-
-      .button svg {
-        width: 2rem;
-        height: 2rem;
-        fill: #E0E0E0;
-        transition: fill 0.3s ease;
-      }
-
-      .button svg:hover{
-        fill: #BB86FC;
       }
 
       .form-element {
@@ -130,24 +148,24 @@ class UserForm extends HTMLElement {
       }
 
       .form-title span {
-        font-size: 14px;
-        color: #BB86FC;
+        font-size: 1rem;
+        color: hsl(0, 0.00%, 87.80%);
       }
 
       .form-element-input input {
         width: 100%;
         padding: 0.5rem;
         border-radius: 0.25rem;
-        border: 0.2rem solid #3A3A5A;
-        background-color: #2A2A40;
-        color: #E0E0E0;
+        border: 0.2rem solid hsl(0, 0%, 15%);
+        background-color: hsl(0, 0%, 10%);
+        color: hsl(0, 0%, 88%);
       }
 
       .form-element-input input:focus {
-        outline: 0.2rem solid #BB86FC;
-        background-color: #2A2A40;
+        outline: 0.2rem solid hsl(0, 0.00%, 54.90%);
       }
     </style>
+
 
 
     <section class="form">
@@ -158,6 +176,7 @@ class UserForm extends HTMLElement {
           </div>
           <div class="form-header-buttons">
             <button class="button clean-button">
+              <span class="tooltip">limpiar formulario</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <title>clean</title>
                 <path
@@ -165,8 +184,8 @@ class UserForm extends HTMLElement {
               </svg>
             </button>
             <button class="button save-button">
+              <span class="tooltip">guardar</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <title>save</title>
                 <path
                   d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
               </svg>
