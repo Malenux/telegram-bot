@@ -6,6 +6,7 @@ class UserTable extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.endpoint = '/api/admin/users'
+    this.filterQuery = null
     this.unsubscribe = null
   }
 
@@ -13,7 +14,13 @@ class UserTable extends HTMLElement {
     this.unsubscribe = store.subscribe(() => {
       const currentState = store.getState()
 
-      if (currentState.crud.tableEndpoint === this.endpoint) {
+      if (currentState.crud.filterQuery.query && currentState.crud.filterQuery.endPoint === this.endpoint) {
+        this.filterQuery = currentState.crud.filterQuery.query
+        const endpoint = `${this.endpoint}?${currentState.crud.filterQuery.query}`
+        this.loadData(endpoint).then(() => this.render())
+      }
+
+      if (!currentState.crud.filterQuery.query && currentState.crud.tableEndpoint === this.endpoint) {
         this.loadData().then(() => this.render())
       }
     })
@@ -112,6 +119,18 @@ class UserTable extends HTMLElement {
         color: hsl(0, 0%, 88%);
       }
 
+      .filter {
+        display: flex;
+        justify-content: flex-start;
+        background-color:hsl(0, 0.00%, 10.20%);
+        padding: 1rem;
+        border-bottom: 0.2rem solid hsl(0, 0.00%, 22.00%)
+      }
+
+      .filter-button {
+        margin-left: 5px;
+      }
+
       .table-body {
         display: flex;
         flex-direction: column;
@@ -189,7 +208,14 @@ class UserTable extends HTMLElement {
 
     <section class="table">
       <div class="table-header">
-        <slot></slot>
+        <div class="filter">
+          <button class="button filter-button" data-filter="General">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <title>filter</title>
+            <path d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
+          </svg>
+          </button>
+        </div>
       </div>
       <div class="table-body"></div>
       <div class="table-footer">
@@ -332,8 +358,21 @@ class UserTable extends HTMLElement {
 
       if (event.target.closest('.pagination-button') && !event.target.closest('.pagination-button').classList.contains('disabled')) {
         const page = event.target.closest('.pagination-button').dataset.page
-        const endpoint = `${this.endpoint}?page=${page}`
+        let endpoint = `${this.endpoint}?page=${page}`
+
+        if (this.filterQuery) {
+          endpoint = `${endpoint}&${this.filterQuery}`
+        }
+
         this.loadData(endpoint).then(() => this.render())
+      }
+
+      if (event.target.closest('.filter-button')) {
+        document.dispatchEvent(new CustomEvent('showFilterModal'), {
+          detail: {
+            endpoint: this.endpoint
+          }
+        })
       }
     })
   }

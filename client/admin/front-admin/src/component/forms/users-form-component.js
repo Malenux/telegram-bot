@@ -401,7 +401,7 @@ class UserForm extends HTMLElement {
   }
 
   showValidationErrors (errors) {
-    const errorsContainer = this.shadow.querySelector('.validation-errors')
+    const errorsMessage = this.shadow.querySelector('.validation-errors')
     const errorsList = this.shadow.querySelector('.validation-errors ul')
     errorsList.innerHTML = ''
 
@@ -411,11 +411,7 @@ class UserForm extends HTMLElement {
       errorsList.appendChild(errorMessage)
     })
 
-    errorsContainer.classList.add('active')
-  }
-
-  closeValidationErrors () {
-    this.shadow.querySelector('.validation-errors').classList.remove('active')
+    errorsMessage.classList.add('active')
   }
 
   resetForm () {
@@ -423,6 +419,7 @@ class UserForm extends HTMLElement {
     form.reset()
     this.shadow.querySelector('[name="id"]').value = ''
     this.formElementData = null
+    this.errorsMessage = this.shadow.querySelector('.validation-errors').classList.remove('active')
   }
 }
 
