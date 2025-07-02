@@ -15,9 +15,13 @@ class UserForm extends HTMLElement {
     this.unsubscribe = store.subscribe(() => {
       const currentState = store.getState()
 
-      if (currentState.crud.formElement && currentState.crud.formElement.endPoint === this.endpoint && !isEqual(this.formElementData, currentState.crud.formElement.data)) {
+      if (currentState.crud.formElement.data && currentState.crud.formElement.endPoint === this.endpoint && !isEqual(this.formElementData, currentState.crud.formElement.data)) {
         this.formElementData = currentState.crud.formElement.data
         this.showElement(this.formElementData)
+      }
+
+      if (!currentState.crud.formElement.data && currentState.crud.formElement.endPoint === this.endpoint) {
+        this.resetForm()
       }
     })
 
@@ -62,12 +66,11 @@ class UserForm extends HTMLElement {
       }
 
       button {
-        background-color: transparent;
-        border: none;
         cursor: pointer;
         outline: none;
         padding: 0;
         position: relative;
+        margin: 0;
       }
 
       .tooltip {
@@ -94,7 +97,6 @@ class UserForm extends HTMLElement {
         flex-direction: column;
         gap: 0.5rem;
         border-radius: 0.5rem;
-        padding: 0.8rem;
         color: hsl(0, 0%, 88%);
       }
       
@@ -104,6 +106,14 @@ class UserForm extends HTMLElement {
         gap: 1rem;
       }
 
+      .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 0.2rem solid hsl(0, 0%, 15%);
+      }
+
       .form-body {
         display: grid;
         grid-template-columns: 1fr;
@@ -111,34 +121,55 @@ class UserForm extends HTMLElement {
         gap: 1rem;
       }
 
-      .form-header {
-        background-color: hsl(0, 0%, 10%);
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-      }
-
-      .form-header-box {
+      .tabs {
         display: flex;
-        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+
+      .tab {
         align-items: center;
+        border-radius: 8px;
+        display: flex;
+        padding: 0.5rem 0;
+        justify-content: space-between;
       }
 
-      .form-header-box-filter {
-        background: hsl(0, 0%, 15%);
-        padding: 0.5rem 0.8rem;
+      .tab button{
+        background-color:hsl(0, 0.00%, 22.00%);
+        padding: 0.2rem 0.5rem;
         color: hsl(0, 0%, 88%);
-        height: 2rem;
-        border-radius: 6px;
+        border: 0.2rem solid hsla(0, 0.00%, 87.80%, 0.10);
+        border-radius: 0.5rem;
+        font-size: 1rem
       }
 
-      .form-header-box-filter button {
-        color: hsl(0, 0%, 88%);
-        font-size: 1rem;
+      .tab:hover button{
+        border: 0.2rem solid hsl(0, 0.00%, 54.90%);
       }
 
-      .form-header-buttons {
+      .tab.active button{
+        border: 0.2rem solid hsl(0, 0.00%, 54.90%);
+      }
+
+      .tab-content{
+        display: none;
+      }
+
+      .tab-content.active{
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+      }
+
+      .buttons {
         display: flex;
         gap: 0.8rem;
+      }
+
+      .button-mod{
+        background-color: transparent;
+        border: none;
       }
 
       .form-element {
@@ -164,52 +195,108 @@ class UserForm extends HTMLElement {
       .form-element-input input:focus {
         outline: 0.2rem solid hsl(0, 0.00%, 54.90%);
       }
+
+      .validation-errors{
+        display: none;
+        color: hsla(0, 95.20%, 75.70%, 0.80);
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 0.2rem solid hsl(0, 95.20%, 75.70%);;
+        border-radius: 0.5rem;
+        position: relative;
+      }
+
+      .validation-errors.active{
+        display: block;
+      }
+
+      .validation-errors p{
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+
+      .validation-errors .close-validation-errors{
+        cursor: pointer;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+      }
+
+      .close-validation-errors svg{
+        fill:hsl(0, 95.20%, 75.70%);
+      }
+
+      .close-validation-errors svg:hover{
+        fill:hsla(0, 95.20%, 75.70%, 0.5);
+      }
+
     </style>
 
 
 
     <section class="form">
       <div class="form-header">
-        <div class="form-header-box">
-          <div class="form-header-box-filter">
+        <div class="tabs">
+          <div class="tab active" data-tab="general">
             <button>General</button>
           </div>
-          <div class="form-header-buttons">
-            <button class="button clean-button">
-              <span class="tooltip">limpiar formulario</span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <title>clean</title>
-                <path
-                  d="M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z" />
-              </svg>
-            </button>
-            <button class="button save-button">
-              <span class="tooltip">guardar</span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
-              </svg>
-            </button>
+          <div class="tab" data-tab="images">
+            <button>Imagen</button>
           </div>
+        </div>
+        <div class="buttons">
+          <button class="button-mod clean-button">
+            <span class="tooltip">limpiar formulario</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>clean</title>
+              <path
+                d="M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z" />
+            </svg>
+          </button>
+          <button class="button-mod save-button">
+            <span class="tooltip">guardar</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
+            </svg>
+          </button>
         </div>
       </div>
       <div class="form-body">
+        <div class="validation-errors">
+          <ul></ul>
+          <div class="close-validation-errors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z"/></svg>
+          </div>
+        </div>  
         <form>
           <input type="hidden" name="id">
-          <div class="form-element">
-            <div class="form-title">
-              <span>Nombre</span>
+          <div class="tab-content active" data-tab="general">
+            <div class="form-element">
+              <div class="form-title">
+                <span>Nombre</span>
+              </div>
+              <div class="form-element-input">
+                <input type="text" placeholder="" name="name">
+              </div>
             </div>
-            <div class="form-element-input">
-              <input type="text" placeholder="" name="name">
+            <div class="form-element">
+              <div class="form-title">
+                <span>Email</span>
+              </div>
+              <div class="form-element-input">
+                <input type="email" placeholder="" name="email">
+              </div>
             </div>
           </div>
-          <div class="form-element">
-            <div class="form-title">
-              <span>Email</span>
-            </div>
-            <div class="form-element-input">
-              <input type="email" placeholder="" name="email">
+          <div class="tab-content" data-tab="images">
+           <div class="form-element">
+              <div class="form-title">
+                <span>Avatar</span>
+              </div>
+              <div class="form-element-input">
+                <input type="file" name="avatar">
+              </div>
             </div>
           </div>
         </form>
@@ -222,57 +309,86 @@ class UserForm extends HTMLElement {
   }
 
   renderButton () {
-    this.shadow.querySelector('.save-button').addEventListener('click', async event => {
+    this.shadow.querySelector('.form').addEventListener('click', async event => {
       event.preventDefault()
 
-      const form = this.shadow.querySelector('form')
-      const formData = new FormData(form)
-      const formDataJson = {}
+      if (event.target.closest('.save-button')) {
+        const form = this.shadow.querySelector('form')
+        const formData = new FormData(form)
+        const formDataJson = {}
 
-      for (const [key, value] of formData.entries()) {
-        formDataJson[key] = value !== '' ? value : null
-      }
-
-      const id = this.shadow.querySelector('[name="id"]').value
-      const endpoint = id ? `${this.endpoint}/${id}` : this.endpoint
-      const method = id ? 'PUT' : 'POST'
-      delete formDataJson.id
-
-      try {
-        const response = await fetch(endpoint, {
-          method,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formDataJson)
-        })
-
-        if (!response.ok) {
-          throw new Error(`Error al guardar los datos: ${response.statusText}`)
+        for (const [key, value] of formData.entries()) {
+          formDataJson[key] = value !== '' ? value : null
         }
 
-        store.dispatch(refreshTable(this.endpoint))
-        this.resetForm()
+        const id = this.shadow.querySelector('[name="id"]').value
+        const endpoint = id ? `${this.endpoint}/${id}` : this.endpoint
+        const method = id ? 'PUT' : 'POST'
+        delete formDataJson.id
 
-        document.dispatchEvent(new CustomEvent('notice', {
-          detail: {
-            message: 'Datos guardados correctamente',
-            type: 'success'
+        try {
+          const response = await fetch(endpoint, {
+            method,
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formDataJson)
+          })
+
+          if (!response.ok) {
+            throw response
           }
-        }))
-      } catch (error) {
-        document.dispatchEvent(new CustomEvent('notice', {
-          detail: {
-            message: 'No se han podido guardar los datos',
-            type: 'error'
+
+          store.dispatch(refreshTable(this.endpoint))
+          this.resetForm()
+
+          document.dispatchEvent(new CustomEvent('notice', {
+            detail: {
+              message: 'Datos guardados correctamente',
+              type: 'success'
+            }
+          }))
+        } catch (error) {
+          if (error.status === 422) {
+            const data = await error.json()
+            this.showValidationErrors(data.message)
+
+            document.dispatchEvent(new CustomEvent('notice', {
+              detail: {
+                message: 'Hay errores de validación',
+                type: 'error'
+              }
+            }))
           }
-        }))
-        console.error('Error al guardar los datos:', error)
+
+          if (error.status === 500) {
+            document.dispatchEvent(new CustomEvent('notice', {
+              detail: {
+                message: 'No se han podido guardar los datos',
+                type: 'error'
+              }
+            }))
+          }
+        }
       }
-    })
 
-    this.shadow.querySelector('.clean-button').addEventListener('click', async event => {
-      this.resetForm()
+      if (event.target.closest('.clean-button')) {
+        this.resetForm()
+      }
+
+      if (event.target.closest('.tab')) {
+        const clickedTab = event.target.closest('.tab')
+
+        this.shadow.querySelector('.tab.active').classList.remove('active')
+        clickedTab.classList.add('active')
+
+        this.shadow.querySelector('.tab-content.active').classList.remove('active')
+        this.shadow.querySelector(`.tab-content[data-tab='${clickedTab.dataset.tab}']`).classList.add('active')
+      }
+
+      if (event.target.closest('.close-validation-errors')) {
+        this.closeValidationErrors()
+      }
     })
   }
 
@@ -282,6 +398,24 @@ class UserForm extends HTMLElement {
         this.shadow.querySelector(`[name="${key}"]`).value = value
       }
     })
+  }
+
+  showValidationErrors (errors) {
+    const errorsContainer = this.shadow.querySelector('.validation-errors')
+    const errorsList = this.shadow.querySelector('.validation-errors ul')
+    errorsList.innerHTML = ''
+
+    errors.forEach(error => {
+      const errorMessage = document.createElement('li')
+      errorMessage.textContent = error.message
+      errorsList.appendChild(errorMessage)
+    })
+
+    errorsContainer.classList.add('active')
+  }
+
+  closeValidationErrors () {
+    this.shadow.querySelector('.validation-errors').classList.remove('active')
   }
 
   resetForm () {

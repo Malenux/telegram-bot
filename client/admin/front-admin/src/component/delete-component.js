@@ -1,5 +1,5 @@
 import { store } from '../redux/store.js'
-import { refreshTable } from '../redux/crud-slice.js'
+import { refreshTable, showFormElement } from '../redux/crud-slice.js'
 
 class Delete extends HTMLElement {
   constructor () {
@@ -153,6 +153,10 @@ class Delete extends HTMLElement {
         }))
 
         store.dispatch(refreshTable(this.tableEndpoint))
+        store.dispatch(showFormElement({
+          endPoint: this.tableEndpoint,
+          data: null
+        }))
 
         this.shadow.querySelector('.overlay').classList.remove('active')
       } catch (error) {

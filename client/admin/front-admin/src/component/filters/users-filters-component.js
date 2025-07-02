@@ -1,7 +1,4 @@
-// import { store } from '../../redux/store.js'
-// import { showFormElement } from '../../redux/crud-slice.js'
-
-class UsersFilter extends HTMLElement {
+class Userfilter extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
@@ -10,12 +7,6 @@ class UsersFilter extends HTMLElement {
   }
 
   async connectedCallback () {
-    // this.unsubscribe = store.subscribe(() => {
-    //   const currentState = store.getState()
-
-    //   if (currentState.crud.filterEndpoint === this.endpoint) {
-    //     this.loadData().then(() => this.render())
-    //   }
     // })
 
     await this.loadData()
@@ -86,7 +77,7 @@ class UsersFilter extends HTMLElement {
     </style>
 
     <section class="filter">
-      <button class="button filter-button">
+      <button class="button filter-button" data-filter="General">
        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <title>filter</title>
         <path d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
@@ -94,55 +85,7 @@ class UsersFilter extends HTMLElement {
       </button>
     </section>
     `
-
-    // this.renderButtons()
   }
-
-  // renderButtons () {
-  //   this.shadow.querySelector('.filter').addEventListener('click', async event => {
-  //     if (event.target.closest('.filter-button')) {
-  //       const element = event.target.closest('.filter-button')
-  //       const id = element.dataset.id
-  //       const endpoint = `${this.endpoint}/${id}`
-
-  //       try {
-  //         const response = await fetch(endpoint)
-
-  //         if (response.status === 500 || response.status === 404) {
-  //           throw response
-  //         }
-
-  //         const data = await response.json()
-
-  //         const formElement = {
-  //           endPoint: this.endpoint,
-  //           data
-  //         }
-
-  //         store.dispatch(showFormElement(formElement))
-  //       } catch (error) {
-  //         document.dispatchEvent(new CustomEvent('notice', {
-  //           detail: {
-  //             message: 'No se han podido recuperar el dato',
-  //             type: 'error'
-  //           }
-  //         }))
-  //       }
-  //     }
-
-  //     if (event.target.closest('.delete-button')) {
-  //       const element = event.target.closest('.delete-button')
-  //       const id = element.dataset.id
-
-  //       document.dispatchEvent(new CustomEvent('showDeleteModal', {
-  //         detail: {
-  //           endpoint: this.endpoint,
-  //           elementId: id,
-  //         }
-  //       }))
-  //     }
-  //   })
-  // }
 }
 
-customElements.define('users-filters-component', UsersFilter)
+customElements.define('users-filters-component', Userfilter)

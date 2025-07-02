@@ -89,6 +89,7 @@ class UserTable extends HTMLElement {
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.875rem;
+        padding: 0;
         white-space: nowrap;
         transform: translate(-50%, -140%);
         margin-bottom: 0.25rem;
@@ -106,7 +107,6 @@ class UserTable extends HTMLElement {
         flex: 1;
         gap: 0.8rem;
         width: 100%;
-        background-color: hsl(0, 0%, 10%);
         border-radius: 0.25rem;
         border: 0.2rem solid hsl(0, 0%, 22%);
         color: hsl(0, 0%, 88%);
@@ -131,7 +131,7 @@ class UserTable extends HTMLElement {
 
       .element-box-data {
         padding: 1rem;
-        background-color: hsl(0, 0%, 5.5%);
+        background-color:hsl(0, 0.00%, 10.20%);
       }
 
       .element-box-data li {
