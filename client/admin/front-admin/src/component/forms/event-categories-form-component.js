@@ -2,11 +2,11 @@ import isEqual from 'lodash-es/isEqual'
 import { store } from '../../redux/store.js'
 import { refreshTable } from '../../redux/crud-slice.js'
 
-class UserForm extends HTMLElement {
+class EventCategoryForm extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.endpoint = '/api/admin/users'
+    this.endpoint = '/api/admin/event-categories'
     this.unsubscribe = null
     this.formElementData = null
   }
@@ -240,9 +240,6 @@ class UserForm extends HTMLElement {
           <div class="tab active" data-tab="general">
             <button>General</button>
           </div>
-          <div class="tab" data-tab="images">
-            <button>Imagen</button>
-          </div>
         </div>
         <div class="buttons">
           <button class="button-mod clean-button">
@@ -278,24 +275,6 @@ class UserForm extends HTMLElement {
               </div>
               <div class="form-element-input">
                 <input type="text" placeholder="" name="name">
-              </div>
-            </div>
-            <div class="form-element">
-              <div class="form-title">
-                <span>Email</span>
-              </div>
-              <div class="form-element-input">
-                <input type="email" placeholder="" name="email">
-              </div>
-            </div>
-          </div>
-          <div class="tab-content" data-tab="images">
-           <div class="form-element">
-              <div class="form-title">
-                <span>Avatar</span>
-              </div>
-              <div class="form-element-input">
-                <input type="file" name="avatar">
               </div>
             </div>
           </div>
@@ -429,4 +408,4 @@ class UserForm extends HTMLElement {
   }
 }
 
-customElements.define('users-form-component', UserForm)
+customElements.define('event-categories-form-component', EventCategoryForm)

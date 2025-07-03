@@ -1,11 +1,11 @@
 import { store } from '../../redux/store.js'
 import { showFormElement } from '../../redux/crud-slice.js'
 
-class UserTable extends HTMLElement {
+class EventCategoryTable extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.endpoint = '/api/admin/users'
+    this.endpoint = '/api/admin/event-categories'
     this.filterQuery = null
     this.unsubscribe = null
   }
@@ -303,10 +303,6 @@ class UserTable extends HTMLElement {
       ul.appendChild(name)
       name.textContent = `Nombre: ${element.name}`
 
-      const email = document.createElement('li')
-      ul.appendChild(email)
-      email.textContent = `Email: ${element.email}`
-
       const createdAt = document.createElement('li')
       ul.appendChild(createdAt)
       createdAt.textContent = `Creado: ${element.createdAt}`
@@ -385,4 +381,4 @@ class UserTable extends HTMLElement {
   }
 }
 
-customElements.define('users-table-component', UserTable)
+customElements.define('event-categories-table-component', EventCategoryTable)

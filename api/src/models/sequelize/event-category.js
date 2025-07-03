@@ -1,23 +1,11 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('Bot',
+  const Model = sequelize.define('EventCategory',
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
-      },
-      platform: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Plataforma".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Plataforma".'
-          }
-        }
       },
       name: {
         type: DataTypes.STRING,
@@ -28,30 +16,6 @@ module.exports = function (sequelize, DataTypes) {
           },
           notEmpty: {
             msg: 'Por favor, rellena el campo "Nombre".'
-          }
-        }
-      },
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Descripción".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Descripción".'
-          }
-        }
-      },
-      token: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Token".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Token".'
           }
         }
       },
@@ -73,9 +37,9 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'Bots',
+      tableName: 'event_categories',
       timestamps: true,
-      paranoid: true,
+      paranoid: true, // Esto significa que los registros eliminados no se borran físicamente, sino que se marcan como eliminados (deletedAt se establece con la fecha y hora de eliminación).
       indexes: [
         {
           name: 'PRIMARY',
@@ -95,3 +59,4 @@ module.exports = function (sequelize, DataTypes) {
 
   return Model
 }
+// Este modelo representa la tabla de usuarios en la base de datos y define sus atributos y validaciones. También establece las asociaciones con otros modelos, si es necesario.
