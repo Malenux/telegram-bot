@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('User',
+  const Model = sequelize.define('Promoter',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -17,7 +17,6 @@ module.exports = function (sequelize, DataTypes) {
           notEmpty: {
             msg: 'Por favor, rellena el campo "Nombre".'
           }
-
         }
       },
       email: {
@@ -54,9 +53,9 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'users',
+      tableName: 'Promoters',
       timestamps: true,
-      paranoid: true, // Esto significa que los registros eliminados no se borran físicamente, sino que se marcan como eliminados (deletedAt se establece con la fecha y hora de eliminación).
+      paranoid: true,
       indexes: [
         {
           name: 'PRIMARY',
@@ -76,4 +75,3 @@ module.exports = function (sequelize, DataTypes) {
 
   return Model
 }
-// Este modelo representa la tabla de usuarios en la base de datos y define sus atributos y validaciones. También establece las asociaciones con otros modelos, si es necesario.
