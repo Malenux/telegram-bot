@@ -211,7 +211,6 @@ class UserFilter extends HTMLElement {
       overlay.classList.remove('active')
     })
 
-    // Close modal when clicking outside
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.classList.remove('active')
