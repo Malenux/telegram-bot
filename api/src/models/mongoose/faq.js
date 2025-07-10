@@ -9,7 +9,7 @@ module.exports = (mongoose) => {
       },
       delateAt: Date,
     },
-    { timestamps: true } // Agrega createdAt y updatedAt
+    { timestamps: true }
   )
 
   const Faq = mongoose.model('Faq', schema, 'faqs')

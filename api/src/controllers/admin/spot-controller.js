@@ -1,10 +1,10 @@
 const sequelizeDb = require('../../models/sequelize')
-const Customer = sequelizeDb.Customer
+const Spot = sequelizeDb.Spot
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await Customer.create(req.body)
+    const data = await Spot.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -19,6 +19,7 @@ exports.findAll = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.size) || 10
     const offset = (page - 1) * limit
+
     const whereStatement = {}
 
     for (const key in req.query) {
@@ -31,9 +32,9 @@ exports.findAll = async (req, res, next) => {
       ? { [Op.and]: [whereStatement] }
       : {}
 
-    const result = await Customer.findAndCountAll({
+    const result = await Spot.findAndCountAll({
       where: condition,
-      attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'townId', 'name', 'description', 'address', 'environment', 'isActive', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]
@@ -55,7 +56,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await Customer.findByPk(id)
+    const data = await Spot.findByPk(id)
 
     if (!data) {
       const err = new Error(`No se puede encontrar el elemento con la id=${id}.`)
@@ -72,7 +73,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await Customer.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await Spot.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error(`No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado o el cuerpo de la petición está vacío.`)
@@ -88,17 +89,21 @@ exports.update = async (req, res, next) => {
   }
 }
 
+// Controlador para eliminar un registro por su ID
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await Customer.destroy({ where: { id } })
+    // Ejecuta la eliminación y obtiene el número de filas eliminadas
+    const numberRowsAffected = await Spot.destroy({ where: { id } })
 
+    // Si no se eliminó ninguna fila, lanza un error 404
     if (numberRowsAffected !== 1) {
       const err = new Error(`No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado.`)
       err.statusCode = 404
       throw err
     }
 
+    // Confirma que la eliminación fue exitosa
     res.status(200).send({
       message: 'El elemento ha sido borrado correctamente.'
     })

@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('Town',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,49 +7,17 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
-          }
-        }
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
-      },
-      password: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Nombre".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Nombre".'
           }
         }
-      },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
-        allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -69,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'Towns',
       timestamps: true,
       paranoid: true,
       indexes: [

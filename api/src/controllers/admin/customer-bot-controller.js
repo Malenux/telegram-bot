@@ -1,10 +1,10 @@
 const sequelizeDb = require('../../models/sequelize')
-const Customer = sequelizeDb.Customer
+const CustomerBot = sequelizeDb.CustomerBot
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await Customer.create(req.body)
+    const data = await CustomerBot.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -31,9 +31,9 @@ exports.findAll = async (req, res, next) => {
       ? { [Op.and]: [whereStatement] }
       : {}
 
-    const result = await Customer.findAndCountAll({
+    const result = await CustomerBot.findAndCountAll({
       where: condition,
-      attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'customerId', 'botId', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]
@@ -55,7 +55,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await Customer.findByPk(id)
+    const data = await CustomerBot.findByPk(id)
 
     if (!data) {
       const err = new Error(`No se puede encontrar el elemento con la id=${id}.`)
@@ -72,7 +72,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await Customer.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await CustomerBot.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error(`No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado o el cuerpo de la petición está vacío.`)
@@ -91,7 +91,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await Customer.destroy({ where: { id } })
+    const numberRowsAffected = await CustomerBot.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error(`No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado.`)

@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('CustomerBotChat',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,49 +7,33 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
+      customerBotId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
-          }
-        }
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
-          }
-        }
-      },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
         allowNull: false
+      },
+      emisor: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "emisor".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "emisor".'
+          }
+        }
+      },
+      message: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "mensaje".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "mensaje".'
+          }
+        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -69,7 +53,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'CustomerBotChats',
       timestamps: true,
       paranoid: true,
       indexes: [

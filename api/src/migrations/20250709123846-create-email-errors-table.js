@@ -3,24 +3,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('customers', {
+    await queryInterface.createTable('email_error', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      name: {
+      userType: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
+      userId: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      birthdate: {
-        type: Sequelize.DATE,
+      emailTemplate: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      error: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
       createdAt: {
@@ -38,6 +41,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('customers')
+    await queryInterface.dropTable('email_error')
   }
 }

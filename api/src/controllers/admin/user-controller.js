@@ -21,7 +21,7 @@ exports.findAll = async (req, res, next) => {
     const offset = (page - 1) * limit
     const whereStatement = {}
 
-    for (const key in req.query) { // este bucle recorre todos los parametros de la query para filtrar los resultados y req.query es el objeto que contiene los parametros de la query
+    for (const key in req.query) {
       if (req.query[key] !== '' && req.query[key] !== 'null' && key !== 'page' && key !== 'size') {
         whereStatement[key] = { [Op.substring]: req.query[key] }
       }

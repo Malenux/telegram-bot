@@ -1,10 +1,10 @@
 const sequelizeDb = require('../../models/sequelize')
-const Customer = sequelizeDb.Customer
+const EmailError = sequelizeDb.EmailError
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await Customer.create(req.body)
+    const data = await EmailError.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -27,13 +27,11 @@ exports.findAll = async (req, res, next) => {
       }
     }
 
-    const condition = Object.keys(whereStatement).length > 0
-      ? { [Op.and]: [whereStatement] }
-      : {}
+    const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
 
-    const result = await Customer.findAndCountAll({
+    const result = await EmailError.findAndCountAll({
       where: condition,
-      attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'userId', 'error', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]
@@ -55,10 +53,11 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await Customer.findByPk(id)
+    const data = await EmailError.findByPk(id)
 
     if (!data) {
-      const err = new Error(`No se puede encontrar el elemento con la id=${id}.`)
+      const err = new Error()
+      err.message = `No se puede encontrar el elemento con la id=${id}.`
       err.statusCode = 404
       throw err
     }
@@ -72,10 +71,11 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await Customer.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await EmailError.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
-      const err = new Error(`No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado o el cuerpo de la petición está vacío.`)
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
       throw err
     }
@@ -84,6 +84,10 @@ exports.update = async (req, res, next) => {
       message: 'El elemento ha sido actualizado correctamente.'
     })
   } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      err.statusCode = 422
+    }
+
     next(err)
   }
 }
@@ -91,10 +95,11 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await Customer.destroy({ where: { id } })
+    const numberRowsAffected = await EmailError.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
-      const err = new Error(`No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado.`)
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
       throw err
     }

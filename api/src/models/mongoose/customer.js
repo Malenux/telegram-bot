@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('Customer',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,47 +7,24 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
-          }
-        }
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
+        unique: true
       },
-      password: {
+      telephone: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
-          }
-        }
+        allowNull: false
       },
-      lastPasswordChange: {
+      prefix: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      birthdate: {
         type: DataTypes.DATE,
         allowNull: false
       },
@@ -69,7 +46,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'customers',
       timestamps: true,
       paranoid: true,
       indexes: [

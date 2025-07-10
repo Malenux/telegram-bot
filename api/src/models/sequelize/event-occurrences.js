@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('CustomerCredentials',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,49 +7,42 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
+      eventId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "Evento".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "Evento".'
           }
         }
       },
-      email: {
-        type: DataTypes.STRING,
+      startDateTime: {
+        type: DataTypes.DATETIME,
         allowNull: false,
         unique: true,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "Comienzo del evento".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "Comienzo del evento".'
           }
         }
       },
-      password: {
-        type: DataTypes.STRING,
+      endDateTime: {
+        type: DataTypes.DATETIME,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Final del evento".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Final del evento".'
           }
         }
-      },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
-        allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -69,7 +62,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'CustomerCredentials',
       timestamps: true,
       paranoid: true,
       indexes: [

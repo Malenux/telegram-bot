@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('PromoterCredentials',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,15 +7,15 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
+      promoterId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "promoterId".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "promoterId".'
           }
         }
       },
@@ -69,7 +69,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'PromoterCredentials',
       timestamps: true,
       paranoid: true,
       indexes: [

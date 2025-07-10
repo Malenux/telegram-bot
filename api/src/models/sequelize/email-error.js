@@ -1,11 +1,23 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('EmailError',
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
+      },
+      userType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "tipo de usuario".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "tipo de usuario".'
+          }
+        }
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -19,37 +31,29 @@ module.exports = function (sequelize, DataTypes) {
           }
         }
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
-      },
-      password: {
+      emailTemplate: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "plantilla de correo".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "plantilla de correo".'
           }
         }
       },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
-        allowNull: false
+      error: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "error".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "error".'
+          }
+        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -69,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'EmailErrors',
       timestamps: true,
       paranoid: true,
       indexes: [

@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('User',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,49 +7,34 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
-        type: DataTypes.INTEGER,
+      name: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "Nombre".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "Nombre".'
           }
+
         }
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
           isEmail: {
+            args: true,
+            msg: 'Debe ser um e-mail válido'
+          },
+          notNull: {
+            msg: 'Por favor, rellena el campo "Email".'
+          },
+          notEmpty: {
             msg: 'Por favor, rellena el campo "Email".'
           }
         }
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
-          }
-        }
-      },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
-        allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -69,7 +54,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'users',
       timestamps: true,
       paranoid: true,
       indexes: [

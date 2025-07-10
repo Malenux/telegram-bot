@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('UserActivationToken',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,37 +19,45 @@ module.exports = function (sequelize, DataTypes) {
           }
         }
       },
-      email: {
+      token: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "Token".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "Token".'
           },
           isEmail: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "Token".'
           }
         }
       },
-      password: {
-        type: DataTypes.STRING,
+      expirationDate: {
+        type: DataTypes.DATETIME,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Fecha de expiración".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Fecha de expiración".'
           }
         }
       },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
-        allowNull: false
+      used: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Usado".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Usado".'
+          }
+        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -69,7 +77,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'UserActivationTokens',
       timestamps: true,
       paranoid: true,
       indexes: [

@@ -3,24 +3,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('customers', {
+    await queryInterface.createTable('promoter_activation_tokens', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      name: {
+      promoterId: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      email: {
+      token: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false
       },
-      birthdate: {
-        type: Sequelize.DATE,
+      expirationDate: {
+        type: Sequelize.DATETIME,
+        allowNull: false
+      },
+      used: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {
@@ -38,6 +41,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('customers')
+    await queryInterface.dropTable('promoter_activation_tokens')
   }
 }
