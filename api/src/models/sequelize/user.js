@@ -56,7 +56,7 @@ module.exports = function (sequelize, DataTypes) {
       sequelize,
       tableName: 'users',
       timestamps: true,
-      paranoid: true, // Esto significa que los registros eliminados no se borran físicamente, sino que se marcan como eliminados (deletedAt se establece con la fecha y hora de eliminación).
+      paranoid: true,
       indexes: [
         {
           name: 'PRIMARY',
@@ -76,4 +76,3 @@ module.exports = function (sequelize, DataTypes) {
 
   return Model
 }
-// Este modelo representa la tabla de usuarios en la base de datos y define sus atributos y validaciones. También establece las asociaciones con otros modelos, si es necesario.
