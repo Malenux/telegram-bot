@@ -14,7 +14,8 @@ class Hero extends HTMLElement {
     this.data = {
       title: 'Un bot de Telegram para buscar tus productos favoritos',
       description: 'Ahorra dinero perfeccionando y automatizando tus búsquedas gracias a nuestra IA.',
-      buttonText: 'Comenzar'
+      buttonText: 'Comenzar',
+      buttonLink: '#'
     }
   }
 
@@ -347,7 +348,9 @@ class Hero extends HTMLElement {
           </p>
         </div>
         <div class="hero-button">
-          <button>${this.data.buttonText}</button>
+          <a href="${this.data.buttonLink}">
+            <button>${this.data.buttonText}</button>
+          </a>
         </div>
       </div>
 

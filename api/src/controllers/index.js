@@ -17,6 +17,6 @@ router.use('/admin/spots', require('./admin/spot-controller.js'))
 router.use('/admin/towns', require('./admin/town-controller.js'))
 router.use('/admin/users', require('./admin/user-controller.js'))
 router.use('/admin/faqs', require('./admin/faq-controller.js'))
-router.use('/admin/feature-title', require('./admin/feature-title-controller'))
+router.use('/admin/feature-titles', require('./admin/feature-title-controller.js'))
 
 module.exports = router

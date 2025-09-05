@@ -1,6 +1,6 @@
 import './components/font-loader-component.js'
 import './components/hero-component.js'
-import './components/features-titles-component.js'
+import './components/feature-titles-component.js'
 import './components/cards-component.js'
 import './components/subscription-form-component.js'
 import './components/faqs-component.js'
