@@ -120,7 +120,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'Spotss',
+      tableName: 'spots',
       timestamps: true,
       paranoid: true,
       indexes: [

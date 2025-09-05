@@ -7,7 +7,7 @@ module.exports = (mongoose) => {
         type: Boolean,
         default: true
       },
-      delateAt: Date,
+      deletedAt: Date,
     },
     { timestamps: true }
   )

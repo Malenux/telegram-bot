@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'EmailErrors',
+      tableName: 'email_error',
       timestamps: true,
       paranoid: true,
       indexes: [

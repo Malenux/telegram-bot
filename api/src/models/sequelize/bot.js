@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'Bots',
+      tableName: 'bot',
       timestamps: true,
       paranoid: true,
       indexes: [

@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('User',
+  const Model = sequelize.define('PromoterSpot',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,32 +7,27 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      name: {
-        type: DataTypes.STRING,
+      promoterId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
+            msg: 'Por favor, rellena el campo "promotor".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
+            msg: 'Por favor, rellena el campo "promotor".'
           }
-
         }
       },
-      email: {
-        type: DataTypes.STRING,
+      spotId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          isEmail: {
-            args: true,
-            msg: 'Debe ser um e-mail válido'
-          },
           notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "sitio".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
+            msg: 'Por favor, rellena el campo "sitio".'
           }
         }
       },
@@ -54,7 +49,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'users',
+      tableName: 'promoter_spots',
       timestamps: true,
       paranoid: true,
       indexes: [

@@ -23,11 +23,11 @@ module.exports = {
         allowNull: false
       },
       senedAt: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         allowNull: false
       },
       readedAt: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         allowNull: false
       },
       uuid: {

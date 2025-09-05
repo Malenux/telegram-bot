@@ -15,11 +15,11 @@ module.exports = {
         allowNull: false
       },
       startDateTime: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         allowNull: false
       },
       endDateTime: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         allowNull: false
       },
       createdAt: {

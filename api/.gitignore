@@ -1,5 +1,4 @@
-# es un archivo para que github ignore todo lo que este escrito aquí dentro
 .env
 /node_modules
 package-lock.json
-/src/config/config.json
+./src/config/config.json

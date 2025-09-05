@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'CustomerEvents',
+      tableName: 'customer_events',
       timestamps: true,
       paranoid: true,
       indexes: [

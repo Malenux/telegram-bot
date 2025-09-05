@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('CustomerCredentials',
+  const Model = sequelize.define('EventOcurrence',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       startDateTime: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
         unique: true,
         validate: {
@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       endDateTime: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
         validate: {
           notNull: {
@@ -62,7 +62,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'CustomerCredentials',
+      tableName: 'event_occurrences',
       timestamps: true,
       paranoid: true,
       indexes: [

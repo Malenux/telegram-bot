@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       expirationDate: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
         validate: {
           notNull: {
@@ -77,7 +77,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserActivationTokens',
+      tableName: 'user_activation_tokens',
       timestamps: true,
       paranoid: true,
       indexes: [

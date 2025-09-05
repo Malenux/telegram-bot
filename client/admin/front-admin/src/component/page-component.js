@@ -21,10 +21,11 @@ class PageComponent extends HTMLElement {
 
   async getTemplate (path) {
     const routes = {
-      '/admin/usuarios': 'users.html',
-      '/admin/eventos': 'events.html',
-      '/admin/categorias-de-eventos': 'event-categories.html',
-      '/admin/promoters': 'promoters.html'
+      '/admin/users': 'users.html',
+      '/admin/events': 'events.html',
+      '/admin/categories-events': 'event-categories.html',
+      '/admin/promoters': 'promoters.html',
+      '/admin/faqs': 'faqs.html'
     }
 
     const filename = routes[path] || '404.html'

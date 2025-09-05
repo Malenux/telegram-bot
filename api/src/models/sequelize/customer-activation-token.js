@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       expirationDate: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
         validate: {
           notNull: {

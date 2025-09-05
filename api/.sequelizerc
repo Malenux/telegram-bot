@@ -6,10 +6,3 @@ module.exports = {
   'seeders-path': path.resolve('src', 'seeders/sequelize'),
   'migrations-path': path.resolve('src', 'migrations'),
 }
-
-// Este archivo es utilizado por Sequelize para encontrar la configuración de la base de datos y las rutas de los modelos, seeders y migraciones.
-// path --> es un módulo de Node.js que proporciona utilidades para trabajar con rutas de archivos y directorios.
-// resolve --> es un método de path que resuelve una secuencia de rutas o segmentos de ruta en una ruta absoluta.
-// __dirname --> es una variable global de Node.js que contiene la ruta del directorio que contiene el archivo actual.
-// config --> es el nombre del archivo de configuración de Sequelize que contiene la información de conexión a la base de datos.
-// models-path --> es la ruta donde se encuentran los modelos de Sequelize.

@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
+body, textarea, input, select, button {
   font-family: 'Roboto', sans-serif;
   background-color: hsl(0, 0%, 5.5%);
   padding: 0;

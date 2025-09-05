@@ -58,6 +58,9 @@ class EventCategoryTable extends HTMLElement {
       }
 
       ul {
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -96,18 +99,18 @@ class EventCategoryTable extends HTMLElement {
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.875rem;
-        padding: 0;
         white-space: nowrap;
         transform: translate(-50%, -140%);
         margin-bottom: 0.25rem;
         opacity: 0;
         transition: opacity 0.2s ease;  
-        z-index: 10;
+        z-index: 100;
       }
 
       button:hover .tooltip {
         opacity: 1;
       }
+
       .table {
         display: flex;
         flex-direction: column;
@@ -137,9 +140,32 @@ class EventCategoryTable extends HTMLElement {
         gap: 1rem;
         width: 90%;
         margin: 1rem auto;
-        max-height: 67vh;
+        max-height: 64vh;
+        min-height: 64vh;
         overflow-y: auto;
-        padding-right: 1rem;
+        gap: 1rem;
+      }
+
+      .table-body::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .table-body::-webkit-scrollbar-track {
+        background: hsl(0, 0%, 15%);
+      }
+
+      .table-body::-webkit-scrollbar-thumb {
+        background: hsl(0, 0%, 40%);
+        border-radius: 4px;
+      }
+
+      .table-body::-webkit-scrollbar-thumb:hover {
+        background: hsl(0, 0%, 60%);
+      }
+
+      .table-body {
+        scrollbar-width: thin;
+        scrollbar-color: hsl(0, 0%, 40%) hsl(0, 0%, 15%);
       }
 
       .table-body-element-box {
@@ -162,9 +188,11 @@ class EventCategoryTable extends HTMLElement {
         justify-content: flex-end;
         align-items: center;
         gap: 1rem;
-        background-color: #383838;
+        background-color:hsl(0, 0.00%, 22.00%);
         padding: 0.5rem 1rem;
-        border-bottom: 0.3rem solid hsl(0, 0.00%, 10.20%);
+        border: 0.3rem solid hsl(0, 0.00%, 22.00%);
+        border-radius: 0.25rem 0.25rem 0 0;
+        width: max-content;
       }
 
       .table-footer {
@@ -203,6 +231,7 @@ class EventCategoryTable extends HTMLElement {
       .pagination-button.disabled svg{
         fill: hsla(0, 0.00%, 54.90%, 0.3);
       }
+      
     </style>
 
 

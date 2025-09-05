@@ -1,11 +1,11 @@
 import { store } from '../../redux/store.js'
 import { showFormElement } from '../../redux/crud-slice.js'
 
-class PromotersTable extends HTMLElement {
+class FaqTable extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.endpoint = '/api/admin/promoters'
+    this.endpoint = '/api/admin/faqs'
     this.filterQuery = null
     this.unsubscribe = null
   }
@@ -147,7 +147,7 @@ class PromotersTable extends HTMLElement {
       }
 
       .table-body::-webkit-scrollbar {
-        width: 8px;
+        width: 0.3rem;
       }
 
       .table-body::-webkit-scrollbar-track {
@@ -328,13 +328,21 @@ class PromotersTable extends HTMLElement {
       const ul = document.createElement('ul')
       data.appendChild(ul)
 
-      const name = document.createElement('li')
-      ul.appendChild(name)
-      name.textContent = `Nombre: ${element.name}`
+      const title = document.createElement('li')
+      const titleStrong = document.createElement('strong')
+      titleStrong.textContent = 'Título: '
+      const titleText = document.createTextNode(` ${element.title}`)
+      title.appendChild(titleStrong)
+      title.appendChild(titleText)
+      ul.appendChild(title)
 
-      const email = document.createElement('li')
-      ul.appendChild(email)
-      email.textContent = `Email: ${element.email}`
+      const description = document.createElement('li')
+      const descriptionStrong = document.createElement('strong')
+      descriptionStrong.textContent = 'Description: '
+      const descriptiontText = document.createTextNode(` ${element.description}`)
+      description.appendChild(descriptionStrong)
+      description.appendChild(descriptiontText)
+      ul.appendChild(description)
 
       const createdAt = document.createElement('li')
       ul.appendChild(createdAt)
@@ -414,4 +422,4 @@ class PromotersTable extends HTMLElement {
   }
 }
 
-customElements.define('promoters-table-component', PromotersTable)
+customElements.define('faqs-table-component', FaqTable)

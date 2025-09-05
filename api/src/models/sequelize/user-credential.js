@@ -69,7 +69,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'UserCredentials',
+      tableName: 'user_credentials',
       timestamps: true,
       paranoid: true,
       indexes: [

@@ -2,11 +2,11 @@ import isEqual from 'lodash-es/isEqual'
 import { store } from '../../redux/store.js'
 import { refreshTable } from '../../redux/crud-slice.js'
 
-class PromoterForm extends HTMLElement {
+class FaqForm extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.endpoint = '/api/admin/promoters'
+    this.endpoint = '/api/admin/faqs'
     this.unsubscribe = null
     this.formElementData = null
   }
@@ -183,7 +183,8 @@ class PromoterForm extends HTMLElement {
         color: hsl(0, 0.00%, 87.80%);
       }
 
-      .form-element-input input{
+      .form-element-input input,
+      .form-element-input textarea {
         width: 100%;
         padding: 0.5rem;
         border-radius: 0.25rem;
@@ -192,8 +193,16 @@ class PromoterForm extends HTMLElement {
         color: hsl(0, 0%, 88%);
       }
 
+      .form-element-input textarea:focus, 
       .form-element-input input:focus{
         outline: 0.2rem solid hsl(0, 0.00%, 54.90%);
+      }
+
+      .form-element-input textarea {
+        resize: vertical;
+        max-height: 5rem;
+        min-height: 2.4rem;
+        overflow-y: auto;
       }
 
       .validation-errors{
@@ -230,10 +239,6 @@ class PromoterForm extends HTMLElement {
         fill:hsla(0, 95.20%, 75.70%, 0.5);
       }
 
-      .close-validation-errors svg:hover{
-        fill:hsla(0, 95.20%, 75.70%, 0.5);
-      }
-
     </style>
 
 
@@ -252,7 +257,6 @@ class PromoterForm extends HTMLElement {
           <button class="button-mod clean-button">
             <span class="tooltip">limpiar formulario</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <title>clean</title>
               <path
                 d="M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z" />
             </svg>
@@ -278,25 +282,25 @@ class PromoterForm extends HTMLElement {
           <div class="tab-content active" data-tab="general">
             <div class="form-element">
               <div class="form-title">
-                <span>Nombre</span>
+                <span>Título</span>
               </div>
               <div class="form-element-input">
-                <input type="text" placeholder="" name="name">
+                <input type="text" placeholder="" name="title" rows="1" cols="50">
               </div>
             </div>
             <div class="form-element">
               <div class="form-title">
-                <span>Email</span>
+                <span>Descripción</span>
               </div>
               <div class="form-element-input">
-                <input type="email" placeholder="" name="email">
+                <textarea type="text" placeholder="" name="description" rows="2" cols="50"></textarea>
               </div>
             </div>
           </div>
           <div class="tab-content" data-tab="images">
            <div class="form-element">
               <div class="form-title">
-                <span>Avatar</span>
+                <span>Icon</span>
               </div>
               <div class="form-element-input">
                 <input type="file" name="avatar">
@@ -433,4 +437,4 @@ class PromoterForm extends HTMLElement {
   }
 }
 
-customElements.define('promoters-form-component', PromoterForm)
+customElements.define('faqs-form-component', FaqForm)

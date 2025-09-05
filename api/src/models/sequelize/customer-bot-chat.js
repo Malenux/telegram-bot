@@ -53,7 +53,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'CustomerBotChats',
+      tableName: 'customer_bot_chat',
       timestamps: true,
       paranoid: true,
       indexes: [
