@@ -404,11 +404,11 @@ class PromotersTable extends HTMLElement {
       }
 
       if (event.target.closest('.filter-button')) {
-        document.dispatchEvent(new CustomEvent('showFilterModal'), {
+        document.dispatchEvent(new CustomEvent('showFilterModal', {
           detail: {
             endpoint: this.endpoint
           }
-        })
+        }))
       }
     })
   }
