@@ -59,6 +59,7 @@ class Delete extends HTMLElement {
         visibility: visible;
         opacity: 1;
       }
+
       .delete-box {
         width: 25rem;
         background-color: hsl(0, 0.00%, 10.20%);

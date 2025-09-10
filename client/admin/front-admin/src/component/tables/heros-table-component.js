@@ -1,11 +1,11 @@
 import { store } from '../../redux/store.js'
 import { showFormElement } from '../../redux/crud-slice.js'
 
-class PromotersTable extends HTMLElement {
+class HeroTable extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.endpoint = '/api/admin/promoters'
+    this.endpoint = '/api/admin/heros'
     this.filterQuery = null
     this.unsubscribe = null
   }
@@ -327,12 +327,44 @@ class PromotersTable extends HTMLElement {
       data.appendChild(ul)
 
       const name = document.createElement('li')
+      const nameStrong = document.createElement('strong')
+      nameStrong.textContent = 'Nombre: '
+      const nameText = document.createTextNode(` ${element.name}`)
+      name.appendChild(nameStrong)
+      name.appendChild(nameText)
       ul.appendChild(name)
-      name.textContent = `Nombre: ${element.name}`
 
-      const email = document.createElement('li')
-      ul.appendChild(email)
-      email.textContent = `Email: ${element.email}`
+      const title = document.createElement('li')
+      const titleStrong = document.createElement('strong')
+      titleStrong.textContent = 'Título: '
+      const titleText = document.createTextNode(` ${element.title}`)
+      title.appendChild(titleStrong)
+      title.appendChild(titleText)
+      ul.appendChild(title)
+
+      const description = document.createElement('li')
+      const descriptionStrong = document.createElement('strong')
+      descriptionStrong.textContent = 'Description: '
+      const descriptiontText = document.createTextNode(` ${element.description}`)
+      description.appendChild(descriptionStrong)
+      description.appendChild(descriptiontText)
+      ul.appendChild(description)
+
+      const buttonText = document.createElement('li')
+      const buttonTextStrong = document.createElement('strong')
+      buttonTextStrong.textContent = 'Button text: '
+      const buttonTextText = document.createTextNode(` ${element.buttonText}`)
+      buttonText.appendChild(buttonTextStrong)
+      buttonText.appendChild(buttonTextText)
+      ul.appendChild(buttonText)
+
+      const buttonLink = document.createElement('li')
+      const buttonLinkStrong = document.createElement('strong')
+      buttonLinkStrong.textContent = 'Button text: '
+      const buttonLinkText = document.createTextNode(` ${element.buttonLink}`)
+      buttonLink.appendChild(buttonLinkStrong)
+      buttonLink.appendChild(buttonLinkText)
+      ul.appendChild(buttonLink)
 
       const createdAt = document.createElement('li')
       ul.appendChild(createdAt)
@@ -412,4 +444,4 @@ class PromotersTable extends HTMLElement {
   }
 }
 
-customElements.define('promoters-table-component', PromotersTable)
+customElements.define('heros-table-component', HeroTable)

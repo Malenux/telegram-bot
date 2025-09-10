@@ -138,12 +138,14 @@ class FaqTable extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        width: 90%;
         margin: 1rem auto;
         max-height: 64vh;
         min-height: 64vh;
         overflow-y: auto;
-        gap: 1rem;
+        padding-right: 1rem;
+        scrollbar-width: thin;
+        scrollbar-color: hsl(0, 0%, 40%) hsl(0, 0%, 15%);
+        width: 90%;
       }
 
       .table-body::-webkit-scrollbar {
@@ -163,11 +165,6 @@ class FaqTable extends HTMLElement {
         background: hsl(0, 0%, 60%);
       }
 
-      .table-body {
-        scrollbar-width: thin;
-        scrollbar-color: hsl(0, 0%, 40%) hsl(0, 0%, 15%);
-      }
-
       .table-body-element-box {
         background: hsl(0, 0%, 10%);
         color: hsl(0, 0%, 88%);
@@ -177,6 +174,8 @@ class FaqTable extends HTMLElement {
       .element-box-data {
         padding: 1rem;
         background-color:hsl(0, 0.00%, 10.20%);
+        border: 0.3rem solid hsl(0, 0.00%, 10.20%);
+        border-radius: 0 0.25rem 0.25rem 0.25rem;
       }
 
       .element-box-data li {
@@ -184,15 +183,14 @@ class FaqTable extends HTMLElement {
       }
 
       .element-box-upper-row {
-        display: flex;
-        justify-content: flex-end;
         align-items: center;
-        gap: 1rem;
         background-color:hsl(0, 0.00%, 22.00%);
-        padding: 0.5rem 1rem;
         border: 0.3rem solid hsl(0, 0.00%, 22.00%);
         border-radius: 0.25rem 0.25rem 0 0;
+        display: flex;
         width: max-content;
+        padding: 0.5rem 1rem;
+        gap: 1rem;
       }
 
       .table-footer {
@@ -327,6 +325,14 @@ class FaqTable extends HTMLElement {
 
       const ul = document.createElement('ul')
       data.appendChild(ul)
+
+      const name = document.createElement('li')
+      const nameStrong = document.createElement('strong')
+      nameStrong.textContent = 'Nombre: '
+      const nameText = document.createTextNode(` ${element.name}`)
+      name.appendChild(nameStrong)
+      name.appendChild(nameText)
+      ul.appendChild(name)
 
       const title = document.createElement('li')
       const titleStrong = document.createElement('strong')

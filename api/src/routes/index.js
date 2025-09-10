@@ -18,8 +18,10 @@ router.use('/admin/towns', require('./admin/town.js'))
 router.use('/admin/users', require('./admin/users.js'))
 router.use('/admin/faqs', require('./admin/faqs.js'))
 router.use('/admin/feature-titles', require('./admin/feature-titles.js'))
+router.use('/admin/heros', require('./admin/heros.js'))
 
 router.use('/customer/faqs', require('./customer/faqs.js'))
 router.use('/customer/feature-titles', require('./customer/feature-titles.js'))
+router.use('/customer/heros', require('./customer/heros.js'))
 
 module.exports = router

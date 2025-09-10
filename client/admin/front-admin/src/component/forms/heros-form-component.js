@@ -2,11 +2,11 @@ import isEqual from 'lodash-es/isEqual'
 import { store } from '../../redux/store.js'
 import { refreshTable } from '../../redux/crud-slice.js'
 
-class FaqForm extends HTMLElement {
+class HeroForm extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.endpoint = '/api/admin/faqs'
+    this.endpoint = '/api/admin/heros'
     this.unsubscribe = null
     this.formElementData = null
   }
@@ -102,7 +102,7 @@ class FaqForm extends HTMLElement {
       
       form {
         display: grid;
-        grid-template-columns: 1fr,;
+        grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
         gap: 1rem;
       }
 
@@ -199,9 +199,10 @@ class FaqForm extends HTMLElement {
       }
 
       .form-element-input textarea {
-        max-height: 8rem;
+        max-height: 5rem;
+        max-width: 40rem;
         min-height: 2.4rem;
-        resize: vertical;
+        min-width: 30rem;
         overflow-y: auto;
       }
 
@@ -294,6 +295,22 @@ class FaqForm extends HTMLElement {
               </div>
               <div class="form-element-input">
                 <input type="text" placeholder="" name="title">
+              </div>
+            </div>
+            <div class="form-element">
+              <div class="form-title">
+                <span>Texto del botón</span>
+              </div>
+              <div class="form-element-input">
+                <input type="text" placeholder="" name="buttonText">
+              </div>
+            </div>
+            <div class="form-element">
+              <div class="form-title">
+                <span>Link del botón</span>
+              </div>
+              <div class="form-element-input">
+                <input type="text" placeholder="" name="buttonLink">
               </div>
             </div>
             <div class="form-element">
@@ -445,4 +462,4 @@ class FaqForm extends HTMLElement {
   }
 }
 
-customElements.define('faqs-form-component', FaqForm)
+customElements.define('heros-form-component', HeroForm)

@@ -6,6 +6,9 @@ module.exports = (mongoose) => {
         required: [true, 'La sección "nombre" es obligatorio']
       },
       title: String,
+      description: String,
+      buttonText: String,
+      buttonLink: String,
       isActive: {
         type: Boolean,
         default: true
@@ -15,6 +18,6 @@ module.exports = (mongoose) => {
     { timestamps: true }
   )
 
-  const FeatureTitle = mongoose.model('FeatureTitle', schema, 'feature-titles')
-  return FeatureTitle
+  const Hero = mongoose.model('Hero', schema, 'heros')
+  return Hero
 }
