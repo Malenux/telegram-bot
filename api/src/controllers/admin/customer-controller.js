@@ -7,7 +7,7 @@ exports.create = async (req, res, next) => {
     const data = await Customer.create(req.body)
     res.status(200).send(data)
   } catch (err) {
-    if (err.name === 'SequelizeValidationError') {
+    if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
       err.statusCode = 422
     }
     next(err)
