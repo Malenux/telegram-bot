@@ -26,5 +26,6 @@ router.use('/customer/faqs', require('./customer/faqs.js'))
 router.use('/customer/feature-titles', require('./customer/feature-titles.js'))
 router.use('/customer/heros', require('./customer/heros.js'))
 router.use('/customer/chats', require('./customer/chats.js'))
+router.use('/customer/search', require('./customer/search.js'))
 
 module.exports = router

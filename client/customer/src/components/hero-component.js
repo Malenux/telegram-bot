@@ -140,7 +140,7 @@ class Hero extends HTMLElement {
         left: 35%;
         position: absolute;
         width: 30%;
-        z-index: 1005;
+        z-index: 1000;
 
         @media (min-width: 768px) {
           bottom: 40%;
@@ -289,7 +289,7 @@ class Hero extends HTMLElement {
         left: 15%;
         position: absolute;
         width: 70%;
-        z-index: 1001;
+        z-index: 1000;
 
         @media (min-width: 768px) {
           bottom: 10%;
