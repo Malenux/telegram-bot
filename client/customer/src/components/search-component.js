@@ -9,21 +9,21 @@ class Search extends HTMLElement {
     this.addEventListeners()
   }
 
-  async buscarProductos (query) {
-    const res = await fetch(`/api/customer/search?query=${encodeURIComponent(query)}`)
-    if (!res.ok) throw new Error('Error en la búsqueda')
-    return await res.json()
+  async fetchProducts (searchText) {
+    const response = await fetch(`/api/customer/search?query=${encodeURIComponent(searchText)}`)
+    if (!response.ok) throw new Error('Error en la búsqueda')
+    return await response.json()
   }
 
   addEventListeners () {
     const searchInput = this.shadow.querySelector('.search input')
-    const searchResults = this.shadow.querySelector('.searchs')
-    const ul = this.shadow.querySelector('.searchs ul')
+    const searchResultsContainer = this.shadow.querySelector('.search-results')
+    const resultsList = this.shadow.querySelector('.search-results ul')
     const overlay = document.createElement('div')
     overlay.classList.add('search-overlay')
     document.body.appendChild(overlay)
 
-    let typingTimeout = null
+    let typingDelay = null
 
     const openSearch = () => {
       document.body.style.overflow = 'hidden'
@@ -33,40 +33,40 @@ class Search extends HTMLElement {
     const closeSearch = () => {
       document.body.style.overflow = ''
       overlay.classList.remove('active')
-      searchResults.classList.add('fadeOut')
-      searchResults.classList.remove('fadeIn')
+      searchResultsContainer.classList.add('fadeOut')
+      searchResultsContainer.classList.remove('fadeIn')
       setTimeout(() => {
-        searchResults.classList.remove('active')
-        ul.innerHTML = ''
+        searchResultsContainer.classList.remove('active')
+        resultsList.innerHTML = ''
       }, 200)
     }
 
     searchInput.addEventListener('input', () => {
-      clearTimeout(typingTimeout)
-      const query = searchInput.value.trim()
+      clearTimeout(typingDelay)
+      const searchText = searchInput.value.trim()
 
-      if (query.length === 0) {
+      if (searchText.length === 0) {
         closeSearch()
         return
       }
 
-      typingTimeout = setTimeout(async () => {
+      typingDelay = setTimeout(async () => {
         try {
-          const resultados = await this.buscarProductos(query)
-          ul.innerHTML = ''
+          const productResults = await this.fetchProducts(searchText)
+          resultsList.innerHTML = ''
 
-          if (resultados.length > 0) {
-            resultados.forEach(prod => {
-              const li = document.createElement('li')
-              li.innerHTML = `
-                <a href="${prod.url || '#'}" target="_blank" class="result-link">
-                  ${prod.name || prod.nombre || 'Producto sin nombre'}
+          if (productResults.length > 0) {
+            productResults.forEach(product => {
+              const item = document.createElement('li')
+              item.innerHTML = `
+                <a href="${product.url || '#'}" target="_blank" class="result-link">
+                  ${product.name || product.nombre || 'Producto sin nombre'}
                 </a>
               `
-              ul.appendChild(li)
+              resultsList.appendChild(item)
             })
-            searchResults.classList.add('active', 'fadeIn')
-            searchResults.classList.remove('fadeOut')
+            searchResultsContainer.classList.add('active', 'fadeIn')
+            searchResultsContainer.classList.remove('fadeOut')
             openSearch()
           } else {
             closeSearch()
@@ -77,7 +77,7 @@ class Search extends HTMLElement {
       }, 1000)
     })
 
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       const path = event.composedPath()
       if (!path.includes(this)) closeSearch()
     })
@@ -112,18 +112,18 @@ class Search extends HTMLElement {
           overflow: hidden;
         }
 
-        .writeInput {
+        .write-search {
           display: flex;
           align-items: center;
           gap: 0.75rem;
           padding: 0.8rem 1rem;
         }
 
-        .writeInput svg {
+        .write-search svg {
           color: #222;
         }
 
-        .writeInput input {
+        .write-search input {
           flex: 1;
           border: none;
           background: transparent;
@@ -132,11 +132,11 @@ class Search extends HTMLElement {
           outline: none;
         }
 
-        .writeInput input::placeholder {
+        .write-search input::placeholder {
           color: rgba(0, 0, 0, 0.6);
         }
 
-        .searchs {
+        .search-results {
           display: none;
           max-height: 12rem;
           overflow-y: auto;
@@ -144,12 +144,12 @@ class Search extends HTMLElement {
           scrollbar-color: #00aaff transparent;
         }
 
-        .searchs.active {
+        .search-results.active {
           display: block;
           animation: fadeIn 0.25s ease forwards;
         }
 
-        .searchs ul {
+        .search-results ul {
           list-style: none;
           display: flex;
           flex-direction: column;
@@ -173,7 +173,7 @@ class Search extends HTMLElement {
           color: #00aaff;
           background: rgba(255, 255, 255, 0.4);
           border-left: 4px solid #00aaff;
-          transform: scale(0.98);
+          transform: translateX(5px);
         }
 
         .search-overlay {
@@ -199,13 +199,13 @@ class Search extends HTMLElement {
       </style>
 
       <section class="search">
-        <div class="writeInput">
+        <div class="write-search">
           <input type="text" name="search" placeholder="Escribe el producto que deseas buscar">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" d="M10.5 2a8.5 8.5 0 1 0 5.262 15.176l3.652 3.652a1 1 0 0 0 1.414-1.414l-3.652-3.652A8.5 8.5 0 0 0 10.5 2M4 10.5a6.5 6.5 0 1 1 13 0a6.5 6.5 0 0 1-13 0"/>
           </svg>
         </div>
-        <div class="searchs">
+        <div class="search-results">
           <ul></ul>
         </div>
       </section>

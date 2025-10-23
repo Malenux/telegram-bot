@@ -1,22 +1,22 @@
 const { ChromaClient } = require('chromadb')
 
-async function buscarProductos (query, nResults = 2) {
-  const client = new ChromaClient()
-  const collection = await client.getOrCreateCollection({ name: 'products' })
+async function buscarProductos (searchText, maxResults = 2) {
+  const chroma = new ChromaClient()
+  const productCollection = await chroma.getOrCreateCollection({ name: 'products' })
 
-  const results = await collection.query({
-    queryTexts: [query],
-    nResults
+  const queryResults = await productCollection.query({
+    queryTexts: [searchText],
+    nResults: maxResults
   })
 
-  const ids = results.ids[0] || []
-  const metadatas = results.metadatas[0] || []
-  const distances = results.distances[0] || []
+  const resultIds = queryResults.ids[0] || []
+  const resultMetadatas = queryResults.metadatas[0] || []
+  const resultDistances = queryResults.distances[0] || []
 
-  return ids.map((id, i) => ({
+  return resultIds.map((id, index) => ({
     id,
-    distancia: distances[i],
-    ...metadatas[i]
+    distance: resultDistances[index],
+    ...resultMetadatas[index]
   }))
 }
 
