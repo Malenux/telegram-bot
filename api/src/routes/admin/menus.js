@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const controller = require('../../controllers/customer/customer-controller.js')
+const controller = require('../../controllers/admin/menu-controller.js')
 
+router.get('/display/:name', controller.getMenuItems)
 router.post('/', controller.create)
 router.get('/', controller.findAll)
 router.get('/:id', controller.findOne)

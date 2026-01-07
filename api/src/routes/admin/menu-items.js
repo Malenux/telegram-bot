@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const controller = require('../../controllers/customer/customer-controller.js')
+const controller = require('../../controllers/admin/menu-item-controller.js')
 
+router.get('/sortable', controller.sortableItems)
+router.post('/update-order', controller.updateOrder)
 router.post('/', controller.create)
 router.get('/', controller.findAll)
 router.get('/:id', controller.findOne)

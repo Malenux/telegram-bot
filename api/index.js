@@ -1,6 +1,6 @@
 global.__basedir = __dirname
 
-const { wss } = require('./src/services/websocket-service')
+const { wss } = require('./src/services/websocket-service.js')
 const app = require('./src/app')
 const PORT = process.env.PORT || 8080
 
