@@ -11,9 +11,9 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      botId: {
+      eventId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customer_bot',
+      tableName: 'customer_bots',
       timestamps: true,
       paranoid: true,
       indexes: [
@@ -44,13 +44,29 @@ module.exports = function (sequelize, DataTypes) {
           fields: [
             { name: 'id' }
           ]
+        },
+        {
+          name: 'customer_bots_customerId',
+          using: 'BTREE',
+          fields: [
+            { name: 'customerId' }
+          ]
+        },
+        {
+          name: 'customer_bots_botId',
+          using: 'BTREE',
+          fields: [
+            { name: 'botId' }
+          ]
         }
       ]
     }
   )
 
   Model.associate = function (models) {
-
+    Model.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
+    Model.belongsTo(models.Bot, { as: 'bot', foreignKey: 'botId' })
+    Model.hasMany(models.CustomerBotChat, { as: 'customerBotChats', foreignKey: 'customerBotId' })
   }
 
   return Model

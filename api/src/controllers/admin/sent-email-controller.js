@@ -1,10 +1,14 @@
 const sequelizeDb = require('../../models/sequelize')
-const SendEmail = sequelizeDb.SendEmail
+const SentEmail = sequelizeDb.SentEmail
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await SendEmail.create(req.body)
+    const data = await SentEmail.create({
+      userId: req.body.userId,
+      sentAt: new Date(),
+      uuid: req.body.uuid,
+    })
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -29,9 +33,9 @@ exports.findAll = async (req, res, next) => {
 
     const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
 
-    const result = await SendEmail.findAndCountAll({
+    const result = await SentEmail.findAndCountAll({
       where: condition,
-      attributes: ['id', 'userId', 'senedAt', 'uuid', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'emailTemplate', 'sendAt', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]
@@ -53,7 +57,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await SendEmail.findByPk(id)
+    const data = await SentEmail.findByPk(id)
 
     if (!data) {
       const err = new Error()
@@ -71,7 +75,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await SendEmail.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await SentEmail.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()
@@ -95,7 +99,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await SendEmail.destroy({ where: { id } })
+    const numberRowsAffected = await SentEmail.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()

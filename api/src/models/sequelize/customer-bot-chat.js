@@ -13,27 +13,11 @@ module.exports = function (sequelize, DataTypes) {
       },
       emisor: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "emisor".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "emisor".'
-          }
-        }
+        allowNull: false
       },
       message: {
         type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "mensaje".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "mensaje".'
-          }
-        }
+        allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -53,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customer_bot_chat',
+      tableName: 'customer_bot_chats',
       timestamps: true,
       paranoid: true,
       indexes: [
@@ -64,13 +48,20 @@ module.exports = function (sequelize, DataTypes) {
           fields: [
             { name: 'id' }
           ]
+        },
+        {
+          name: 'customer_bot_chats_customerBotId',
+          using: 'BTREE',
+          fields: [
+            { name: 'customerBotId' }
+          ]
         }
       ]
     }
   )
 
   Model.associate = function (models) {
-
+    Model.belongsTo(models.CustomerBot, { as: 'customerBot', foreignKey: 'customerBotId' })
   }
 
   return Model

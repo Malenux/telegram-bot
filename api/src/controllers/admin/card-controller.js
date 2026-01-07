@@ -1,16 +1,17 @@
-const sequelizeDb = require('../../models/sequelize')
-const User = sequelizeDb.User
-const Op = sequelizeDb.Sequelize.Op
+const moment = require('moment')
+const mongooseDb = require('../../models/mongoose')
+const Card = mongooseDb.Card
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await User.create(req.body)
-    req.redisClient.publish('new-user', JSON.stringify(req.body))
+    req.body.images = await req.imageService.resizeImages(req.body.images)
+
+    let data = await Card.create(req.body)
+    data = data.toObject()
+    data.id = data._id
+
     res.status(200).send(data)
   } catch (err) {
-    if (err.name === 'SequelizeValidationError') {
-      err.statusCode = 422
-    }
     next(err)
   }
 }
@@ -21,31 +22,40 @@ exports.findAll = async (req, res, next) => {
     const limit = parseInt(req.query.size) || 10
     const offset = (page - 1) * limit
     const whereStatement = {}
+    whereStatement.deletedAt = { $exists: false }
 
     for (const key in req.query) {
       if (req.query[key] !== '' && req.query[key] !== 'null' && key !== 'page' && key !== 'size') {
-        whereStatement[key] = { [Op.substring]: req.query[key] }
+        whereStatement[key] = { $regex: req.query[key], $options: 'i' }
       }
     }
 
-    const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
+    const result = await Card.find(whereStatement)
+      .skip(offset)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec()
 
-    const result = await User.findAndCountAll({
-      where: condition,
-      attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
-      limit,
-      offset,
-      order: [['createdAt', 'DESC']]
-    })
+    const count = await Card.countDocuments(whereStatement)
 
-    result.meta = {
-      total: result.count,
-      pages: Math.ceil(result.count / limit),
-      currentPage: page,
-      size: limit
+    const response = {
+      rows: result.map(doc => ({
+        ...doc,
+        id: doc._id,
+        _id: undefined,
+        createdAt: moment(doc.createdAt).format('YYYY-MM-DD HH:mm'),
+        updatedAt: moment(doc.updatedAt).format('YYYY-MM-DD HH:mm')
+      })),
+      meta: {
+        total: count,
+        pages: Math.ceil(count / limit),
+        size: limit,
+        currentPage: page
+      }
     }
 
-    res.status(200).send(result)
+    res.status(200).send(response)
   } catch (err) {
     next(err)
   }
@@ -54,7 +64,8 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await User.findByPk(id)
+    const data = await Card.findById(id).lean().exec()
+    data.images = data.images ? data.images.adminImages : []
 
     if (!data) {
       const err = new Error()
@@ -63,6 +74,7 @@ exports.findOne = async (req, res, next) => {
       throw err
     }
 
+    data.id = data._id
     res.status(200).send(data)
   } catch (err) {
     next(err)
@@ -72,9 +84,11 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await User.update(req.body, { where: { id } })
+    req.body.images = await req.imageService.resizeImages(req.body.images)
 
-    if (numberRowsAffected !== 1) {
+    const data = await Card.findByIdAndUpdate(id, req.body, { new: true }).lean().exec()
+
+    if (!data) {
       const err = new Error()
       err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
@@ -85,10 +99,6 @@ exports.update = async (req, res, next) => {
       message: 'El elemento ha sido actualizado correctamente.'
     })
   } catch (err) {
-    if (err.name === 'SequelizeValidationError') {
-      err.statusCode = 422
-    }
-
     next(err)
   }
 }
@@ -96,9 +106,9 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await User.destroy({ where: { id } })
+    const data = await Card.findByIdAndUpdate(id, { deletedAt: new Date() })
 
-    if (numberRowsAffected !== 1) {
+    if (!data) {
       const err = new Error()
       err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404

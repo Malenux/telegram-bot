@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'bot',
+      tableName: 'bots',
       timestamps: true,
       paranoid: true,
       indexes: [
@@ -90,7 +90,8 @@ module.exports = function (sequelize, DataTypes) {
   )
 
   Model.associate = function (models) {
-
+    Model.hasMany(models.CustomerBot, { as: 'customerBots', foreignKey: 'botId' })
+    Model.belongsToMany(models.Customer, { as: 'customers', through: models.CustomerBot, foreignKey: 'botId' })
   }
 
   return Model

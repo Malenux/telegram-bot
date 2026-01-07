@@ -1,4 +1,6 @@
 const services = {
+  imageService: new (require('../services/image-service'))(),
+  fileService: new (require('../services/file-service'))(),
   telegramService: new (require('../services/telegram-service'))(process.env.TELEGRAM_ADMIN_TOKEN, process.env.TELEGRAM_ADMIN_CHAT_ID)
 }
 

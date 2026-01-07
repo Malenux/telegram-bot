@@ -10,47 +10,59 @@ class Cards extends HTMLElement {
   }
 
   async loadData () {
-    this.data = {
-      title: 'Fácil de usar',
-      description: 'Tan simple como decir qué productos buscas, las características que te interesan y cuanto estás dispuesto a pagas. Nuestro bot se encargará de buscarlo por ti y te notificará cuando encuentre algo que se ajuste a tus preferencias.',
-      images: {
-        xs: './images/airpods/go_airpods__ed69m4vdask2_large.png',
-        sm: './images/airpods/go_airpods__ed69m4vdask2_large.png',
-        md: './images/airpods/go_airpods__ed69m4vdask2_large.png',
-        lg: './images/airpods/go_airpods__ed69m4vdask2_large.png'
-      },
-      cards: [
-        {
-          title: 'Siri, text Rigo, "I\'m on my way"',
-          color: 'white',
-          images: {
-            xs: './images/text/go_iphone__rgcqxe88k6y6_small.png',
-            sm: './images/text/go_iphone__rgcqxe88k6y6_small.png',
-            md: './images/text/go_iphone__rgcqxe88k6y6_small.png',
-            lg: './images/text/go_iphone__rgcqxe88k6y6_small.png'
-          }
-        },
-        {
-          title: 'Siri, remind me to water plants when I get home',
-          color: 'black',
-          images: {
-            xs: './images/remind/go_tile_1__c3xn44p0q22q_large.png',
-            sm: './images/remind/go_tile_1__c3xn44p0q22q_large.png',
-            md: './images/remind/go_tile_1__c3xn44p0q22q_large.png',
-            lg: './images/remind/go_tile_1__c3xn44p0q22q_large.png'
-          }
-        },
-        {
-          title: 'Siri, text Rigo, "I\'m on my way"',
-          color: 'white',
-          images: {
-            xs: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
-            sm: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
-            md: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
-            lg: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg'
-          }
-        }
-      ]
+    // this.data = {
+    //   title: 'Fácil de usar',
+    //   description: 'Tan simple como decir qué productos buscas, las características que te interesan y cuanto estás dispuesto a pagas. Nuestro bot se encargará de buscarlo por ti y te notificará cuando encuentre algo que se ajuste a tus preferencias.',
+    //   images: {
+    //     xs: './images/airpods/go_airpods__ed69m4vdask2_large.png',
+    //     sm: './images/airpods/go_airpods__ed69m4vdask2_large.png',
+    //     md: './images/airpods/go_airpods__ed69m4vdask2_large.png',
+    //     lg: './images/airpods/go_airpods__ed69m4vdask2_large.png'
+    //   },
+    //   cards: [
+    //     {
+    //       title: 'Siri, text Rigo, "I\'m on my way"',
+    //       color: 'white',
+    //       images: {
+    //         xs: './images/text/go_iphone__rgcqxe88k6y6_small.png',
+    //         sm: './images/text/go_iphone__rgcqxe88k6y6_small.png',
+    //         md: './images/text/go_iphone__rgcqxe88k6y6_small.png',
+    //         lg: './images/text/go_iphone__rgcqxe88k6y6_small.png'
+    //       }
+    //     },
+    //     {
+    //       title: 'Siri, remind me to water plants when I get home',
+    //       color: 'black',
+    //       images: {
+    //         xs: './images/remind/go_tile_1__c3xn44p0q22q_large.png',
+    //         sm: './images/remind/go_tile_1__c3xn44p0q22q_large.png',
+    //         md: './images/remind/go_tile_1__c3xn44p0q22q_large.png',
+    //         lg: './images/remind/go_tile_1__c3xn44p0q22q_large.png'
+    //       }
+    //     },
+    //     {
+    //       title: 'Siri, text Rigo, "I\'m on my way"',
+    //       color: 'white',
+    //       images: {
+    //         xs: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
+    //         sm: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
+    //         md: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
+    //         lg: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg'
+    //       }
+    //     }
+    //   ]
+    // }
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/customer/cards/${this.getAttribute('name')}`)
+
+      if (response.status === 500) {
+        throw response
+      }
+
+      this.data = await response.json()
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -255,11 +267,11 @@ class Cards extends HTMLElement {
           </div>
           <div class="cards-image">
             <picture>
-              <source srcset="${this.data.images.lg}" media="(min-width: 1920px)">
-              <source srcset="${this.data.images.md}" media="(min-width: 1024px)">
-              <source srcset="${this.data.images.sm}" media="(min-width: 768px)">
-              <source srcset="${this.data.images.xs}" media="(min-width: 480px)">
-              <img src="${this.data.images.xs}" alt="Imagen de prueba de Picsum">
+              <source srcset="${import.meta.env.VITE_API_URL}/api/customer/images/image/${this.data.images.lg.cardsHeaderImage.filename}" media="(min-width: 1920px)">
+              <source srcset="${import.meta.env.VITE_API_URL}/api/customer/images/image/${this.data.images.md.cardsHeaderImage.filename}" media="(min-width: 1024px)">
+              <source srcset="${import.meta.env.VITE_API_URL}/api/customer/images/image/${this.data.images.sm.cardsHeaderImage.filename}" media="(min-width: 768px)">
+              <source srcset="${import.meta.env.VITE_API_URL}/api/customer/images/image/${this.data.images.xs.cardsHeaderImage.filename}" media="(min-width: 480px)">
+              <img src="${import.meta.env.VITE_API_URL}/api/customer/images/image/${this.data.images.lg.cardsHeaderImage.filename}" alt="Imagen de prueba de Picsum">
             </picture>
           </div>
         </div>
@@ -321,4 +333,5 @@ class Cards extends HTMLElement {
     })
   }
 }
+
 customElements.define('cards-component', Cards)

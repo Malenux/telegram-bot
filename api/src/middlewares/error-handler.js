@@ -2,7 +2,7 @@ const fs = require('fs')
 
 module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
-    console.error('🛑 Error capturado:', err)
+    console.error('🔴 Error capturado:', err)
   }
 
   if (process.env.NODE_ENV === 'production' && err.statusCode !== 404) {
