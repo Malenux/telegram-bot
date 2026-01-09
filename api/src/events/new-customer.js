@@ -1,4 +1,4 @@
-const EmailService = require('../services/email-services.js')
+const EmailService = require('../services/email-service.js')
 
 exports.handleEvent = async (redisClient, subscriberClient) => {
   subscriberClient.subscribe('customer', (err) => {

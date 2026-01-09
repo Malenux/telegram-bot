@@ -22,15 +22,11 @@ module.exports = function (sequelize, DataTypes) {
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           notNull: {
             msg: 'Por favor, rellena el campo "Token".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Token".'
-          },
-          isEmail: {
             msg: 'Por favor, rellena el campo "Token".'
           }
         }

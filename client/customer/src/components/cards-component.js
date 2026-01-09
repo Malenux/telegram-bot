@@ -43,7 +43,7 @@ class Cards extends HTMLElement {
     //     {
     //       title: 'Siri, text Rigo, "I\'m on my way"',
     //       color: 'white',
-    //       images: {
+    //       images: {z
     //         xs: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
     //         sm: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',
     //         md: './images/helpful/go_tile_2__r3t0enbq5lea_large.jpg',

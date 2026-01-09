@@ -20,11 +20,10 @@ class SubscriptionForm extends HTMLElement {
         }
 
         .subscription-form {
-          min-height: 100vh;
           padding: 3rem 1rem;
           background-color: hsl(198, 100%, 85%);
           display: grid;
-          place-items: center;
+          justify-content: center;
         }
 
         .form-container {

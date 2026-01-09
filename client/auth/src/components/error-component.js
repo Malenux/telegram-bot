@@ -14,8 +14,10 @@ class Error404 extends HTMLElement {
       title: '404',
       subtitle: 'Página no encontrada',
       description: 'La página que intentas visitar no existe o fue movida.',
-      buttonText: 'Volver al inicio',
-      buttonUrl: '/'
+      buttonText: 'Volver a inicio',
+      buttonUrl: '/',
+      buttonTwoText: 'Volver a auth',
+      buttonTwoUrl: '/auth/token?token=' + this.getAttribute('token')
     }
   }
 
@@ -54,6 +56,11 @@ class Error404 extends HTMLElement {
           color: var(--text-primary);
         }
 
+        .buttons {
+          display: flex;
+          gap: 1rem;
+        }
+
         h1 {
           font-size: 5rem;
           font-weight: 700;
@@ -79,32 +86,46 @@ class Error404 extends HTMLElement {
           gap: 1rem;
         }
 
-        button {
-          background: linear-gradient(
-            135deg,
-            var(--accent),
-            #6bb7ff
-          );
-          border: none;
+        .button {
           border-radius: 0.75rem;
           padding: 0.9rem 2.2rem;
           font-size: 1rem;
           font-weight: 600;
-          color: #ffffff;
           cursor: pointer;
-          box-shadow: 0 10px 30px rgba(77, 163, 255, 0.25);
-          transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+          transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border 0.2s ease;
         }
 
-        button:hover {
-          transform: translateY(-2px);
-          background: linear-gradient(
-            135deg,
-            var(--accent-hover),
-            #5aa9ff
-          );
-          box-shadow: 0 14px 40px rgba(77, 163, 255, 0.35);
+        /* PRIMARY */
+        .button.primary {
+          background: linear-gradient(135deg, var(--accent), #6bb7ff);
+          border: none;
+          color: #ffffff;
+          box-shadow: 0 10px 30px rgba(77, 163, 255, 0.3);
         }
+
+        .button.primary:hover {
+          transform: translateY(-2px);
+          background: linear-gradient(135deg, var(--accent-hover), #5aa9ff);
+          box-shadow: 0 14px 40px rgba(77, 163, 255, 0.45);
+        }
+
+        /* SECONDARY */
+        .button.secondary {
+          background: rgba(18, 24, 33, 0.6);
+          border: 1px solid rgba(77, 163, 255, 0.35);
+          color: var(--text-primary);
+          box-shadow: inset 0 0 0 1px rgba(77, 163, 255, 0.05);
+          backdrop-filter: blur(6px);
+        }
+
+        .button.secondary:hover {
+          transform: translateY(-2px);
+          background: rgba(77, 163, 255, 0.1);
+          border-color: var(--accent);
+          color: #ffffff;
+          box-shadow: 0 8px 24px rgba(77, 163, 255, 0.25), inset 0 0 0 1px rgba(77, 163, 255, 0.15);
+        }
+
 
         .newtons-cradle {
           --uib-size: 56px;
@@ -169,9 +190,15 @@ class Error404 extends HTMLElement {
           <div class="newtons-cradle__dot"></div>
         </div>
 
-        <button onclick="location.href='${this.data.buttonUrl}'">
-          ${this.data.buttonText}
-        </button>
+        <div class="buttons">
+          <button class="button primary" onclick="location.href='${this.data.buttonUrl}'">
+            ${this.data.buttonText}
+          </button>
+
+          <button class="button secondary" onclick="location.href='${this.data.buttonTwoUrl}'">
+            ${this.data.buttonTwoText}
+          </button>
+        </div>
       </div>
     `
   }
