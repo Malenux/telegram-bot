@@ -1,6 +1,6 @@
-import isEqual from 'lodash-es/isEqual'
-import { store } from '../../redux/store.js'
-import { refreshTable } from '../../redux/crud-slice.js'
+const isEqual = require('lodash-es/isEqual')
+const store = require('../../redux/store.js')
+const refreshTable = require('../../redux/crud-slice.js')
 
 class HeroForm extends HTMLElement {
   constructor () {
