@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('promoter_spots', {
+    await queryInterface.createTable('promoters_spots', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,10 +12,18 @@ module.exports = {
       },
       promoterId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       spotId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lastPasswordChange: {
+        type: Sequelize.DATE,
         allowNull: false
       },
       createdAt: {
@@ -33,6 +41,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('promoter_spots')
+    await queryInterface.dropTable('promoters_spots')
   }
 }

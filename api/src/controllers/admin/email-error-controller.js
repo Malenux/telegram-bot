@@ -27,11 +27,13 @@ exports.findAll = async (req, res, next) => {
       }
     }
 
-    const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
+    const condition = Object.keys(whereStatement).length > 0
+      ? { [Op.and]: [whereStatement] }
+      : {}
 
     const result = await EmailError.findAndCountAll({
       where: condition,
-      attributes: ['id', 'userId', 'error', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'userType', 'userId', 'emailTemplate', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]

@@ -19,7 +19,6 @@ exports.findAll = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.size) || 10
     const offset = (page - 1) * limit
-
     const whereStatement = {}
 
     for (const key in req.query) {
@@ -59,7 +58,8 @@ exports.findOne = async (req, res, next) => {
     const data = await Town.findByPk(id)
 
     if (!data) {
-      const err = new Error(`No se puede encontrar el elemento con la id=${id}.`)
+      const err = new Error()
+      err.message = `No se puede encontrar el elemento con la id=${id}.`
       err.statusCode = 404
       throw err
     }
@@ -76,7 +76,8 @@ exports.update = async (req, res, next) => {
     const [numberRowsAffected] = await Town.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
-      const err = new Error(`No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado o el cuerpo de la petición está vacío.`)
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
       throw err
     }
@@ -85,25 +86,26 @@ exports.update = async (req, res, next) => {
       message: 'El elemento ha sido actualizado correctamente.'
     })
   } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      err.statusCode = 422
+    }
+
     next(err)
   }
 }
 
-// Controlador para eliminar un registro por su ID
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    // Ejecuta la eliminación y obtiene el número de filas eliminadas
     const numberRowsAffected = await Town.destroy({ where: { id } })
 
-    // Si no se eliminó ninguna fila, lanza un error 404
     if (numberRowsAffected !== 1) {
-      const err = new Error(`No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado.`)
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
       throw err
     }
 
-    // Confirma que la eliminación fue exitosa
     res.status(200).send({
       message: 'El elemento ha sido borrado correctamente.'
     })

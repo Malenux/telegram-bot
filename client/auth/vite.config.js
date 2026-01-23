@@ -1,5 +1,5 @@
 export default {
-  base: '/auth',
+  base: '/cuenta',
   server: {
     port: 5178
   }

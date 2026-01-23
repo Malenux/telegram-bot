@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('customer_bot', {
+    await queryInterface.createTable('customers_bots', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,11 +12,11 @@ module.exports = {
       },
       customerId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       botId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -33,6 +33,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('customer_bot')
+    await queryInterface.dropTable('customers_bots')
   }
 }

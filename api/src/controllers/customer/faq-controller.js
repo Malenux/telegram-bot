@@ -6,6 +6,7 @@ exports.findAll = async (req, res, next) => {
   try {
     const whereStatement = {}
     whereStatement.deletedAt = { $exists: false }
+    whereStatement.isActive = true
 
     const result = await Faq.find(whereStatement)
       .sort({ createdAt: -1 })

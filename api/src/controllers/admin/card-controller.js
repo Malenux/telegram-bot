@@ -4,8 +4,6 @@ const Card = mongooseDb.Card
 
 exports.create = async (req, res, next) => {
   try {
-    req.body.images = await req.imageService.resizeImages(req.body.images)
-
     let data = await Card.create(req.body)
     data = data.toObject()
     data.id = data._id
@@ -50,7 +48,6 @@ exports.findAll = async (req, res, next) => {
       meta: {
         total: count,
         pages: Math.ceil(count / limit),
-        size: limit,
         currentPage: page
       }
     }
@@ -65,7 +62,6 @@ exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
     const data = await Card.findById(id).lean().exec()
-    data.images = data.images ? data.images.adminImages : []
 
     if (!data) {
       const err = new Error()
@@ -84,8 +80,6 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    req.body.images = await req.imageService.resizeImages(req.body.images)
-
     const data = await Card.findByIdAndUpdate(id, req.body, { new: true }).lean().exec()
 
     if (!data) {

@@ -1,11 +1,11 @@
 const sequelizeDb = require('../../models/sequelize')
-const User = sequelizeDb.User
+const Customer = sequelizeDb.Customer
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await User.create(req.body)
-    req.redisClient.publish('customer', JSON.stringify(data))
+    const data = await Customer.create(req.body)
+    req.redisClient.publish('new-customer', JSON.stringify(data))
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -32,7 +32,7 @@ exports.findAll = async (req, res, next) => {
       ? { [Op.and]: [whereStatement] }
       : {}
 
-    const result = await User.findAndCountAll({
+    const result = await Customer.findAndCountAll({
       where: condition,
       attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
       limit,
@@ -56,7 +56,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await User.findByPk(id)
+    const data = await Customer.findByPk(id)
 
     if (!data) {
       const err = new Error()
@@ -74,7 +74,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await User.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await Customer.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()
@@ -98,7 +98,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await User.destroy({ where: { id } })
+    const numberRowsAffected = await Customer.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()

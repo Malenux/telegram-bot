@@ -1,6 +1,8 @@
 const mongooseDb = require('../../models/mongoose')
 const Chat = mongooseDb.Chat
 const OpenAIService = require('../../services/openai-service')
+const { ChromaClient } = require('chromadb')
+const client = new ChromaClient()
 
 exports.getChat = async (req, res) => {
   try {
@@ -67,6 +69,15 @@ exports.assistantResponse = async (req, res) => {
             output: 'Un humano se va a incorporar a la conversación para resolver la consulta del usuario.'
           })
         }
+
+        if (tool.function.name === 'search_product') {
+          const response = await this.searchProduct(data.userQuestion)
+
+          toolsOutputs.push({
+            tool_call_id: tool.id,
+            output: JSON.stringify(response)
+          })
+        }
       }
 
       await openai.submitToolOutputs(toolsOutputs)
@@ -101,6 +112,7 @@ exports.assistantResponse = async (req, res) => {
 
     res.status(200).send(response)
   } catch (error) {
+    console.log(error)
     res.status(500).send({ message: 'Error al obtener el chat' })
   }
 }
@@ -122,4 +134,20 @@ exports.escalateToHumanUserBehavior = (req, conversationContext, threadId) => {
 
 exports.escalateToHumanNoAnswer = (req, conversationContext, threadId) => {
   req.telegramService.escalateToHuman(threadId, conversationContext)
+}
+
+exports.searchProduct = async (userQuestion) => {
+  console.log('Estoy en searchProduct()')
+  const collection = await client.getOrCreateCollection({
+    name: 'products'
+  })
+
+  const queryResults = await collection.query({
+    queryTexts: [userQuestion],
+    nResults: 3,
+  })
+
+  const products = queryResults.metadatas[0].map(result => result)
+
+  return products
 }

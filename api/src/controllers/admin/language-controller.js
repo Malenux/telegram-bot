@@ -2,31 +2,32 @@ const moment = require('moment')
 const mongooseDb = require('../../models/mongoose')
 const Language = mongooseDb.Language
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
   try {
-    const data = await Language.create(req.body)
+    let data = await Language.create(req.body)
+    data = data.toObject()
+    data.id = data._id
+
     res.status(200).send(data)
   } catch (err) {
-    res.status(500).send({
-      message: err.errors || 'Algún error ha surgido al insertar el dato.'
-    })
+    next(err)
   }
 }
 
-exports.findAll = async (req, res) => {
-  const page = req.query.page || 1
-  const limit = parseInt(req.query.size) || 10
-  const offset = (page - 1) * limit
-  const whereStatement = {}
-  whereStatement.deletedAt = { $exists: false }
-
-  for (const key in req.query) {
-    if (req.query[key] !== '' && req.query[key] !== 'null' && key !== 'page' && key !== 'size') {
-      whereStatement[key] = { $regex: req.query[key], $options: 'i' }
-    }
-  }
-
+exports.findAll = async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.size) || 10
+    const offset = (page - 1) * limit
+    const whereStatement = {}
+    whereStatement.deletedAt = { $exists: false }
+
+    for (const key in req.query) {
+      if (req.query[key] !== '' && req.query[key] !== 'null' && key !== 'page' && key !== 'size') {
+        whereStatement[key] = { $regex: req.query[key], $options: 'i' }
+      }
+    }
+
     const result = await Language.find(whereStatement)
       .skip(offset)
       .limit(limit)
@@ -53,97 +54,65 @@ exports.findAll = async (req, res) => {
 
     res.status(200).send(response)
   } catch (err) {
-    res.status(500).send({
-      message: err.message || 'Algún error ha surgido al recuperar los datos.'
-    })
+    next(err)
   }
 }
 
-exports.findOne = async (req, res) => {
-  const id = req.params.id
-
+exports.findOne = async (req, res, next) => {
   try {
+    const id = req.params.id
     const data = await Language.findById(id).lean().exec()
 
-    if (data) {
-      data.id = data._id
-      delete data._id
+    if (!data) {
+      const err = new Error()
+      err.message = `No se puede encontrar el elemento con la id=${id}.`
+      err.statusCode = 404
+      throw err
     }
 
-    if (data) {
-      res.status(200).send(data)
-    } else {
-      res.status(404).send({
-        message: `No se puede encontrar el elemento con la id=${id}.`
-      })
-    }
+    data.id = data._id
+    res.status(200).send(data)
   } catch (err) {
-    res.status(500).send({
-      message: 'Algún error ha surgido al recuperar la id=' + id
-    })
+    next(err)
   }
 }
 
-exports.update = async (req, res) => {
-  const id = req.params.id
-
+exports.update = async (req, res, next) => {
   try {
-    const data = await Language.findByIdAndUpdate(id, req.body, { new: true })
+    const id = req.params.id
+    const data = await Language.findByIdAndUpdate(id, req.body, { new: true }).lean().exec()
 
-    if (data) {
-      res.status(200).send({
-        message: 'El elemento ha sido actualizado correctamente.'
-      })
-    } else {
-      res.status(404).send({
-        message: `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado el elemento o el cuerpo de la petición está vacío.`
-      })
+    if (!data) {
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
+      err.statusCode = 404
+      throw err
     }
-  } catch (err) {
-    res.status(500).send({
-      message: 'Algún error ha surgido al actualizar la id=' + id
+
+    res.status(200).send({
+      message: 'El elemento ha sido actualizado correctamente.'
     })
+  } catch (err) {
+    next(err)
   }
 }
 
-exports.delete = async (req, res) => {
-  const id = req.params.id
-
+exports.delete = async (req, res, next) => {
   try {
+    const id = req.params.id
     const data = await Language.findByIdAndUpdate(id, { deletedAt: new Date() })
 
-    if (data) {
-      res.status(200).send({
-        message: 'El elemento ha sido borrado correctamente.'
-      })
-    } else {
-      res.status(404).send({
-        message: `No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado el elemento.`
-      })
+    if (!data) {
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
+      err.statusCode = 404
+      throw err
     }
-  } catch (err) {
-    res.status(500).send({
-      message: 'Algún error ha surgido al borrar la id=' + id
+
+    res.status(200).send({
+      message: 'El elemento ha sido borrado correctamente.'
     })
-  }
-}
-
-exports.getLanguages = async (req, res) => {
-  try {
-    const result = await Language.find({
-      selected: true,
-      deletedAt: { $exists: false }
-    }).sort({ default: -1 }).lean().exec()
-
-    const response = result.map(element => ({
-      label: element.name,
-      value: element.alias
-    }))
-
-    res.status(200).send(response)
   } catch (err) {
-    res.status(500).send({
-      message: err.message || 'Algún error ha surgido al recuperar los datos.'
-    })
+    next(err)
   }
 }

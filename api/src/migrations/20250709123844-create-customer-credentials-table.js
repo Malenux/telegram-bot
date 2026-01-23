@@ -12,7 +12,7 @@ module.exports = {
       },
       customerId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,

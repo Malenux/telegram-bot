@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
-      address: {
+      adress: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -35,12 +35,12 @@ module.exports = {
         allowNull: false
       },
       environment: {
-        type: Sequelize.ENUM('indoor', 'outdoor', 'mixed'),
-        allowNull: false,
+        type: Sequelize.STRING,
+        allowNull: false
       },
       isActive: {
         type: Sequelize.BOOLEAN,
-        defaultValue: true,
+        allowNull: false
       },
       createdAt: {
         type: Sequelize.DATE,

@@ -3,24 +3,24 @@ const bcrypt = require('bcryptjs')
 const sequelizeDb = require('../models/sequelize')
 
 const entities = {
-  user: {
-    model: sequelizeDb.User,
-    tokenModel: sequelizeDb.UserActivationToken,
-    resetPasswordTokenModel: sequelizeDb.UserResetPasswordToken,
-    credentialModel: sequelizeDb.UserCredential
-  },
   customer: {
     model: sequelizeDb.Customer,
     tokenModel: sequelizeDb.CustomerActivationToken,
     resetPasswordTokenModel: sequelizeDb.CustomerResetPasswordToken,
     credentialModel: sequelizeDb.CustomerCredential
+  },
+  user: {
+    model: sequelizeDb.User,
+    tokenModel: sequelizeDb.UserActivationToken,
+    resetPasswordTokenModel: sequelizeDb.UserResetPasswordToken,
+    credentialModel: sequelizeDb.UserCredential
   }
 }
 
 module.exports = class AuthorizationService {
   createActivationToken = async (id, type) => {
     const entity = entities[type]
-    if (!entity) throw new Error('Invalid type provided')
+    if (!entity) throw new Error('🔴 Invalid type provided')
 
     const token = jwt.sign({ id, type }, process.env.JWT_SECRET)
     const expirationDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
@@ -62,7 +62,7 @@ module.exports = class AuthorizationService {
 
   createResetPasswordToken = async (id, type) => {
     const entity = entities[type]
-    if (!entity) throw new Error('Invalid type provided')
+    if (!entity) throw new Error('🔴 Invalid type provided')
 
     const token = jwt.sign({ id, type }, process.env.JWT_SECRET)
     const expirationDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)

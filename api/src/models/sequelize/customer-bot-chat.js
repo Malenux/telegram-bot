@@ -9,15 +9,15 @@ module.exports = function (sequelize, DataTypes) {
       },
       customerBotId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       emisor: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       message: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -48,20 +48,13 @@ module.exports = function (sequelize, DataTypes) {
           fields: [
             { name: 'id' }
           ]
-        },
-        {
-          name: 'customer_bot_chats_customerBotId',
-          using: 'BTREE',
-          fields: [
-            { name: 'customerBotId' }
-          ]
         }
       ]
     }
   )
 
   Model.associate = function (models) {
-    Model.belongsTo(models.CustomerBot, { as: 'customerBot', foreignKey: 'customerBotId' })
+
   }
 
   return Model

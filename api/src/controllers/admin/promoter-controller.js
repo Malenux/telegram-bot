@@ -27,7 +27,9 @@ exports.findAll = async (req, res, next) => {
       }
     }
 
-    const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
+    const condition = Object.keys(whereStatement).length > 0
+      ? { [Op.and]: [whereStatement] }
+      : {}
 
     const result = await Promoter.findAndCountAll({
       where: condition,

@@ -4,13 +4,11 @@ const Image = mongooseDb.Image
 
 exports.create = async (req, res, next) => {
   try {
-    const result = await req.imageService.uploadImage(req.files)
+    let data = await Image.create(req.body)
+    data = data.toObject()
+    data.id = data._id
 
-    for (const filename of result) {
-      await Image.create({ filename })
-    }
-
-    res.status(200).send(result)
+    res.status(200).send(data)
   } catch (err) {
     next(err)
   }
@@ -18,11 +16,17 @@ exports.create = async (req, res, next) => {
 
 exports.findAll = async (req, res, next) => {
   try {
-    const page = req.query.page || 1
+    const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.size) || 10
     const offset = (page - 1) * limit
     const whereStatement = {}
     whereStatement.deletedAt = { $exists: false }
+
+    for (const key in req.query) {
+      if (req.query[key] !== '' && req.query[key] !== 'null' && key !== 'page' && key !== 'size') {
+        whereStatement[key] = { $regex: req.query[key], $options: 'i' }
+      }
+    }
 
     const result = await Image.find(whereStatement)
       .skip(offset)
@@ -56,18 +60,38 @@ exports.findAll = async (req, res, next) => {
 
 exports.findOne = async (req, res, next) => {
   try {
-    const fileName = req.params.filename
+    const id = req.params.id
+    const data = await Image.findById(id).lean().exec()
 
-    const options = {
-      root: __dirname + '../../../storage/images/gallery/thumbnail/',
-      dotfiles: 'deny',
-      headers: {
-        'x-timestamp': Date.now(),
-        'x-sent': true
-      }
+    if (!data) {
+      const err = new Error()
+      err.message = `No se puede encontrar el elemento con la id=${id}.`
+      err.statusCode = 404
+      throw err
     }
 
-    res.sendFile(fileName, options)
+    data.id = data._id
+    res.status(200).send(data)
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.update = async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const data = await Image.findByIdAndUpdate(id, req.body, { new: true }).lean().exec()
+
+    if (!data) {
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
+      err.statusCode = 404
+      throw err
+    }
+
+    res.status(200).send({
+      message: 'El elemento ha sido actualizado correctamente.'
+    })
   } catch (err) {
     next(err)
   }
@@ -75,30 +99,20 @@ exports.findOne = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    const filename = req.params.filename
+    const id = req.params.id
+    const data = await Image.findByIdAndUpdate(id, { deletedAt: new Date() })
 
-    await req.imageService.deleteImages(filename)
-    await Image.deleteOne({ filename })
+    if (!data) {
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
+      err.statusCode = 404
+      throw err
+    }
 
     res.status(200).send({
-      message: 'El elemento ha sido borrado correctamente'
+      message: 'El elemento ha sido borrado correctamente.'
     })
   } catch (err) {
     next(err)
   }
-}
-
-exports.getImage = async (req, res) => {
-  const fileName = req.params.filename
-
-  const options = {
-    root: __dirname + '../../../storage/images/resized/',
-    dotfiles: 'deny',
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
-  }
-
-  res.sendFile(fileName, options)
 }

@@ -58,7 +58,8 @@ exports.findOne = async (req, res, next) => {
     const data = await CustomerEvent.findByPk(id)
 
     if (!data) {
-      const err = new Error(`No se puede encontrar el elemento con la id=${id}.`)
+      const err = new Error()
+      err.message = `No se puede encontrar el elemento con la id=${id}.`
       err.statusCode = 404
       throw err
     }
@@ -75,7 +76,8 @@ exports.update = async (req, res, next) => {
     const [numberRowsAffected] = await CustomerEvent.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
-      const err = new Error(`No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado o el cuerpo de la petición está vacío.`)
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
       throw err
     }
@@ -84,6 +86,10 @@ exports.update = async (req, res, next) => {
       message: 'El elemento ha sido actualizado correctamente.'
     })
   } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      err.statusCode = 422
+    }
+
     next(err)
   }
 }
@@ -94,7 +100,8 @@ exports.delete = async (req, res, next) => {
     const numberRowsAffected = await CustomerEvent.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
-      const err = new Error(`No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado.`)
+      const err = new Error()
+      err.message = `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado.`
       err.statusCode = 404
       throw err
     }

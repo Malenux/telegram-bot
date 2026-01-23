@@ -4,11 +4,7 @@ const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await SentEmail.create({
-      userId: req.body.userId,
-      sentAt: new Date(),
-      uuid: req.body.uuid,
-    })
+    const data = await SentEmail.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -31,12 +27,14 @@ exports.findAll = async (req, res, next) => {
       }
     }
 
-    const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
+    const condition = Object.keys(whereStatement).length > 0
+      ? { [Op.and]: [whereStatement] }
+      : {}
 
     const result = await SentEmail.findAndCountAll({
       where: condition,
-      attributes: ['id', 'emailTemplate', 'sendAt', 'createdAt', 'updatedAt'],
-      limit,
+      attributes: ['id', 'userType', 'userId', 'emailTemplate', 'sentAt', 'readedAt', 'uuid', 'createdAt', 'updatedAt'],
+      limit, // Es lo mismo que escribir limit: limit
       offset,
       order: [['createdAt', 'DESC']]
     })

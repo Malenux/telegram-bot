@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
   const Model = sequelize.define('Bot',
-    {
+    { // definicion de los campos del modelo
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -71,11 +71,11 @@ module.exports = function (sequelize, DataTypes) {
             : null
         }
       }
-    }, {
+    }, { // opciones del modelo
       sequelize,
       tableName: 'bots',
       timestamps: true,
-      paranoid: true,
+      paranoid: true, // no borres datos
       indexes: [
         {
           name: 'PRIMARY',
@@ -90,8 +90,7 @@ module.exports = function (sequelize, DataTypes) {
   )
 
   Model.associate = function (models) {
-    Model.hasMany(models.CustomerBot, { as: 'customerBots', foreignKey: 'botId' })
-    Model.belongsToMany(models.Customer, { as: 'customers', through: models.CustomerBot, foreignKey: 'botId' })
+
   }
 
   return Model

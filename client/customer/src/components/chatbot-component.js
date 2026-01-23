@@ -321,8 +321,8 @@ class ChatBot extends HTMLElement {
           .chatbot-button {
             bottom: 20px;
             right: 20px;
-            min-width: 250px;
-            padding: 12px 20px;
+            max-width: 250px;
+            padding: 10px;
             font-size: 13px;
           }
         }

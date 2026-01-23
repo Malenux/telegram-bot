@@ -10,21 +10,21 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      customerId: {
-        type: Sequelize.STRING,
-        allowNull: false
+      CustomerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       token: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       expirationDate: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       used: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
