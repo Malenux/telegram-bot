@@ -7,15 +7,15 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      CustomerId: {
+      promoterId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "CustomerId".'
+            msg: 'Por favor, rellena el campo "PromoterId".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "CustomerId".'
+            msg: 'Por favor, rellena el campo "PromoterId".'
           }
         }
       },
@@ -70,7 +70,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customer_credentials',
+      tableName: 'promoter_credentials',
       timestamps: true,
       paranoid: true,
       indexes: [

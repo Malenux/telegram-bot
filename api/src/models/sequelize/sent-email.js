@@ -22,6 +22,14 @@ module.exports = function (sequelize, DataTypes) {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "userId".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "userId".'
+          }
+        }
       },
       emailTemplate: {
         type: DataTypes.INTEGER,
