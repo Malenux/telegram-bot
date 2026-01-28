@@ -12,48 +12,24 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "tipo de usuario".'
+            msg: 'Por favor, rellena el campo "Tipo Usuario".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "tipo de usuario".'
+            msg: 'Por favor, rellena el campo "Tipo Usuario".'
           }
         }
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
-          }
-        }
       },
       emailTemplate: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "plantilla de correo".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "plantilla de correo".'
-          }
-        }
       },
       error: {
         type: DataTypes.TEXT,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "error".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "error".'
-          }
-        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -73,7 +49,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'email_error',
+      tableName: 'email_errors',
       timestamps: true,
       paranoid: true,
       indexes: [

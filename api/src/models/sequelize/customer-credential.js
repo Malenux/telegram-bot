@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
         validate: {
           isEmail: {
-            args: true, // viene por defecto, no hace falta ponerlo
+            args: true,
             msg: 'Debe ser um e-mail válido'
           },
           notNull: {
@@ -68,11 +68,11 @@ module.exports = function (sequelize, DataTypes) {
             : null
         }
       }
-    }, { // opciones del modelo
+    }, {
       sequelize,
       tableName: 'customer_credentials',
       timestamps: true,
-      paranoid: true, // no borres datos
+      paranoid: true,
       indexes: [
         {
           name: 'PRIMARY',

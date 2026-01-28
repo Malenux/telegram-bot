@@ -71,11 +71,11 @@ module.exports = function (sequelize, DataTypes) {
             : null
         }
       }
-    }, {
+    }, { // opciones del modelo
       sequelize,
       tableName: 'customer_activation_tokens',
       timestamps: true,
-      paranoid: true,
+      paranoid: true, // no borres datos
       indexes: [
         {
           name: 'PRIMARY',

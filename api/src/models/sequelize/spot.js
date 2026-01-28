@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('Spots',
+  const Model = sequelize.define('Spot',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -8,14 +8,14 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false
       },
       townId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "townId".'
+            msg: 'Por favor, selecciona una "Ciudad".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "townId".'
+            msg: 'Por favor, selecciona una "Ciudad".'
           }
         }
       },
@@ -32,73 +32,74 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Descripción".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Descripción".'
-          }
-        }
-      },
-      address: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "dirección".'
+            msg: 'Por favor, rellena el campo "Descripción".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "dirección".'
+            msg: 'Por favor, rellena el campo "Descripción".'
+          }
+        }
+      },
+      adress: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Dirección".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Dirección".'
           }
         }
       },
       latitude: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "latitud".'
+            msg: 'Por favor, rellena el campo "Latitud".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "latitud".'
+            msg: 'Por favor, rellena el campo "Latitud".'
           }
         }
       },
       longitude: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "longitud".'
+            msg: 'Por favor, rellena el campo "Longitud".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "longitud".'
+            msg: 'Por favor, rellena el campo "Longitud".'
           }
         }
       },
       environment: {
-        type: DataTypes.ENUM('indoor', 'outdoor', 'mixed'),
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: 'Por favor, rellena el campo "Ambiente".' },
-          isIn: {
-            args: [['indoor', 'outdoor', 'mixed']],
-            msg: 'El valor de "environment" debe ser indoor, outdoor o mixed.'
+          notNull: {
+            msg: 'Por favor, rellena el campo "Entorno".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Entorno".'
           }
         }
       },
       isActive: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "activo".'
+            msg: 'Por favor, selecciona si está "Activo".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "activo".'
+            msg: 'Por favor, selecciona si está "Activo".'
           }
         }
       },

@@ -17,13 +17,11 @@ module.exports = function (sequelize, DataTypes) {
           notEmpty: {
             msg: 'Por favor, rellena el campo "Nombre".'
           }
-
         }
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           isEmail: {
             args: true,

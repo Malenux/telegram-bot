@@ -22,16 +22,12 @@ module.exports = function (sequelize, DataTypes) {
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Token".'
+            msg: 'Por favor, rellena el campo "token".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Token".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Token".'
+            msg: 'Por favor, rellena el campo "token".'
           }
         }
       },
@@ -40,10 +36,10 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Fecha de expiración".'
+            msg: 'Por favor, rellena el campo "expirationDate".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Fecha de expiración".'
+            msg: 'Por favor, rellena el campo "expirationDate".'
           }
         }
       },
@@ -52,10 +48,10 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Usado".'
+            msg: 'Por favor, rellena el campo "used".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Usado".'
+            msg: 'Por favor, rellena el campo "used".'
           }
         }
       },

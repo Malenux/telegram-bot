@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('PromoterCredential',
+  const Model = sequelize.define('Event',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,50 +7,77 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      CustomerId: {
+      promotorId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "CustomerId".'
+            msg: 'Por favor, selecciona un "Promotor".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "CustomerId".'
+            msg: 'Por favor, selecciona un "Promotor".'
           }
-        }
+        },
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: {
-            args: true,
-            msg: 'Debe ser um e-mail válido'
-          },
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
-      },
-      password: {
-        type: DataTypes.STRING,
+      townId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, selecciona una "Ciudad".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Constraseña".'
+            msg: 'Por favor, selecciona una "Ciudad".'
           }
-        }
+        },
       },
-      lastPasswordChange: {
-        type: DataTypes.DATE,
-        allowNull: false
+      spotId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, selecciona un "Lugar".'
+          },
+          notEmpty: {
+            msg: 'Por favor, selecciona un "Lugar".'
+          }
+        },
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, selecciona una "Categoría".'
+          },
+          notEmpty: {
+            msg: 'Por favor, selecciona una "Categoría".'
+          }
+        },
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Título".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Título".'
+          }
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Descripción".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Descripción".'
+          }
+        },
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -70,7 +97,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customer_credentials',
+      tableName: 'events',
       timestamps: true,
       paranoid: true,
       indexes: [

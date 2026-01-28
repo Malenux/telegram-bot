@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('UserCredentials',
+  const Model = sequelize.define('UserCredential',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -10,27 +10,20 @@ module.exports = function (sequelize, DataTypes) {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
-          }
-        }
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
+          isEmail: {
+            args: true,
+            msg: 'Debe ser um e-mail válido'
+          },
           notNull: {
             msg: 'Por favor, rellena el campo "Email".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          isEmail: {
             msg: 'Por favor, rellena el campo "Email".'
           }
         }
@@ -43,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
             msg: 'Por favor, rellena el campo "Contraseña".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Contraseña".'
+            msg: 'Por favor, rellena el campo "Constraseña".'
           }
         }
       },

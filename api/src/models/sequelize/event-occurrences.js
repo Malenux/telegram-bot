@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('EventOcurrence',
+  const Model = sequelize.define('EventOccurrence',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -8,39 +8,30 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false
       },
       eventId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Evento".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Evento".'
-          }
-        }
       },
       startDateTime: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
-        unique: true,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Comienzo del evento".'
+            msg: 'Por favor, rellena el campo "Hora Inicio".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Comienzo del evento".'
+            msg: 'Por favor, rellena el campo "Hora Inicio".'
           }
         }
       },
       endDateTime: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Final del evento".'
+            msg: 'Por favor, rellena el campo "Hora Fin".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Final del evento".'
+            msg: 'Por favor, rellena el campo "Hora Fin".'
           }
         }
       },

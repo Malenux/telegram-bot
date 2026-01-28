@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('Customer',
+  const Model = sequelize.define('EventPrice',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,36 +7,17 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      name: {
-        type: DataTypes.STRING,
+      eventId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          }
-        }
       },
-      email: {
-        type: DataTypes.STRING,
+      description: {
+        type: DataTypes.TEXT,
         allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: {
-            msg: 'Debe ser um e-mail válido'
-          },
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
       },
-      telegramId: {
-        type: DataTypes.STRING,
+      price: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -56,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customers',
+      tableName: 'event_prices',
       timestamps: true,
       paranoid: true,
       indexes: [

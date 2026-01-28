@@ -22,14 +22,6 @@ module.exports = function (sequelize, DataTypes) {
       path: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "ruta".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "ruta".'
-          }
-        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -49,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'email',
+      tableName: 'emails',
       timestamps: true,
       paranoid: true,
       indexes: [

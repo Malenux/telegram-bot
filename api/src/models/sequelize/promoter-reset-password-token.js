@@ -7,31 +7,27 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      promoterId: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "promoterId".'
+            msg: 'Por favor, rellena el campo "userId".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "promoterId".'
+            msg: 'Por favor, rellena el campo "userId".'
           }
         }
       },
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Token".'
+            msg: 'Por favor, rellena el campo "token".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Token".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Token".'
+            msg: 'Por favor, rellena el campo "token".'
           }
         }
       },
@@ -40,24 +36,16 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Fecha de expiración".'
+            msg: 'Por favor, rellena el campo "expirationDate".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Fecha de expiración".'
+            msg: 'Por favor, rellena el campo "expirationDate".'
           }
         }
       },
       used: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Usado".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Usado".'
-          }
-        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -77,7 +65,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'PromoterResetPasswordTokens',
+      tableName: 'promoter_reset_password_tokens',
       timestamps: true,
       paranoid: true,
       indexes: [

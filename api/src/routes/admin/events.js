@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const controller = require('../../controllers/admin/event-occurrence-controller.js')
+const controller = require('../../controllers/admin/event-controller.js')
 const authUserCookie = require('../../middlewares/auth-user-cookie.js')
 
 router.post('/', authUserCookie, controller.create)

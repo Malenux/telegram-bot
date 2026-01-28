@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('Customer',
+  const Model = sequelize.define('SentEmail',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -7,36 +7,35 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      name: {
+      userType: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
+            msg: 'Por favor, rellena el campo "Tipo Usuario".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
+            msg: 'Por favor, rellena el campo "Tipo Usuario".'
           }
         }
       },
-      email: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      emailTemplate: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      sentAt: {
+        type: DataTypes.DATE,
+      },
+      readedAt: {
+        type: DataTypes.DATE,
+      },
+      uuid: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: {
-            msg: 'Debe ser um e-mail válido'
-          },
-          notNull: {
-            msg: 'Por favor, rellena el campo "Email".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Email".'
-          }
-        }
-      },
-      telegramId: {
-        type: DataTypes.STRING,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -56,7 +55,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customers',
+      tableName: 'sent_emails',
       timestamps: true,
       paranoid: true,
       indexes: [

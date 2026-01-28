@@ -7,57 +7,29 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      promoterId: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "promoterId".'
+            msg: 'Por favor, rellena el campo "userId".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "promoterId".'
+            msg: 'Por favor, rellena el campo "userId".'
           }
         }
       },
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Token".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Token".'
-          },
-          isEmail: {
-            msg: 'Por favor, rellena el campo "Token".'
-          }
-        }
       },
       expirationDate: {
         type: DataTypes.DATE,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Fecha de expiración".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Fecha de expiración".'
-          }
-        }
       },
       used: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Usado".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Usado".'
-          }
-        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -77,7 +49,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'PromoterActivationTokens',
+      tableName: 'promoter-activation-tokens',
       timestamps: true,
       paranoid: true,
       indexes: [

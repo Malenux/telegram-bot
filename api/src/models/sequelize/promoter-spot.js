@@ -10,26 +10,10 @@ module.exports = function (sequelize, DataTypes) {
       promoterId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "promotor".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "promotor".'
-          }
-        }
       },
       spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "sitio".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "sitio".'
-          }
-        }
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -49,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'promoter_spots',
+      tableName: 'promoters_spots',
       timestamps: true,
       paranoid: true,
       indexes: [

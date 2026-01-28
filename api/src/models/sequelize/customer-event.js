@@ -9,12 +9,11 @@ module.exports = function (sequelize, DataTypes) {
       },
       customerId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       eventId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -34,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'customer_events',
+      tableName: 'customers-events',
       timestamps: true,
       paranoid: true,
       indexes: [

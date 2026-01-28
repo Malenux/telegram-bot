@@ -1,20 +1,13 @@
 module.exports = (mongoose) => {
+  // define que tipo de datos quieres
   const schema = mongoose.Schema(
     {
-      name: {
-        type: String,
-        required: [true, 'La sección "nombre" es obligatorio']
-      },
-      title: String,
-      isActive: {
-        type: Boolean,
-        default: true
-      },
-      deletedAt: Date,
+      title: String, // No se define el tipo de texto al contrario de MySQL
+      deletedAt: Date
     },
     { timestamps: true }
   )
 
-  const FeatureTitle = mongoose.model('FeatureTitle', schema, 'feature-titles')
+  const FeatureTitle = mongoose.model('FeatureTitle', schema, 'features-titles')
   return FeatureTitle
 }

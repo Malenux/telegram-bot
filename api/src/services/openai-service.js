@@ -33,8 +33,8 @@ module.exports = class OpenAIService {
     }
   }
 
-  setThread (threadId) {
-    this.threadId = threadId
+  setThread (theadId) {
+    this.threadId = theadId
   }
 
   async createMessage (prompt) {
@@ -46,7 +46,6 @@ module.exports = class OpenAIService {
           content: prompt
         }
       )
-
       this.run = await this.openai.beta.threads.runs.createAndPoll(
         this.threadId,
         {
@@ -109,17 +108,6 @@ module.exports = class OpenAIService {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  async runPrompt (id, variables) {
-    const response = await this.openai.responses.create({
-      prompt: {
-        id,
-        variables
-      }
-    })
-
-    return response
   }
 
   sleep (ms) {

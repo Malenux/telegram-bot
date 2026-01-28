@@ -3,13 +3,17 @@ module.exports = (mongoose) => {
     {
       name: String,
       alias: String,
-      selected: Boolean,
-      default: Boolean,
+      selected: {
+        type: Boolean,
+      },
+      default: {
+        type: Boolean,
+      },
       deletedAt: Date
     },
     { timestamps: true }
   )
 
-  const Language = mongoose.model('Language', schema, 'languages')
-  return Language
+  const Languages = mongoose.model('Languages', schema, 'languages')
+  return Languages
 }
