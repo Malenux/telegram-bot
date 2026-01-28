@@ -5,6 +5,7 @@ const Op = sequelizeDb.Sequelize.Op
 exports.create = async (req, res, next) => {
   try {
     const data = await Customer.create(req.body)
+    req.redisClient.publish('new-customer', JSON.stringify(data))
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -33,7 +34,7 @@ exports.findAll = async (req, res, next) => {
 
     const result = await Customer.findAndCountAll({
       where: condition,
-      attributes: ['id', 'name', 'email', 'prefix', 'telephone', 'birthDate', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]
@@ -110,6 +111,10 @@ exports.delete = async (req, res, next) => {
       message: 'El elemento ha sido borrado correctamente.'
     })
   } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      err.statusCode = 422
+    }
+
     next(err)
   }
 }

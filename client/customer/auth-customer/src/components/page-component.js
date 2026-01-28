@@ -1,30 +1,27 @@
 class PageComponent extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.attachShadow({ mode: 'open' })
     this.basePath = this.getAttribute('base-path') || ''
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.render()
     window.onpopstate = () => this.handleRouteChange()
   }
 
-  handleRouteChange() {
+  handleRouteChange () {
     this.render()
   }
 
-  render() {
+  render () {
     const path = window.location.pathname
     this.getTemplate(path)
   }
 
-  async getTemplate(path) {
-
-    console.log('Path actual:', path)
+  async getTemplate (path) {
     const routes = {
-      '/admin/login': 'login.html',
-      '/admin': 'admin-panel.html',
+      '/login': 'login.html',
     }
 
     const filename = routes[path] || '404.html'
@@ -32,7 +29,7 @@ class PageComponent extends HTMLElement {
     await this.loadPage(filename)
   }
 
-  async loadPage(filename) {
+  async loadPage (filename) {
     const response = await fetch(`${this.basePath}/pages/${filename}`)
     const html = await response.text()
 

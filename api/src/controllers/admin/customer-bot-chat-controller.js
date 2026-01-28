@@ -1,10 +1,10 @@
 const sequelizeDb = require('../../models/sequelize')
-const CustomerBotChat = sequelizeDb.CustomerBotChat
+const CustomerBotChats = sequelizeDb.CustomerBotChats
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await CustomerBotChat.create(req.body)
+    const data = await CustomerBotChats.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -31,10 +31,10 @@ exports.findAll = async (req, res, next) => {
       ? { [Op.and]: [whereStatement] }
       : {}
 
-    const result = await CustomerBotChat.findAndCountAll({
+    const result = await CustomerBotChats.findAndCountAll({
       where: condition,
-      attributes: ['id', 'customerBotId', 'emisor', 'createdAt', 'updatedAt'],
-      limit, // Es lo mismo que escribir limit: limit
+      attributes: ['id', 'customerBotId', 'emisor', 'message', 'createdAt', 'updatedAt'],
+      limit,
       offset,
       order: [['createdAt', 'DESC']]
     })
@@ -55,7 +55,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await CustomerBotChat.findByPk(id)
+    const data = await CustomerBotChats.findByPk(id)
 
     if (!data) {
       const err = new Error()
@@ -73,7 +73,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await CustomerBotChat.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await CustomerBotChats.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()
@@ -97,7 +97,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await CustomerBotChat.destroy({ where: { id } })
+    const numberRowsAffected = await CustomerBotChats.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()

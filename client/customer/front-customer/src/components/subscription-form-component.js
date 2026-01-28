@@ -20,10 +20,11 @@ class SubscriptionForm extends HTMLElement {
         }
 
         .subscription-form {
+          min-height: 100vh;
           padding: 3rem 1rem;
           background-color: hsl(198, 100%, 85%);
           display: grid;
-          justify-content: center;
+          place-items: center;
         }
 
         .form-container {
@@ -82,20 +83,20 @@ class SubscriptionForm extends HTMLElement {
           cursor: not-allowed;
         }
 
-        .feedback {
+        .message {
           display: none;
           padding: 0.75rem;
           border-radius: 0.75rem;
           font-weight: 600;
         }
 
-        .feedback.success {
+        .message.success {
           display: block;
           background: #dcfce7;
           color: #166534;
         }
 
-        .feedback.error {
+        .message.error {
           display: block;
           background: #fee2e2;
           color: #991b1b;
@@ -107,12 +108,11 @@ class SubscriptionForm extends HTMLElement {
           <h4>Empieza ahora</h4>
           <span>Te enviaremos un correo con los pasos para comenzar.</span>
 
-          <form novalidate>
+          <form>
             <input
               type="text"
               name="name"
               placeholder="Nombre"
-              autocomplete="name"
               required
             />
 
@@ -120,27 +120,23 @@ class SubscriptionForm extends HTMLElement {
               type="email"
               name="email"
               placeholder="Dirección de correo"
-              autocomplete="email"
               required
             />
 
             <button type="submit">Suscribirme</button>
           </form>
 
-          <div class="feedback"></div>
+          <div class="message"></div>
         </div>
       </section>
     `
 
-    if (!this.eventsBound) {
-      this.bindEvents()
-      this.eventsBound = true
-    }
+    this.bindEvents()
   }
 
   bindEvents () {
     const form = this.shadow.querySelector('form')
-    const feedback = this.shadow.querySelector('.feedback')
+    const message = this.shadow.querySelector('.message')
     const button = form.querySelector('button')
 
     form.addEventListener('submit', async e => {
@@ -148,14 +144,14 @@ class SubscriptionForm extends HTMLElement {
 
       if (button.disabled) return
 
-      feedback.className = 'feedback'
+      message.className = 'message'
 
       const name = form.name.value.trim()
       const email = form.email.value.trim()
 
       if (!name || !email || !email.includes('@')) {
-        feedback.textContent = 'Introduce un nombre y un correo válidos'
-        feedback.classList.add('error')
+        message.textContent = 'Introduce un nombre y un correo válidos'
+        message.classList.add('error')
         return
       }
 
@@ -175,12 +171,12 @@ class SubscriptionForm extends HTMLElement {
           throw new Error(data?.error || 'Error en el servidor')
         }
 
-        feedback.textContent = 'Suscripción enviada correctamente'
-        feedback.classList.add('success')
+        message.textContent = 'Suscripción enviada correctamente'
+        message.classList.add('success')
         form.reset()
       } catch (err) {
-        feedback.textContent = err.message || 'No se pudo enviar la suscripción'
-        feedback.classList.add('error')
+        message.textContent = err.message || 'No se pudo enviar la suscripción'
+        message.classList.add('error')
       } finally {
         button.disabled = false
         button.textContent = 'Suscribirme'

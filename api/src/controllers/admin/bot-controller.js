@@ -33,7 +33,7 @@ exports.findAll = async (req, res, next) => {
 
     const result = await Bot.findAndCountAll({
       where: condition,
-      attributes: ['id', 'platform', 'name', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'platform', 'name', 'description', 'token', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]

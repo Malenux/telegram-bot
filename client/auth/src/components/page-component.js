@@ -20,8 +20,9 @@ class PageComponent extends HTMLElement {
   }
 
   async getTemplate (path) {
+    console.log('Path actual:', path)
     const routes = {
-      '/auth': 'auth.html',
+      '/cuenta/activacion': 'activation.html',
     }
 
     const filename = routes[path] || '404.html'

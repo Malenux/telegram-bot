@@ -1,10 +1,10 @@
 const sequelizeDb = require('../../models/sequelize')
-const CustomerBot = sequelizeDb.CustomerBot
+const CustomerBots = sequelizeDb.CustomerBots
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await CustomerBot.create(req.body)
+    const data = await CustomerBots.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -31,7 +31,7 @@ exports.findAll = async (req, res, next) => {
       ? { [Op.and]: [whereStatement] }
       : {}
 
-    const result = await CustomerBot.findAndCountAll({
+    const result = await CustomerBots.findAndCountAll({
       where: condition,
       attributes: ['id', 'customerId', 'botId', 'createdAt', 'updatedAt'],
       limit,
@@ -55,7 +55,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await CustomerBot.findByPk(id)
+    const data = await CustomerBots.findByPk(id)
 
     if (!data) {
       const err = new Error()
@@ -73,7 +73,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await CustomerBot.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await CustomerBots.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()
@@ -97,7 +97,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await CustomerBot.destroy({ where: { id } })
+    const numberRowsAffected = await CustomerBots.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()
