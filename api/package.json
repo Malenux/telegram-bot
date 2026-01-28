@@ -4,9 +4,9 @@
   "description": "API para atender las llamadas a un bot de Telegram",
   "main": "index.js",
   "scripts": {
-    "migration": "npm-run-all --parallel migration:mongoose migration:sequelize",
-    "migration:mongoose": "npx migrate-mongo up",
-    "migration:sequelize": "sequelize-cli db:migrate",
+    "migrate": "npm-run-all --parallel migrate:mongoose migrate:sequelize",
+    "migrate:mongoose": "npx migrate-mongo up",
+    "migrate:sequelize": "sequelize-cli db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --env-file=.env index.js",
     "dev": "node --env-file=.env --watch index.js"

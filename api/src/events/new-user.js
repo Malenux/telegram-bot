@@ -2,21 +2,22 @@ const AuthorizationService = require('../services/authorization-service')
 const EmailService = require('../services/email-service')
 
 exports.handleEvent = async (redisClient, subscriberClient) => {
-  subscriberClient.subscribe('new-user', (err) => {
-    if (err) {
-      console.error('Error al suscribirse al canal:', err)
-    }
-  })
-
-  subscriberClient.on('message', async (channel, message) => {
-    if (channel === 'new-user') {
+  await subscriberClient.subscribe('new-user', async (message) => {
+    try {
       const data = JSON.parse(message)
+
       const authorizationService = new AuthorizationService()
       const activationUrl = await authorizationService.createActivationToken(data.id, 'user')
 
       const emailService = new EmailService('gmail')
-      emailService.sendEmail(data, 'user', 'activationUrl', { name: data.name, activationUrl })
-      console.log('🟢📨 Email enviado')
+      await emailService.sentEmail(
+        data,
+        'user',
+        'activationUrl',
+        { name: data.name, activationUrl }
+      )
+    } catch (error) {
+      console.error('Error procesando mensaje:', error)
     }
   })
 }

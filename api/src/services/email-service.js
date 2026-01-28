@@ -4,7 +4,6 @@ const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 const OAuth2 = google.auth.OAuth2
 const sequelizeDb = require('../models/sequelize')
-// const Email = sequelizeDb.Email
 const SentEmail = sequelizeDb.SentEmail
 const EmailError = sequelizeDb.EmailError
 
@@ -43,8 +42,14 @@ module.exports = class EmailService {
     }
 
     this.template = {
-      activationUrl: { file: 'activation-url', subject: { es: 'Activación de cuenta', en: 'Account activation' } },
-      activationCustomer: { file: 'activation-customer', subject: { es: 'Activación de cuenta', en: 'Account activation' } }
+      activationUrl: {
+        file: 'activation-url',
+        subject: { es: 'Activación de cuenta', en: 'Account activation' }
+      },
+      activationCustomer: {
+        file: 'activation-customer',
+        subject: { es: 'Activación de cuenta', en: 'Account activation' }
+      }
     }
   }
 
@@ -64,7 +69,7 @@ module.exports = class EmailService {
     return myAccessToken
   }
 
-  sendEmail (user, userType, template, data, attachments = []) {
+  sentEmail (user, userType, template, data, attachments = []) {
     try {
       if (!user.language) user.language = 'es'
 
@@ -97,7 +102,7 @@ module.exports = class EmailService {
           mailOptions.attachments = attachments
         }
 
-        this.transport.sendMail(mailOptions, function (err, result) {
+        this.transport.sentMail(mailOptions, function (err, result) {
           if (err) {
             EmailError.create(
               {

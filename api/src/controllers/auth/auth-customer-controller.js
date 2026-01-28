@@ -22,7 +22,7 @@ exports.signin = async (req, res) => {
     })
 
     if (!data) {
-      return res.status(404).send({ message: 'Usuario o contraseña incorrecta' })
+      return res.status(404).send({ message: 'Cliente o contraseña incorrecta' })
     }
 
     const passwordIsValid = bcrypt.compareSync(
@@ -32,7 +32,7 @@ exports.signin = async (req, res) => {
 
     if (!passwordIsValid) {
       return res.status(404).send({
-        message: 'Usuario o contraseña incorrecta'
+        message: 'Cliente o contraseña incorrecta'
       })
     }
 
@@ -41,7 +41,7 @@ exports.signin = async (req, res) => {
     console.log(req.session)
 
     res.status(200).send({
-      redirection: '/customer-dashboard'
+      redirection: '/customer-panel'
     })
   } catch (err) {
     console.log(err)
@@ -52,7 +52,7 @@ exports.signin = async (req, res) => {
 exports.checkSignin = (req, res) => {
   if (req.session.customer) {
     res.status(200).send({
-      redirection: '/customer-dashboard'
+      redirection: '/customer-panel'
     })
   } else {
     res.status(401).send({
@@ -82,10 +82,8 @@ exports.getCurrentCustomer = async (req, res) => {
   }
 }
 
-// NUEVO: Cerrar sesión
 exports.logout = (req, res) => {
   try {
-    // Opción 1: Destruir la sesión completa
     req.session.destroy((err) => {
       if (err) {
         console.error('Error al destruir la sesión:', err)
@@ -111,7 +109,7 @@ exports.reset = async (req, res) => {
     }
   }).then(async data => {
     if (!data) {
-      return res.status(404).send({ message: 'Usuario no encontrado' })
+      return res.status(404).send({ message: 'Cliente no encontrado' })
     }
 
     await req.authorizationService.createResetPasswordToken(data.customerId, 'customer')

@@ -3,6 +3,7 @@ module.exports = (req, res, next) => {
     next()
   } else {
     res.status(401).send({
+      message: 'No autorizado. Debe iniciar sesión como usuario.',
       redirection: '/admin/login'
     })
   }

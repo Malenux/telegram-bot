@@ -1,6 +1,5 @@
-const store = require('../redux/store.js')
-const refreshTable = require('../redux/crud-slice.js')
-const showFormElement = require('../redux/crud-slice.js')
+import store from '../redux/store.js'
+import { refreshTable, showFormElement } from '../redux/crud-slice.js'
 
 class Delete extends HTMLElement {
   constructor () {

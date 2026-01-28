@@ -1,5 +1,5 @@
-const store = require('../../redux/store.js')
-const showFormElement = require('../../redux/crud-slice.js')
+import store from '../../redux/store.js'
+import { showFormElement } from '../../redux/crud-slice.js'
 
 class SubscriptionFormsTable extends HTMLElement {
   constructor () {

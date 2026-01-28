@@ -26,8 +26,8 @@ router.use('/admin/user-credentials', require('./admin/user-credentials.js'))
 router.use('/admin/users', require('./admin/users.js'))
 
 router.use('/auth/activates', require('./auth/auth-activates.js'))
-router.use('/auth/customers', require('./auth/auth-customers.js'))
-router.use('/auth/users', require('./auth/auth-users.js'))
+router.use('/auth/customer', require('./auth/auth-customers.js'))
+router.use('/auth/user', require('./auth/auth-users.js'))
 
 router.use('/customer/cards', require('./customer/cards.js'))
 router.use('/customer/chats', require('./customer/chats.js'))

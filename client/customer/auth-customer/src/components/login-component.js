@@ -1,17 +1,17 @@
 class Login extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.data = {}
   }
 
-  async connectedCallback() {
+  async connectedCallback () {
     console.log(window)
     await this.checkSignin()
     await this.render()
   }
-  
-  async checkSignin() {
+
+  async checkSignin () {
     try {
       const result = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/customer/check-signin`, {
         headers: {
@@ -28,7 +28,7 @@ class Login extends HTMLElement {
     }
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML = /* html */`
       <style>
         :host {
@@ -194,7 +194,7 @@ class Login extends HTMLElement {
           </div>
 
           <div class="field">
-            <label>Password</label>
+            <label>Contraseña</label>
             <input type="password" name="password" placeholder="Introduce tu contraseña" required />
           </div>
 

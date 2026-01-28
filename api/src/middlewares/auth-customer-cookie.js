@@ -1,4 +1,3 @@
-// API: api/src/middlewares/auth-customer-cookie.js
 module.exports = (req, res, next) => {
   if (req.session.customer) {
     next()

@@ -1,17 +1,17 @@
 class Login extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.data = {}
   }
 
-  async connectedCallback() {
+  async connectedCallback () {
     console.log(window)
     await this.checkSignin()
     await this.render()
   }
-  
-  async checkSignin() {
+
+  async checkSignin () {
     try {
       const result = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/user/check-signin`, {
         headers: {
@@ -28,7 +28,7 @@ class Login extends HTMLElement {
     }
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML = /* html */`
       <style>
         :host {
@@ -138,22 +138,39 @@ class Login extends HTMLElement {
         }
 
         button {
-          background: linear-gradient(135deg, var(--accent), #6bb7ff);
           border: none;
           border-radius: 0.75rem;
           padding: 0.9rem 2.2rem;
           font-size: 1rem;
           font-weight: 600;
-          color: #ffffff;
           cursor: pointer;
-          box-shadow: 0 10px 30px rgba(77, 163, 255, 0.25);
           transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
 
-        button:hover {
+        button.primary {
+          background: linear-gradient(135deg, var(--accent), #6bb7ff);
+          color: #ffffff;
+          box-shadow: 0 10px 30px rgba(77, 163, 255, 0.25);
+        }
+
+        button.primary:hover {
           transform: translateY(-2px);
           background: linear-gradient(135deg, var(--accent-hover), #5aa9ff);
           box-shadow: 0 14px 40px rgba(77, 163, 255, 0.35);
+        }
+
+        button.secondary {
+          background: transparent;
+          color: var(--text-secondary);
+          border: 1px solid #1f2a37;
+          box-shadow: none;
+        }
+
+        button.secondary:hover {
+          background: rgba(77, 163, 255, 0.1);
+          color: var(--accent);
+          border-color: var(--accent);
+          transform: translateY(-1px);
         }
 
         .pig {
@@ -179,8 +196,8 @@ class Login extends HTMLElement {
 
       <div class="content">
         <div class="text">
-          <h1>Login</h1>
-          <h2>Bienvenido de nuevo</h2>
+          <h1>Bienvenido de nuevo</h1>
+          <h2>Rellene llene el siguiente formulario para entrar:</h2>
         </div>
 
         <form>
@@ -194,14 +211,15 @@ class Login extends HTMLElement {
           </div>
 
           <div class="field">
-            <label>Password</label>
+            <label>Contraseña</label>
             <input type="password" name="password" placeholder="Introduce tu contraseña" required />
           </div>
 
           <div class="bottom">
-            <span class="forgot-password">He olvidado la contraseña</span>
-            <button type="submit">Acceder</button>
+            <a href="/cuenta"><button class="button secondary"> Iniciar sesión</button></a>
+            <button class="button primary" type="submit">Acceder</button>
           </div>
+          <span class="forgot-password">He olvidado la contraseña</span>
         </form>
       </div>
     `

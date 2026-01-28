@@ -1,5 +1,5 @@
-const store = require('../../redux/store.js')
-const setFilterQuery = require('../../redux/crud-slice.js')
+import store from '../../redux/store.js'
+import { setFilterQuery } from '../../redux/crud-slice.js'
 
 class CustomerFilter extends HTMLElement {
   constructor () {

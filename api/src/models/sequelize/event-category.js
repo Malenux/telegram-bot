@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'event-categories',
+      tableName: 'event_categories',
       timestamps: true,
       paranoid: true,
       indexes: [

@@ -7,15 +7,13 @@ const entities = {
     model: sequelizeDb.User,
     tokenModel: sequelizeDb.UserActivationToken,
     resetPasswordTokenModel: sequelizeDb.UserResetPasswordToken,
-    credentialModel: sequelizeDb.UserCredential,
-    idField: 'userId'
+    credentialModel: sequelizeDb.UserCredential
   },
   customer: {
     model: sequelizeDb.Customer,
     tokenModel: sequelizeDb.CustomerActivationToken,
     resetPasswordTokenModel: sequelizeDb.CustomerResetPasswordToken,
-    credentialModel: sequelizeDb.CustomerCredential,
-    idField: 'customerId'
+    credentialModel: sequelizeDb.CustomerCredential
   }
 }
 
@@ -28,13 +26,13 @@ module.exports = class AuthorizationService {
     const expirationDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
 
     await entity.tokenModel.create({
-      [entity.idField]: id,
+      [`${type}Id`]: id,
       token,
       expirationDate,
       used: false
     })
 
-    const url = `${process.env.API_URL}/cuenta/activacion?token=${token}&type=${type}`
+    const url = `${process.env.API_URL}/cuenta/activacion?token=${token}`
 
     return url
   }
@@ -70,13 +68,13 @@ module.exports = class AuthorizationService {
     const expirationDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
 
     await entity.resetPasswordTokenModel.create({
-      [entity.idField]: id,
+      [`${type}Id`]: id,
       token,
       expirationDate,
       used: false
     })
 
-    const url = `${process.env.API_URL}/cuenta/reset?token=${token}&type=${type}`
+    const url = `${process.env.API_URL}/cuenta/reset?token=${token}`
     console.log(url)
     return url
   }
@@ -110,7 +108,7 @@ module.exports = class AuthorizationService {
     const userEntity = await entity.model.findOne({ where: { id } })
 
     const credentials = {
-      [entity.idField]: userEntity.id,
+      [`${type}Id`]: userEntity.id,
       email: userEntity.email,
       password: bcrypt.hashSync(password, 8),
       lastPasswordChange: new Date()
@@ -131,7 +129,7 @@ module.exports = class AuthorizationService {
 
     await entity.credentialModel.update(credentials, {
       where: {
-        [entity.idField]: userEntity.id
+        [`${type}Id`]: userEntity.id
       }
     })
   }

@@ -1,10 +1,10 @@
 const sequelizeDb = require('../../models/sequelize')
-const SentEmail = sequelizeDb.SentEmail
+const CustomerCredential = sequelizeDb.CustomerCredential
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = async (req, res, next) => {
   try {
-    const data = await SentEmail.create(req.body)
+    const data = await CustomerCredential.create(req.body)
     res.status(200).send(data)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -31,9 +31,9 @@ exports.findAll = async (req, res, next) => {
       ? { [Op.and]: [whereStatement] }
       : {}
 
-    const result = await SentEmail.findAndCountAll({
+    const result = await CustomerCredential.findAndCountAll({
       where: condition,
-      attributes: ['id', 'userType', 'userId', 'emailTemplate', 'sentAt', 'readedAt', 'uuid', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'email', 'password', 'createdAt', 'updatedAt'],
       limit,
       offset,
       order: [['createdAt', 'DESC']]
@@ -55,7 +55,7 @@ exports.findAll = async (req, res, next) => {
 exports.findOne = async (req, res, next) => {
   try {
     const id = req.params.id
-    const data = await SentEmail.findByPk(id)
+    const data = await CustomerCredential.findByPk(id)
 
     if (!data) {
       const err = new Error()
@@ -73,7 +73,7 @@ exports.findOne = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const id = req.params.id
-    const [numberRowsAffected] = await SentEmail.update(req.body, { where: { id } })
+    const [numberRowsAffected] = await CustomerCredential.update(req.body, { where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()
@@ -97,7 +97,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id
-    const numberRowsAffected = await SentEmail.destroy({ where: { id } })
+    const numberRowsAffected = await CustomerCredential.destroy({ where: { id } })
 
     if (numberRowsAffected !== 1) {
       const err = new Error()

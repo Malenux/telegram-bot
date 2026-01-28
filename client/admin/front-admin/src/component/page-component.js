@@ -13,6 +13,7 @@ class PageComponent extends HTMLElement {
   }
 
   handleRouteChange () {
+    this.checkSignin()
     this.render()
   }
 
@@ -52,10 +53,11 @@ class PageComponent extends HTMLElement {
         }
       })
 
-      if (result.ok) {
-        const data = await result.json()
-        window.location.href = data.redirection
-      }
+      console.log(result)
+
+      const data = await result.json()
+      console.log(data)
+      window.location.href = data.redirection
     } catch (error) {
       console.log(error)
     }

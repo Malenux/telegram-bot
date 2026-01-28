@@ -53,7 +53,7 @@ exports.checkSignin = (req, res) => {
       redirection: '/admin'
     })
   } else {
-    res.status(401).send({
+    res.status(401).json({
       redirection: '/admin/login'
     })
   }
