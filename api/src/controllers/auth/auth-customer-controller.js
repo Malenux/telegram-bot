@@ -1,64 +1,52 @@
-// API: api/src/controllers/auth/auth-customer-controller.js
 const bcrypt = require('bcryptjs')
 const sequelizeDb = require('../../models/sequelize')
+
 const CustomerCredential = sequelizeDb.CustomerCredential
 const Customer = sequelizeDb.Customer
 
 exports.signin = async (req, res) => {
   try {
-    if (!req.body.email || !req.body.password) {
-      return res.status(400).send({ message: 'Los campos no pueden estar vacios.' })
+    const { email, password } = req.body
+
+    if (!email || !password) {
+      return res.status(400).send({ message: 'Los campos no pueden estar vacíos.' })
     }
 
-    if (!/^\S+@\S+\.\S+$/.test(req.body.email)) {
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
       return res.status(400).send({ message: 'La dirección de correo electrónico no es válida.' })
     }
 
-    const data = await CustomerCredential.findOne({
-      where: {
-        email: req.body.email,
-        deletedAt: null
-      }
+    const credential = await CustomerCredential.findOne({
+      where: { email, deletedAt: null }
     })
 
-    if (!data) {
-      return res.status(404).send({ message: 'Cliente o contraseña incorrecta' })
+    if (!credential) {
+      return res.status(401).send({ message: 'Cliente o contraseña incorrecta' })
     }
 
-    const passwordIsValid = bcrypt.compareSync(
-      req.body.password,
-      data.password
-    )
+    const passwordIsValid = await bcrypt.compare(password, credential.password)
 
     if (!passwordIsValid) {
-      return res.status(404).send({
-        message: 'Cliente o contraseña incorrecta'
-      })
+      return res.status(401).send({ message: 'Cliente o contraseña incorrecta' })
     }
 
-    req.session.customer = { id: data.customerId, type: 'customer' }
+    req.session.customer = {
+      id: credential.customerId,
+      type: 'customer'
+    }
 
-    console.log(req.session)
-
-    res.status(200).send({
-      redirection: '/customer-panel'
-    })
+    res.status(200).send({ redirection: '/customer-panel' })
   } catch (err) {
-    console.log(err)
-    res.status(500).send({ message: err.message || 'Algún error ha surgido al recuperar los datos.' })
+    console.error(err)
+    res.status(500).send({ message: 'Error al iniciar sesión.' })
   }
 }
 
 exports.checkSignin = (req, res) => {
   if (req.session.customer) {
-    res.status(200).send({
-      redirection: '/customer-panel'
-    })
-  } else {
-    res.status(401).send({
-      redirection: '/login-customer'
-    })
+    return res.status(200).send({ redirection: '/customer-panel' })
   }
+  res.status(401).send({ redirection: '/login-customer' })
 }
 
 exports.getCurrentCustomer = async (req, res) => {
@@ -72,51 +60,52 @@ exports.getCurrentCustomer = async (req, res) => {
     })
 
     if (!customer) {
-      return res.status(404).send({ message: 'Customer no encontrado' })
+      return res.status(404).send({ message: 'Cliente no encontrado' })
     }
 
     res.status(200).send(customer)
   } catch (err) {
-    console.log(err)
-    res.status(500).send({ message: err.message || 'Error al obtener los datos del customer.' })
+    console.error(err)
+    res.status(500).send({ message: 'Error al obtener los datos del cliente.' })
   }
 }
 
 exports.logout = (req, res) => {
-  try {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error('Error al destruir la sesión:', err)
-        return res.status(500).send({ message: 'Error al cerrar sesión' })
-      }
-      res.status(200).send({ message: 'Sesión cerrada correctamente' })
-    })
-
-    // Opción 2 (alternativa): Solo eliminar customer de la sesión
-    // delete req.session.customer
-    // res.status(200).send({ message: 'Sesión cerrada correctamente' })
-  } catch (err) {
-    console.log(err)
-    res.status(500).send({ message: 'Error al cerrar sesión' })
-  }
+  req.session.destroy(err => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send({ message: 'Error al cerrar sesión' })
+    }
+    res.status(200).send({ message: 'Sesión cerrada correctamente' })
+  })
 }
 
 exports.reset = async (req, res) => {
-  CustomerCredential.findOne({
-    where: {
-      email: req.body.email,
-      deletedAt: null
+  try {
+    const { email } = req.body
+
+    if (!email) {
+      return res.status(400).send({ message: 'El email es obligatorio' })
     }
-  }).then(async data => {
-    if (!data) {
+
+    const credential = await CustomerCredential.findOne({
+      where: { email, deletedAt: null }
+    })
+
+    if (!credential) {
       return res.status(404).send({ message: 'Cliente no encontrado' })
     }
 
-    await req.authorizationService.createResetPasswordToken(data.customerId, 'customer')
+    await req.authorizationService.createResetPasswordToken(
+      credential.customerId,
+      'customer'
+    )
 
-    res.status(200).send({ message: 'Se ha enviado un correo electrónico con las instrucciones para restablecer la contraseña.' })
-  }).catch(err => {
-    console.log(err)
-    res.status(500).send({ message: err.message || 'Algún error ha surgido al recuperar los datos.' })
-  })
+    res.status(200).send({
+      message: 'Se ha enviado un correo electrónico con las instrucciones para restablecer la contraseña.'
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send({ message: 'Error al solicitar el reseteo de contraseña.' })
+  }
 }

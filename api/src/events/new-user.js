@@ -10,7 +10,7 @@ exports.handleEvent = async (redisClient, subscriberClient) => {
       const activationUrl = await authorizationService.createActivationToken(data.id, 'user')
 
       const emailService = new EmailService('gmail')
-      await emailService.sentEmail(
+      await emailService.sendEmail(
         data,
         'user',
         'activationUrl',

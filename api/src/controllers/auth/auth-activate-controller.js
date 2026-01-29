@@ -1,9 +1,13 @@
 exports.activate = async (req, res) => {
   try {
-    const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/
+
+    console.log('📧 Password recibida:', req.body.password)
+    console.log('📏 Longitud:', req.body.password?.length)
+    console.log('✅ Test regex:', regex.test(req.body.password))
 
     if (!req.body.token || !req.body.password) {
-      return res.status(400).send({ message: 'Los campos no pueden estar vacios.' })
+      return res.status(400).send({ message: 'Los campos no pueden estar vacíos.' })
     }
 
     if (!regex.test(req.body.password)) {
@@ -20,16 +24,21 @@ exports.activate = async (req, res) => {
 
     res.status(200).send({ message: 'Cuenta activada correctamente' })
   } catch (err) {
-    res.status(500).send({ message: 'Algún error ha surgido al activar la cuenta. Pongasé en contacto con nosotros.' })
+    console.error(err)
+    res.status(500).send({ message: 'Algún error ha surgido al activar la cuenta. Póngase en contacto con nosotros.' })
   }
 }
 
 exports.reset = async (req, res) => {
   try {
-    const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/
+
+    console.log('📧 Password recibida:', req.body.password)
+    console.log('📏 Longitud:', req.body.password?.length)
+    console.log('✅ Test regex:', regex.test(req.body.password))
 
     if (!req.body.token || !req.body.password) {
-      return res.status(400).send({ message: 'Los campos no pueden estar vacios.' })
+      return res.status(400).send({ message: 'Los campos no pueden estar vacíos.' })
     }
 
     if (!regex.test(req.body.password)) {
@@ -44,8 +53,9 @@ exports.reset = async (req, res) => {
 
     await req.authorizationService.resetCredentials(req.body.token, req.body.password)
 
-    res.status(200).send({ message: 'Cuenta activada correctamente' })
+    res.status(200).send({ message: 'Contraseña restablecida correctamente' })
   } catch (err) {
-    res.status(500).send({ message: 'Algún error ha surgido al activar la cuenta. Pongasé en contacto con nosotros.' })
+    console.error(err)
+    res.status(500).send({ message: 'Algún error ha surgido al restablecer la contraseña. Póngase en contacto con nosotros.' })
   }
 }

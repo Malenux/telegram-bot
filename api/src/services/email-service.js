@@ -102,7 +102,7 @@ module.exports = class EmailService {
           mailOptions.attachments = attachments
         }
 
-        this.transport.sentMail(mailOptions, function (err, result) {
+        this.transport.sendMail(mailOptions, function (err, result) {
           if (err) {
             EmailError.create(
               {

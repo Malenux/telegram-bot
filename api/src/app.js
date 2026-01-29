@@ -10,10 +10,25 @@ const { createClient } = require('redis')
 const session = require('express-session')
 const { RedisStore } = require('connect-redis')
 
-const redisClient = createClient({ url: process.env.REDIS_URL })
-redisClient.connect().catch(console.error)
-const subscriberClient = redisClient.duplicate()
-subscriberClient.connect().catch(console.error)
+let redisClient
+let subscriberClient
+
+async function initializeRedis () {
+  redisClient = createClient({ url: process.env.REDIS_URL })
+
+  redisClient.on('connect', () => console.log('✅ Redis conectado'))
+  redisClient.on('error', (err) => console.error('❌ Redis error:', err))
+  redisClient.on('ready', () => console.log('✅ Redis listo'))
+
+  await redisClient.connect()
+
+  subscriberClient = redisClient.duplicate()
+  await subscriberClient.connect()
+
+  require('./events')(redisClient, subscriberClient)
+}
+
+initializeRedis().catch(console.error)
 
 const sessionConfig = session({
   store: new RedisStore({ client: redisClient }),
@@ -29,8 +44,6 @@ const sessionConfig = session({
     maxAge: 1000 * 60 * 3600
   }
 })
-
-require('./events')(redisClient, subscriberClient)
 
 app.use((req, res, next) => {
   req.redisClient = redisClient

@@ -238,7 +238,7 @@ class Activation extends HTMLElement {
       event.preventDefault()
       const password = this.shadow.querySelector('input[name="password"]').value
       const repeatPassword = this.shadow.querySelector('input[name="repeat-password"]').value
-      const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
+      const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/
 
       const messageElement = this.shadow.querySelector('.message span')
       messageElement.parentElement.classList.remove('success')

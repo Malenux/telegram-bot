@@ -7,15 +7,15 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      userId: {
+      promoterId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "promoterId".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "userId".'
+            msg: 'Por favor, rellena el campo "promoterId".'
           }
         }
       },
