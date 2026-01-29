@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../../controllers/customer/customer-controller.js')
-const authUserCookie = require('../../middlewares/auth-user-cookie.js')
+const authCustomerCookie = require('../../middlewares/auth-customer-cookie.js')
 
 router.post('/', controller.create)
 
-router.get('/', authUserCookie, controller.findAll)
-router.get('/:id', authUserCookie, controller.findOne)
-router.put('/:id', authUserCookie, controller.update)
-router.delete('/:id', authUserCookie, controller.delete)
+router.get('/', authCustomerCookie, controller.findAll)
+router.get('/:id', authCustomerCookie, controller.findOne)
+router.put('/:id', authCustomerCookie, controller.update)
+router.delete('/:id', authCustomerCookie, controller.delete)
 
 module.exports = router

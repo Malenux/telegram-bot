@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start your conversation in Telegram</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica', Arial, sans-serif;
+      background-color: #1B1F23; /* Obsidian */
+      color: #E1E4E8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #25292E; /* Slightly lighter obsidian */
+      border-radius: 8px;
+    }
+
+    h1 {
+      color: #58A6FF; /* Azul brillante */
+      text-align: center;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      display: block;
+      width: 250px;
+      margin: 0 auto;
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #FFFFFF;
+      background-color: #1E90FF; /* Azul fuerte */
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #339CFF;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #8B949E;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hello <%= clientName %>!</h1>
+    <p>To start a conversation with our Telegram bot, click the button below. This will open Telegram and automatically start the conversation using your unique token.</p>
+    
+    <a 
+      class="button" 
+      href="https://t.me/<%= botUsername %>?start=<%= token %>" 
+      target="_blank"
+    >
+      Start conversation
+    </a>
+
+    <div class="footer">
+      If you cannot open Telegram, make sure you have the app installed or use a compatible browser.
+    </div>
+  </div>
+</body>
+</html>
