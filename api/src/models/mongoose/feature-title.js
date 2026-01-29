@@ -1,8 +1,7 @@
 module.exports = (mongoose) => {
-  // define que tipo de datos quieres
   const schema = mongoose.Schema(
     {
-      title: String, // No se define el tipo de texto al contrario de MySQL
+      title: String,
       deletedAt: Date
     },
     { timestamps: true }

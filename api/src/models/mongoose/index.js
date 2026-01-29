@@ -29,7 +29,7 @@ fs.readdirSync(__dirname)
     const formattedModelName = modelName.split('-')
       .map(part => part.charAt(0).toUpperCase() + part.slice(1))
       .join('')
-    const model = require(path.join(__dirname, file))(mongoose)
+    const model = require(path.join(__dirname, file))
     mongooseDb[formattedModelName] = model
   })
 

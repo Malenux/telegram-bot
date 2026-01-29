@@ -1,45 +1,21 @@
 module.exports = function (sequelize, DataTypes) {
-  const Model = sequelize.define('Bot',
-    { // definicion de los campos del modelo
+  const Model = sequelize.define('CustomerBotActivationToken',
+    {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
       },
-      platform: {
-        type: DataTypes.STRING,
+      customerId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Plataforma".'
+            msg: 'Por favor, rellena el campo "customerId".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Plataforma".'
-          }
-        }
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          }
-        }
-      },
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Descripción".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Descripción".'
+            msg: 'Por favor, rellena el campo "customerId".'
           }
         }
       },
@@ -48,10 +24,34 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Token".'
+            msg: 'Por favor, rellena el campo "token".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Token".'
+            msg: 'Por favor, rellena el campo "token".'
+          }
+        }
+      },
+      expirationDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "expirationDate".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "expirationDate".'
+          }
+        }
+      },
+      used: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "used".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "used".'
           }
         }
       },
@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }, {
       sequelize,
-      tableName: 'bots',
+      tableName: 'customer_bot_activation_tokens',
       timestamps: true,
       paranoid: true,
       indexes: [
