@@ -22,11 +22,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      sendAt: {
-        type: Sequelize.DATE
+      sentAt: {
+        type: Sequelize.DATE,
+        allowNull: true
       },
       readedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       },
       uuid: {
         type: Sequelize.STRING,
@@ -41,12 +43,13 @@ module.exports = {
         allowNull: false
       },
       deletedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       }
     })
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('sent_emails')
   }
 }

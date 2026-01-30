@@ -49,6 +49,10 @@ module.exports = class EmailService {
       activationCustomer: {
         file: 'activation-customer',
         subject: { es: 'Activación de cuenta', en: 'Account activation' }
+      },
+      activationBotCustomer: {
+        file: 'activation-bot-customer',
+        subject: { es: 'Activa tu chat de Telegram', en: 'Activate your Telegram chat' }
       }
     }
   }
@@ -69,7 +73,7 @@ module.exports = class EmailService {
     return myAccessToken
   }
 
-  sentEmail (user, userType, template, data, attachments = []) {
+  sendEmail (user, userType, template, data, attachments = []) {
     try {
       if (!user.language) user.language = 'es'
 
@@ -117,9 +121,8 @@ module.exports = class EmailService {
               {
                 userId: user.id,
                 userType,
-                sendAt: new Date(),
+                sentAt: new Date(),
                 emailTemplate: template,
-                readed: false,
                 uuid
               }
             )

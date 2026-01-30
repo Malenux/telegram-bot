@@ -13,7 +13,8 @@ const entities = {
     model: sequelizeDb.Customer,
     tokenModel: sequelizeDb.CustomerActivationToken,
     resetPasswordTokenModel: sequelizeDb.CustomerResetPasswordToken,
-    credentialModel: sequelizeDb.CustomerCredential
+    credentialModel: sequelizeDb.CustomerCredential,
+    botActivationTokenModel: sequelizeDb.CustomerBotActivationToken
   }
 }
 
@@ -134,8 +135,62 @@ module.exports = class AuthorizationService {
     })
   }
 
+  createCustomerBotActivationToken = async (customerId) => {
+    const token = jwt.sign({ id: customerId, type: 'customer-bot' }, process.env.JWT_SECRET)
+    const expirationDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+
+    await sequelizeDb.CustomerBotActivationToken.create({
+      customerId,
+      token,
+      expirationDate,
+      used: false
+    })
+
+    const url = `${process.env.API_URL}/bot/activacion?token=${token}`
+
+    return url
+  }
+
+  useCustomerBotActivationToken = async (token) => {
+    const activationToken = await sequelizeDb.CustomerBotActivationToken.findOne({
+      where: {
+        token,
+        used: false,
+        expirationDate: {
+          [sequelizeDb.Sequelize.Op.gt]: new Date()
+        }
+      }
+    })
+
+    if (!activationToken) return false
+
+    activationToken.used = true
+    await activationToken.save()
+
+    return true
+  }
+
   createVerificationCode = () => {
     const code = Math.floor(100000 + Math.random() * 900000)
     return code
+  }
+
+  useVerificationCode = async (code) => {
+    const verificationCode = await sequelizeDb.VerificationCode.findOne({
+      where: {
+        code,
+        used: false,
+        expirationDate: {
+          [sequelizeDb.Sequelize.Op.gt]: new Date()
+        }
+      }
+    })
+
+    if (!verificationCode) return false
+
+    verificationCode.used = true
+    await verificationCode.save()
+
+    return true
   }
 }

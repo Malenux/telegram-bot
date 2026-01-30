@@ -2,10 +2,6 @@ exports.activate = async (req, res) => {
   try {
     const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/
 
-    console.log('📧 Password recibida:', req.body.password)
-    console.log('📏 Longitud:', req.body.password?.length)
-    console.log('✅ Test regex:', regex.test(req.body.password))
-
     if (!req.body.token || !req.body.password) {
       return res.status(400).send({ message: 'Los campos no pueden estar vacíos.' })
     }
@@ -32,10 +28,6 @@ exports.activate = async (req, res) => {
 exports.reset = async (req, res) => {
   try {
     const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,16}$/
-
-    console.log('📧 Password recibida:', req.body.password)
-    console.log('📏 Longitud:', req.body.password?.length)
-    console.log('✅ Test regex:', regex.test(req.body.password))
 
     if (!req.body.token || !req.body.password) {
       return res.status(400).send({ message: 'Los campos no pueden estar vacíos.' })

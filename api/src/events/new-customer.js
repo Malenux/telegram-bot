@@ -8,20 +8,22 @@ exports.handleEvent = async (redisClient, subscriberClient) => {
 
       const authorizationService = new AuthorizationService()
       const activationUrl = await authorizationService.createActivationToken(data.id, 'customer')
+      const customerBotActivationTokenUrl = await authorizationService.createActivationToken(data.id, 'customer-bot-activation-token')
 
       const emailService = new EmailService('gmail')
-      await emailService.sentEmail(
+      await emailService.sendEmail(
         data,
         'customer',
         'activationUrl',
         {
           name: data.name,
-          activationUrl
+          activationUrl,
+          customerBotActivationTokenUrl
         }
       )
-      console.log('Email enviado correctamente')
+      console.log('[new-customer] Email enviado correctamente')
     } catch (error) {
-      console.error('Error procesando mensaje:', error)
+      console.error('[new-customer] Error procesando mensaje:', error)
     }
   })
 }

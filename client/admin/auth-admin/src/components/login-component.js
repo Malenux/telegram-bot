@@ -196,8 +196,8 @@ class Login extends HTMLElement {
 
       <div class="content">
         <div class="text">
-          <h1>Bienvenido de nuevo</h1>
-          <h2>Rellene llene el siguiente formulario para entrar:</h2>
+          <h1>Bienvenido de nuevo Admin</h1>
+          <h2>Rellene el siguiente formulario para entrar:</h2>
         </div>
 
         <form>

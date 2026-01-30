@@ -79,7 +79,6 @@ class ButtonLogin extends HTMLElement {
       .login-button a {
         text-decoration: none;
       }
-
     </style>
 
     <div class="login-button">

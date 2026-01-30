@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkSG06/telegram-bot.git"
+    "url": "git+https://github.com/Malenux/telegram-bot.git"
   },
   "keywords": [
     "telegram",
@@ -23,9 +23,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MarkSG06/telegram-bot/issues"
   },
-  "homepage": "https://github.com/MarkSG06/telegram-bot#readme",
   "devDependencies": {
     "eslint": "^9.24.0",
     "neostandard": "^0.12.1",
